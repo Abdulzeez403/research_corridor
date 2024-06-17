@@ -1,5 +1,5 @@
 "use client"
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import {
     Bell,
@@ -15,15 +15,8 @@ import {
     CircleUserRound,
     MessageSquareQuote
 } from 'lucide-react';
-// import { Badge } from "@/components/ui/badge"
 import { Button } from '@/components/ui/button';
-import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardHeader,
-    CardTitle,
-} from '@/components/ui/card';
+
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -49,6 +42,8 @@ interface NavLinkProps {
 
 export const MainLayout = ({ children }: IProp) => {
     const urlPath = usePathname();
+
+    const [role, setRole] = useState("Supervisor")
 
 
     const NavLink = ({ href, icon: Icon, children }: NavLinkProps) => {
@@ -88,20 +83,20 @@ export const MainLayout = ({ children }: IProp) => {
                             </NavLink>
 
                             <NavLink href="/admin/upload" icon={Upload}>
-                                Upload Document
+                                {role === "Researcher" ? " Upload Document" : "Validation"}
                             </NavLink>
 
-                            <NavLink href="#" icon={TicketCheck}>
+                            {/* <NavLink href="#" icon={TicketCheck}>
                                 Validation
-                            </NavLink>
-                            <NavLink href="#" icon={Presentation}>
+                            </NavLink> */}
+                            <NavLink href="/admin/meeting" icon={Presentation}>
                                 Meeting
                             </NavLink>
 
                             <NavLink href="/admin/chat" icon={MessageSquareQuote}>
                                 ChatRoom
                             </NavLink>
-                            <NavLink href="#" icon={CircleUserRound}>
+                            <NavLink href="/admin/profile" icon={CircleUserRound}>
                                 Profile
                             </NavLink>
                         </nav>
