@@ -3,15 +3,18 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSepara
 import { Row } from '@tanstack/react-table';
 import { MoreHorizontal } from 'lucide-react';
 import React from 'react';
+import Link from 'next/link'
 
 
 interface DataTableRowActionsProps<TData> {
     row: Row<TData>;
     onEdit: (value: TData) => void;
     onDelete: (value: TData) => void;
+    onView: (value: TData) => void;
 }
 
-const DataTableRowActions = <TData,>({ row, onEdit, onDelete }: DataTableRowActionsProps<TData>) => {
+
+const DataTableRowActions = <TData,>({ row, onEdit, onDelete, onView }: DataTableRowActionsProps<TData>) => {
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -20,11 +23,15 @@ const DataTableRowActions = <TData,>({ row, onEdit, onDelete }: DataTableRowActi
                 </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
+                <DropdownMenuItem onClick={() => onView(row.id as any)}>
+                    <Link href={`/admin/upload/${row?.id}`}>
+                        View
+                    </Link></DropdownMenuItem>
                 <DropdownMenuItem onClick={() => onEdit(row.original)}>Edit</DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={() => onDelete(row.original)}>Delete</DropdownMenuItem>
             </DropdownMenuContent>
-        </DropdownMenu>
+        </DropdownMenu >
     );
 };
 

@@ -3,17 +3,20 @@
 import { UploodModel } from '@/constant/models';
 import React, { useEffect, useState } from 'react'
 import { columns } from "./column";
-import { UploadDataSample } from "../../../../constant/data"
 import { TableComponent } from './table/datatable';
 import CardComponent from '@/app/components/card/index';
 import { UsersRound, MessageCircleMore, BookCheck } from 'lucide-react';
 import FileUploadForm from './form/index';
+import { useRouter } from 'next/navigation';
+import { UploadDataSample } from '@/constant/data';
 
 
 function UploadDocumentDetail() {
     const [datas, setDatas] = useState<UploodModel[]>([])
     const [isDrawerOpen, setDrawerOpen] = useState(false);
     // const [selectedUrl, setSelectedUrl] = useState<Url | null>(null);
+
+    const router = useRouter()
 
     const handleUpdate = (user: UploodModel) => {
         setDrawerOpen(!isDrawerOpen);
@@ -23,6 +26,10 @@ function UploadDocumentDetail() {
     const handleDelete = (user: UploodModel) => {
         alert("Deleted Successfully!")
 
+    };
+
+    const handleView = (value: UploodModel) => {
+        return value?.id
     };
 
     const handleClose = () => {
@@ -36,7 +43,9 @@ function UploadDocumentDetail() {
     useEffect(() => {
         setDatas(UploadDataSample as any)
     }, [])
-    const createColumns = columns({ onEdit: handleUpdate, onDelete: handleDelete });
+
+    const createColumns = columns({ onEdit: handleUpdate, onDelete: handleDelete, onView: handleView });
+
     return (
         <div>
             <div>
@@ -66,11 +75,12 @@ function UploadDocumentDetail() {
                     data={datas}
                     onEdit={handleUpdate}
                     onDelete={handleDelete}
+                    onView={handleView}
                     open={isDrawerOpen}
                     onDismiss={handleClose}
                     onOpen={handleCreateNewMember}
                     title="Upload File"
-                    description="This support Doc/Pft/Image/sheet and others!">
+                    description="This support Doc / Pft / Image / sheet and others!">
                     <FileUploadForm />
                 </TableComponent>
             </div>

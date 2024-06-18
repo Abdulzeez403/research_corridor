@@ -30,6 +30,7 @@ interface DataTableProps<TData, TValue> {
     onEdit: (value: any) => void;
     onDelete: (user: any) => void;
     onDismiss: () => void;
+    onView: (value: any) => void;
     onOpen: () => void;
     open: boolean,
     children: React.ReactNode;
@@ -37,7 +38,7 @@ interface DataTableProps<TData, TValue> {
     description: string;
 }
 
-export function TableComponent<TData, TValue>({ columns, data, onEdit, onDelete, open, onDismiss, onOpen, children, title, description }: DataTableProps<TData, TValue>) {
+export function TableComponent<TData, TValue>({ columns, data, open, onDismiss, onOpen, children, title, description }: DataTableProps<TData, TValue>) {
     const [sorting, setSorting] = React.useState<SortingState>([])
     const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
         []
