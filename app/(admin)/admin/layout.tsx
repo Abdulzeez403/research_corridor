@@ -6,7 +6,7 @@ interface IProps {
 
 export default function AdminLayout({ children }: IProps) {
     return (
-        <div className="h-screen w-screen overflow-hidden">
+        <div className="h-screen w-screen ">
             <MainLayout>
                 <div className="h-full">
                     {children}

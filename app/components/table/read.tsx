@@ -45,7 +45,7 @@ export const ReatTableComponent = () => {
                         </TableCell>
                         <TableCell>{item.topic}</TableCell>
                         <TableCell className="text-right w-10">
-                            <Progress value={item.progress} className={getColorForProgress(item.progress)} />
+                            <Progress value={Number(item.progress)} className={getColorForProgress(item.progress)} />
 
 
                         </TableCell>

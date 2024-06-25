@@ -118,7 +118,7 @@ export const MainLayout = ({ children }: IProp) => {
             </div>
 
 
-            <div className="flex flex-col">
+            <div className="flex flex-col overflow-hidden">
                 <header className="flex h-14 items-center gap-4 border-b  px-4 lg:h-[60px] lg:px-6 bg-customPrimary ">
                     <Sheet>
                         <SheetTrigger asChild>
@@ -209,7 +209,7 @@ export const MainLayout = ({ children }: IProp) => {
                         </DropdownMenuContent>
                     </DropdownMenu>
                 </header>
-                <main className="p-4 overflow-auto flex-1">
+                <main className="p-4 overflow-y-auto  flex-1">
 
                     {children}
                 </main>
