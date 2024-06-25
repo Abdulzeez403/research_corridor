@@ -1,142 +1,85 @@
-import React, { useRef, ChangeEvent, DragEvent, MouseEvent } from 'react';
-import axios from 'axios';
-import useFileUpload from 'react-use-file-upload';
-import { CloudUpload } from 'lucide-react';
-import CustomButton from '@/app/components/button/index';
+"use client"
 
+import React, { useState } from 'react';
+import { useDocumentContext } from '../context';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
+import { FormField } from '@/app/components/input/textInput';
+import CustomButton from '@/app/components/button';
 
-const CSS: React.CSSProperties = {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    margin: '20px',
-};
+const ResearchUploadForm: React.FC = () => {
+    const { uploadDocument, loading, error } = useDocumentContext();
+    const [fileName, setFileName] = useState<string>('No file chosen');
 
-const ListCSS: React.CSSProperties = {
-    margin: '20px 0',
-};
+    const initialValues = {
+        title: '',
+        document: null as File | null
+    };
 
-const DropzoneCSS: React.CSSProperties = {
-    border: '2px dashed #E5B671',
-    padding: '30px',
-    textAlign: 'center',
-    margin: '20px 0',
-    cursor: 'pointer',
-};
+    const validationSchema = Yup.object({
+        title: Yup.string().required('Title is required'),
+        document: Yup.mixed().required('A file is required')
+    });
 
-const FileUploadForm: React.FC = () => {
-    const {
-        files,
-        fileNames,
-        fileTypes,
-        totalSize,
-        totalSizeInBytes,
-        handleDragDropEvent,
-        clearAllFiles,
-        createFormData,
-        setFiles,
-        removeFile,
-    } = useFileUpload();
-
-    const inputRef = useRef<HTMLInputElement | null>(null);
-
-    const handleSubmit = async (e: MouseEvent<HTMLButtonElement>) => {
-        e.preventDefault();
-
-        const formData = createFormData();
-
-        try {
-            await axios.post('https://some-api.com', formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                },
-            });
-            console.log('Files submitted successfully.');
-        } catch (error) {
-            console.error('Failed to submit files.', error);
+    const handleSubmit = async (values: { title: string; document: File | null }, { setSubmitting, resetForm }: any) => {
+        if (values.title && values.document) {
+            await uploadDocument(values.title, values.document);
+            setFileName('No file chosen');
+            resetForm();
         }
+        setSubmitting(false);
     };
 
     return (
-        <div style={CSS}>
-
-            <div className="form-container">
-                {/* Display the files to be uploaded */}
-                <div style={ListCSS}>
-                    <ul>
-                        {fileNames.map((name) => (
-                            <li key={name}>
-                                <span>{name}</span>
-                                <span onClick={() => removeFile(name)} style={{ cursor: 'pointer', marginLeft: '10px', color: 'red' }}>
-                                    <i className="fa fa-times" />
-                                </span>
-                            </li>
-                        ))}
-                    </ul>
-
-                    {files.length > 0 && (
-                        <ul>
-                            <li>File types found: {fileTypes.join(', ')}</li>
-                            <li>Total Size: {totalSize}</li>
-                            <li>Total Bytes: {totalSizeInBytes}</li>
-                            <li className="clear-all">
-                                <button onClick={clearAllFiles}>Clear All</button>
-                            </li>
-                        </ul>
-                    )}
-                </div>
-
-                {/* Provide a drop zone and an alternative button inside it to upload files. */}
-                <div
-                    className="bg-slate-200"
-                    style={DropzoneCSS}
-                    onDragEnter={handleDragDropEvent as (e: DragEvent<HTMLDivElement>) => void}
-                    onDragOver={handleDragDropEvent as (e: DragEvent<HTMLDivElement>) => void}
-                    onDrop={(e: DragEvent<HTMLDivElement>) => {
-                        handleDragDropEvent(e);
-                        setFiles(e, 'a');
-                    }}
-                >
-
-                    <div className="text-center">
-                        <div className='flex justify-center'>
-                            <CloudUpload className="h-6 w-6 text-customPrimary" />
-
+        <div>
+            {error && <div style={{ color: 'red' }}>{error}</div>}
+            <Formik
+                initialValues={initialValues}
+                validationSchema={validationSchema}
+                onSubmit={handleSubmit}
+            >
+                {({ setFieldValue, isSubmitting }) => (
+                    <Form>
+                        <div>
+                            <FormField label="Title" name="title" className="my-4 w-full" />
                         </div>
+                        <div>
+                            <label htmlFor="document" className=" text-sm font-medium text-gray-700 hidden">Document</label>
+                            <div className="flex items-center">
+                                <input
+                                    type="file"
+                                    name="document"
+                                    id="document"
+                                    className="hidden"
+                                    onChange={(event) => {
+                                        const file = event.currentTarget.files ? event.currentTarget.files[0] : null;
+                                        setFieldValue('document', file);
+                                        setFileName(file ? file.name : 'No file chosen');
+                                    }}
 
-
-                        <button type="button" className='' onClick={() => inputRef.current?.click()}> Drag and drop files here Or select files to upload</button>
-
-
-                    </div>
-
-
-
-
-                    {/* Hide the default HTML input */}
-                    <input
-                        ref={inputRef}
-                        type="file"
-                        multiple
-                        style={{ display: 'none' }}
-                        onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                            setFiles(e, 'a');
-                            if (inputRef.current) {
-                                inputRef.current.value = '';
-                            }
-                        }}
-                    />
-                </div>
-            </div>
-
-            <div className="submit">
-                <CustomButton type="submit" loading={false}>
-                    Upload
-                </CustomButton>
-                {/* <button type="button" onClick={handleSubmit}>Submit</button> */}
-            </div>
+                                />
+                                <button
+                                    type="button"
+                                    onClick={() => document.getElementById('document')?.click()}
+                                    className="px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                >
+                                    Choose File
+                                </button>
+                                <span className="text-sm text-gray-500">{fileName}</span>
+                            </div>
+                            <ErrorMessage name="document" component="div" className="text-red-500 text-sm mt-1" />
+                        </div>
+                        <div>
+                            <CustomButton type="submit" disabled={loading || isSubmitting}>
+                                {loading || isSubmitting ? 'Uploading...' : 'Upload'}
+                            </CustomButton>
+                        </div>
+                    </Form>
+                )}
+            </Formik>
         </div>
     );
 };
 
-export default FileUploadForm;
+export default ResearchUploadForm;
+

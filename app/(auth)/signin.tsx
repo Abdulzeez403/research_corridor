@@ -2,20 +2,19 @@
 import React, { useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import { Button } from '@/components/ui/button';
 import { FormField } from '@/app/components/input/textInput';
 import CustomButton from '../components/button/index';
+import { useAuthContext } from './context';
+import { useRouter } from 'next/navigation';
 
 interface UserFormValues {
-    Name: string;
+    emailOrMatric: string;
     password: string;
 
 }
 
 const UserFormValues = Yup.object().shape({
-    Name: Yup.string()
-        .min(2, 'Too Short!')
-        .max(50, 'Too Long!')
+    emailOrMatric: Yup.string()
         .required('Required'),
 
     password: Yup.string()
@@ -25,23 +24,25 @@ const UserFormValues = Yup.object().shape({
 });
 
 export const SignInForm: React.FC = () => {
+
+
+    const { signIn, loading } = useAuthContext();
+    const router = useRouter();
+
+
     const initialValues: UserFormValues = {
-        Name: '',
+        emailOrMatric: '',
         password: '',
 
     };
 
-    const handleSubmit = (values: UserFormValues) => {
-        // Handle form submission
-        console.log(values);
-    };
-
-    const [loading, setLoading] = useState(false);
-
-    const handleClick = async () => {
-        setLoading(true);
-        await new Promise(resolve => setTimeout(resolve, 2000)); // Simulate an async operation
-        setLoading(false);
+    const handleSubmit = async (values: UserFormValues) => {
+        try {
+            await signIn(values);
+            console.log(values);
+        } catch (error) {
+            console.error('Error during sign-in:', error);
+        }
     };
 
     return (
@@ -62,12 +63,10 @@ export const SignInForm: React.FC = () => {
                 {({ isSubmitting }) => (
                     <Form>
 
-                        <FormField label="Email" name="email" className="my-4" />
+                        <FormField label="EmailOrMatric" name="emailOrMatric" className="my-4" />
                         <FormField label="Password" name="password" type="password" />
-
-
-                        <CustomButton onClick={handleClick} loading={loading}>
-                            {loading ? 'Loading...' : 'LogIn'}
+                        <CustomButton type="submit" loading={loading}>
+                            SignUp
                         </CustomButton>
                     </Form>
                 )}

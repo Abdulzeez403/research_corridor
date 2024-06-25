@@ -9,13 +9,14 @@ import { UsersRound, MessageCircleMore, BookCheck } from 'lucide-react';
 import FileUploadForm from './form/index';
 import { useRouter } from 'next/navigation';
 import { UploadDataSample } from '@/constant/data';
+import { useAuthContext } from '@/app/(auth)/context';
 
 
 function UploadDocumentDetail() {
     const [datas, setDatas] = useState<UploodModel[]>([])
     const [isDrawerOpen, setDrawerOpen] = useState(false);
-    // const [selectedUrl, setSelectedUrl] = useState<Url | null>(null);
-
+    const { user } = useAuthContext()
+    console.log(user, "the user")
     const router = useRouter()
 
     const handleUpdate = (user: UploodModel) => {
@@ -79,7 +80,8 @@ function UploadDocumentDetail() {
                     open={isDrawerOpen}
                     onDismiss={handleClose}
                     onOpen={handleCreateNewMember}
-                    title="Upload File"
+                    title="Upload Research Document
+                    "
                     description="This support Doc / Pft / Image / sheet and others!">
                     <FileUploadForm />
                 </TableComponent>

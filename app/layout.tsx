@@ -1,5 +1,9 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { AuthProvider } from "./(auth)/context";
+import { DocumentProvider } from "./(admin)/admin/upload/context";
+import { UploadTopicProvider } from "./(admin)/admin/validation/context";
+
 
 // const inter = Inter({ subsets: ["latin"] });
 
@@ -15,7 +19,18 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en">
-            <body>{children}</body>
+            <body>
+                <UploadTopicProvider>
+
+                    <DocumentProvider>
+                        <AuthProvider>
+                            {children}
+                        </AuthProvider>
+                    </DocumentProvider>
+
+                </UploadTopicProvider>
+
+            </body>
         </html>
     );
 }

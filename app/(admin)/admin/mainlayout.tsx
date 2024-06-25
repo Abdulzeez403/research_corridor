@@ -28,6 +28,8 @@ import {
 import { Input } from '@/components/ui/input';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { usePathname } from 'next/navigation';
+import { ResponsiveDrawerDialog } from '@/app/components/modals/responsivedrawer';
+import ResearchUploadForm from './validation/form';
 
 
 interface IProp {
@@ -42,6 +44,16 @@ interface NavLinkProps {
 
 export const MainLayout = ({ children }: IProp) => {
     const urlPath = usePathname();
+    const [isDrawerOpen, setDrawerOpen] = useState(false);
+
+    const handleClose = () => {
+        setDrawerOpen(false)
+    }
+
+    const handleOpen = () => {
+        setDrawerOpen(true)
+    }
+
 
     const [role, setRole] = useState("Supervisor")
 
@@ -59,7 +71,7 @@ export const MainLayout = ({ children }: IProp) => {
         );
     };
     return (
-        <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[220px_1fr]">
+        <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[220px_1fr]  ">
 
 
             <div className="hidden border-r bg-muted/40 md:block ">
@@ -177,6 +189,9 @@ export const MainLayout = ({ children }: IProp) => {
                             </div>
                         </form>
                     </div>
+                    <Button className="rounded-lg bg-black text-white" onClick={handleOpen}>
+                        Validate Topic
+                    </Button>
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
                             <Button className="rounded-lg bg-white">
@@ -194,10 +209,22 @@ export const MainLayout = ({ children }: IProp) => {
                         </DropdownMenuContent>
                     </DropdownMenu>
                 </header>
-                <main className="p-4 flex-1">
+                <main className="p-4 overflow-auto flex-1">
 
                     {children}
                 </main>
+                <ResponsiveDrawerDialog
+                    title="Validate Your Topic"
+                    description="Validate Your Topic"
+                    isOpen={isDrawerOpen}
+                    onClose={handleClose}
+                >
+                    <div>
+                        <ResearchUploadForm />
+                    </div>
+
+
+                </ResponsiveDrawerDialog>
             </div>
         </div>
     );
