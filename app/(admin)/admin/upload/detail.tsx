@@ -10,14 +10,19 @@ import FileUploadForm from './form/index';
 import { useRouter } from 'next/navigation';
 import { UploadDataSample } from '@/constant/data';
 import { useAuthContext } from '@/app/(auth)/context';
+import { useDocumentContext } from './context';
 
 
 function UploadDocumentDetail() {
     const [datas, setDatas] = useState<UploodModel[]>([])
     const [isDrawerOpen, setDrawerOpen] = useState(false);
-    const { user } = useAuthContext()
-    console.log(user, "the user")
-    const router = useRouter()
+    const { fetchDocuments, documents } = useDocumentContext();
+
+
+    useEffect(() => {
+        fetchDocuments();
+        console.log(documents)
+    }, [])
 
     const handleUpdate = (user: UploodModel) => {
         setDrawerOpen(!isDrawerOpen);
@@ -46,6 +51,8 @@ function UploadDocumentDetail() {
     }, [])
 
     const createColumns = columns({ onEdit: handleUpdate, onDelete: handleDelete, onView: handleView });
+
+
 
     return (
         <div>

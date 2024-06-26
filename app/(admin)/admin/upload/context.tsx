@@ -70,9 +70,15 @@ export const DocumentProvider: React.FC<DocumentProviderProps> = ({ children }) 
     const fetchDocuments = async () => {
         setLoading(true);
         setError(null);
+        const token = cookies.get("token");
+
 
         try {
-            const response = await axios.get(`${port}/researcher/documents`);
+            const response = await axios.get(`${port}/researcher/get-research`, {
+                headers: {
+                    'x-auth-token': token
+                },
+            });
             setDocuments(response.data);
         } catch (err: any) {
             setError(err.response?.data?.message || 'Failed to fetch documents.');

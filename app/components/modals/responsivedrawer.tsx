@@ -43,40 +43,41 @@ export const ResponsiveDrawerDialog: React.FC<ResponsiveDrawerDialogProps> = ({
 }) => {
     const isDesktop = useMediaQuery("(min-width: 768px)");
 
-    if (isDesktop) {
-        return (
-            <Dialog open={isOpen} onOpenChange={onClose}>
-                {/* <DialogTrigger asChild>
+
+    // if (isDesktop) {
+    return (
+        <Dialog open={isOpen} onOpenChange={onClose}>
+            {/* <DialogTrigger asChild>
                     <Button variant={buttonVariant}>{buttonLabel}</Button>
                 </DialogTrigger> */}
-                <DialogContent className={dialogClassName}>
-                    <DialogHeader>
-                        <DialogTitle>{title}</DialogTitle>
-                        <DialogDescription>{description}</DialogDescription>
-                    </DialogHeader>
-                    {children}
-                </DialogContent>
-            </Dialog>
-        );
-    }
-
-    return (
-        <Drawer open={isOpen} onOpenChange={onClose}>
-            {/* <DrawerTrigger asChild>
-                <Button variant={buttonVariant}>{buttonLabel}</Button>
-            </DrawerTrigger> */}
-            <DrawerContent className={drawerClassName}>
-                <DrawerHeader className="text-left">
-                    <DrawerTitle>{title}</DrawerTitle>
-                    <DrawerDescription>{description}</DrawerDescription>
-                </DrawerHeader>
+            <DialogContent className={dialogClassName}>
+                <DialogHeader>
+                    <DialogTitle>{title}</DialogTitle>
+                    <DialogDescription>{description}</DialogDescription>
+                </DialogHeader>
                 {children}
-                <DrawerFooter className="pt-2">
-                    <DrawerClose asChild>
-                        <Button variant="outline">Cancel</Button>
-                    </DrawerClose>
-                </DrawerFooter>
-            </DrawerContent>
-        </Drawer>
+            </DialogContent>
+        </Dialog>
     );
+    // }
+
+    // return (
+    //     <Drawer open={isOpen} onOpenChange={onClose}>
+    //         {/* <DrawerTrigger asChild>
+    //             <Button variant={buttonVariant}>{buttonLabel}</Button>
+    //         </DrawerTrigger> */}
+    //         <DrawerContent className={drawerClassName}>
+    //             <DrawerHeader className="text-left">
+    //                 <DrawerTitle>{title}</DrawerTitle>
+    //                 <DrawerDescription>{description}</DrawerDescription>
+    //             </DrawerHeader>
+    //             {children}
+    //             <DrawerFooter className="pt-2">
+    //                 <DrawerClose asChild>
+    //                     <Button variant="outline">Cancel</Button>
+    //                 </DrawerClose>
+    //             </DrawerFooter>
+    //         </DrawerContent>
+    //     </Drawer>
+    // );
 };

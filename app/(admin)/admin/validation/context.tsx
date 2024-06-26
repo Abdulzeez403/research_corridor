@@ -5,7 +5,9 @@ import Cookies from 'universal-cookie';
 
 interface UploadTopicContextType {
     loading: boolean;
+    topics: any;
     uploadTopic: (title: string, supervisorIds: string[], document: File) => Promise<string>;
+    getTopic: () => Promise<void>;
 }
 
 const UploadTopicContext = createContext<UploadTopicContextType | undefined>(undefined);
@@ -24,13 +26,15 @@ interface IProps {
 
 export const UploadTopicProvider: React.FC<IProps> = ({ children }) => {
     const [loading, setLoading] = useState<boolean>(false);
+    const [topics, setTopics] = useState()
     const cookies = new Cookies();
 
     const port = "https://research-corridor.onrender.com/api";
+    const token = cookies.get("token");
+
 
     const uploadTopic = useCallback(async (title: string, supervisorIds: string[], document: File) => {
         setLoading(true);
-        const token = cookies.get("token");
         try {
             const formData = new FormData();
             formData.append('title', title);
@@ -55,8 +59,25 @@ export const UploadTopicProvider: React.FC<IProps> = ({ children }) => {
         }
     }, []);
 
+
+    const getTopic = async () => {
+        try {
+            const response = await axios.get(`${port}/researcher/get-topics`, {
+                headers: {
+                    'x-auth-token': token
+                },
+            });
+            setTopics(response.data);
+        } catch (err: any) {
+            console.log(err.response?.data?.message || 'Failed to fetch documents.');
+        } finally {
+            setLoading(false);
+        }
+
+    }
+
     return (
-        <UploadTopicContext.Provider value={{ loading, uploadTopic }}>
+        <UploadTopicContext.Provider value={{ loading, topics, uploadTopic, getTopic }}>
             {children}
         </UploadTopicContext.Provider>
     );

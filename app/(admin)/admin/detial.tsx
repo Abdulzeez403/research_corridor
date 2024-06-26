@@ -1,10 +1,14 @@
+"use client"
+
 import CardComponent from '@/app/components/card/index'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { UsersRound, MessageCircleMore, BookCheck, ChevronRight, Activity, Mail } from 'lucide-react';
 import { ReatTableComponent } from '@/app/components/table/read';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import Image from 'next/image'
 import User from "../../../public/student.jpg"
+import { useUploadTopic } from './validation/context';
+import { useResearcherProfile } from './profile/context';
 
 const notifications = [
     { title: 'New Meeting Scheduled', description: 'Lorem ipsum dolor sit, amet consectetur' },
@@ -14,6 +18,7 @@ const notifications = [
     { title: 'Reminder', description: 'Don\'t forget about your upcoming appointment' },
     { title: 'Alert', description: 'Your account password will expire in 3 days' },
 ];
+
 
 interface INotification {
     title: string,
@@ -37,6 +42,18 @@ export const AdminDetial = () => {
             <ChevronRight />
         </div>
     );
+
+
+    const { getTopic, topics } = useUploadTopic();
+    const { fetchProfile, profile } = useResearcherProfile()
+
+
+    useEffect(() => {
+        getTopic()
+        fetchProfile()
+        console.log(topics, 'the topic')
+        console.log(profile, 'the prf')
+    }, [])
 
 
     return (
@@ -79,7 +96,7 @@ export const AdminDetial = () => {
                 </div>
             </div>
 
-            <div>
+            <div className='hidden md:flex lg:flex'>
                 <Card className="w-[400px]">
                     <CardHeader>
                         <CardTitle className='text-2x1 text-customPrimary'>Notification</CardTitle>

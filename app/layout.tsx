@@ -3,6 +3,8 @@ import "./globals.css";
 import { AuthProvider } from "./(auth)/context";
 import { DocumentProvider } from "./(admin)/admin/upload/context";
 import { UploadTopicProvider } from "./(admin)/admin/validation/context";
+import { ResearcherProfileProvider } from "./(admin)/admin/profile/context";
+import { AppointmentsProvider } from "./(admin)/admin/meeting/context";
 
 
 // const inter = Inter({ subsets: ["latin"] });
@@ -17,16 +19,23 @@ export default function RootLayout({
 }: Readonly<{
     children: React.ReactNode;
 }>) {
+
+
     return (
         <html lang="en">
             <body>
                 <UploadTopicProvider>
+                    <ResearcherProfileProvider>
+                        <AppointmentsProvider>
 
-                    <DocumentProvider>
-                        <AuthProvider>
-                            {children}
-                        </AuthProvider>
-                    </DocumentProvider>
+                            <DocumentProvider>
+                                <AuthProvider>
+                                    {children}
+                                </AuthProvider>
+                            </DocumentProvider>
+                        </AppointmentsProvider>
+
+                    </ResearcherProfileProvider>
 
                 </UploadTopicProvider>
 

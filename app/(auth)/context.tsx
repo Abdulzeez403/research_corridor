@@ -19,7 +19,6 @@ interface DecodedToken {
 interface IProp {
     loading: boolean;
     user: any,
-    signIn: (payload: any) => void;
     seasons: any;
     supervisors: any
     departments: any,
@@ -28,8 +27,10 @@ interface IProp {
     getSupervisors: (value: any) => void;
     researcherSignup: (values: any) => void;
     supervisorSignup: (values: any) => void;
-    currentUser: (userId: any) => void;
-    updateUser: (userId: any, values: any) => void;
+    supervisorSignIn: (payload: any) => void;
+    researcherSignIn: (payload: any) => void;
+    updateSupervisor: (values: any) => void;
+    updateResearcher: (values: any) => void;
     signOut: () => void;
 }
 const AuthContext = createContext<IProp>({
@@ -41,13 +42,13 @@ const AuthContext = createContext<IProp>({
     getDepartments: () => { },
     getSeasons: () => { },
     getSupervisors: (value) => { },
-    signIn: (payload) => {
-        return null
-    },
     researcherSignup: (values) => { },
     supervisorSignup: (values) => { },
-    currentUser: (userId) => { },
-    updateUser: (userId, values) => { },
+    updateSupervisor: (values) => { },
+    updateResearcher: (values) => { },
+    supervisorSignIn: (payload) => { },
+    researcherSignIn: (payload) => { },
+
     signOut: () => { },
 });
 
@@ -74,13 +75,47 @@ export const AuthProvider: React.FC<IProps> = ({ children }) => {
     const router = useRouter();
 
 
+    const token = cookies.get("token");
+
+
 
     const port = "https://research-corridor.onrender.com/api"
 
-    const signIn = async (payload: any) => {
+    const researcherSignIn = async (payload: any) => {
         setLoading(true)
         try {
             const response = await axios.post(`${port}/auth/researcher-login`, payload);
+
+            // UseSetCookie("user")
+            UseSetCookie("token", response.data.token)
+            setUser(response.data);
+            setLoading(false)
+            router.push('/admin');
+
+            notify.success(response.data.msg);
+
+
+        } catch (error: any) {
+            setLoading(false);
+            if (error.response) {
+                console.error('Server Error:', error.response.data);
+                notify.error(error.response.data.message || 'Server error occurred');
+            } else if (error.request) {
+                console.error('Network Error:', error.request);
+                notify.error('Network error occurred. Please try again later.');
+            } else {
+                console.error('Error:', error.message);
+                notify.error('An error occurred. Please try again.');
+            }
+            throw error;
+        };
+    };
+
+
+    const supervisorSignIn = async (payload: any) => {
+        setLoading(true)
+        try {
+            const response = await axios.post(`${port}/auth/supervisor-login`, payload);
 
             // UseSetCookie("user")
             UseSetCookie("token", response.data.token)
@@ -117,15 +152,10 @@ export const AuthProvider: React.FC<IProps> = ({ children }) => {
             setLoading(false);
         } catch (error: any) {
             setLoading(false);
-            if (error.response) {
-                console.error('Server Error:', error.response.data);
-                notify.error(error.response.data.message || 'Server error occurred');
-            } else if (error.request) {
-                console.error('Network Error:', error.request);
-                notify.error('Network error occurred. Please try again later.');
+            if (error.response && error.response.data && error.response.data.msg) {
+                notify.error(error.response.data.msg);
             } else {
-                console.error('Error:', error.message);
-                notify.error('An error occurred. Please try again.');
+                notify.error("An unknown error occurred.");
             }
             throw error;
         }
@@ -149,44 +179,7 @@ export const AuthProvider: React.FC<IProps> = ({ children }) => {
         }
     };
 
-    const currentUser = async (userId: any) => {
-        try {
 
-            const { token } = cookies.get("token");
-            const response = await axios.get(`${port}/user/${userId}`, {
-                headers: {
-                    'x-auth-token': token
-                }
-            });
-            setUser(response.data);
-            return response.data;
-        } catch (error) {
-            console.error('Error fetching current user:', error);
-            throw error;
-        }
-    };
-
-
-    const updateUser = async (userId: any, values: any) => {
-        setLoading(true);
-
-        try {
-
-            const { token } = cookies.get("token");
-            const response = await axios.post(`${port}/performance/${userId}`, values, {
-                headers: {
-                    'x-auth-token': token
-                }
-            });
-            setUser(response.data);
-            console.log(response.data)
-            setLoading(false);
-            return response.data;
-        } catch (error) {
-            console.error('Error fetching current user:', error);
-            throw error;
-        }
-    };
 
     const getSeasons = async () => {
         try {
@@ -231,6 +224,34 @@ export const AuthProvider: React.FC<IProps> = ({ children }) => {
 
     }
 
+    const updateResearcher = async (values: any) => {
+        try {
+            const response = await axios.put(`${port}/auth/researcher-update`, values, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-auth-token': token,
+                },
+            });
+            console.log('Response:', response.data);
+        } catch (error: any) {
+            console.error('Error updating researcher:', error.message);
+        }
+    }
+
+    const updateSupervisor = async (values: any) => {
+        try {
+            const response = await axios.put(`${port}/auth/supervisor-update`, values, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-auth-token': token,
+                },
+            });
+            console.log('Response:', response.data);
+        } catch (error: any) {
+            console.error('Error updating supervisor:', error.message);
+        }
+    }
+
 
 
 
@@ -246,7 +267,7 @@ export const AuthProvider: React.FC<IProps> = ({ children }) => {
 
     return (
         <AuthContext.Provider
-            value={{ loading, user, signIn, researcherSignup, supervisorSignup, currentUser, signOut, updateUser, getSupervisors, getSeasons, seasons, supervisors, departments, getDepartments }}>
+            value={{ loading, user, researcherSignIn, researcherSignup, supervisorSignup, supervisorSignIn, updateResearcher, signOut, updateSupervisor, getSupervisors, getSeasons, seasons, supervisors, departments, getDepartments }}>
             {children}
 
         </AuthContext.Provider>

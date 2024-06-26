@@ -30,6 +30,7 @@ import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { usePathname } from 'next/navigation';
 import { ResponsiveDrawerDialog } from '@/app/components/modals/responsivedrawer';
 import ResearchUploadForm from './validation/form';
+import { useAuthContext } from '@/app/(auth)/context';
 
 
 interface IProp {
@@ -45,6 +46,7 @@ interface NavLinkProps {
 export const MainLayout = ({ children }: IProp) => {
     const urlPath = usePathname();
     const [isDrawerOpen, setDrawerOpen] = useState(false);
+    const { signOut } = useAuthContext()
 
     const handleClose = () => {
         setDrawerOpen(false)
@@ -102,7 +104,7 @@ export const MainLayout = ({ children }: IProp) => {
                                 Validation
                             </NavLink> */}
                             <NavLink href="/admin/meeting" icon={Presentation}>
-                                Meeting
+                                Appointment
                             </NavLink>
 
                             <NavLink href="/admin/chat" icon={MessageSquareQuote}>
@@ -140,21 +142,25 @@ export const MainLayout = ({ children }: IProp) => {
                                     <Package2 className="h-6 w-6 text-customPrimary" />
                                     <span className="text-customPrimary">Research Gate</span>
                                 </Link>
-                                <NavLink href="#" icon={Home}>
+                                <NavLink href="/admin" icon={LayoutDashboard}>
                                     Dashboard
                                 </NavLink>
 
-                                <NavLink href="#" icon={Home}>
-                                    Upload Document
+                                <NavLink href="/admin/upload" icon={Upload}>
+                                    {role === "Researcher" ? " Upload Document" : "Validation"}
                                 </NavLink>
 
-                                <NavLink href="#" icon={Home}>
-                                    Validation
+                                {/* <NavLink href="#" icon={TicketCheck}>
+                                Validation
+                            </NavLink> */}
+                                <NavLink href="/admin/meeting" icon={Presentation}>
+                                    Appointment
                                 </NavLink>
-                                <NavLink href="#" icon={Home}>
-                                    Meeting
+
+                                <NavLink href="/admin/chat" icon={MessageSquareQuote}>
+                                    ChatRoom
                                 </NavLink>
-                                <NavLink href="#" icon={Home}>
+                                <NavLink href="/admin/profile" icon={CircleUserRound}>
                                     Profile
                                 </NavLink>
 
@@ -205,7 +211,7 @@ export const MainLayout = ({ children }: IProp) => {
                             <DropdownMenuItem>Settings</DropdownMenuItem>
                             <DropdownMenuItem>Support</DropdownMenuItem>
                             <DropdownMenuSeparator />
-                            <DropdownMenuItem>Logout</DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => signOut()}>Logout</DropdownMenuItem>
                         </DropdownMenuContent>
                     </DropdownMenu>
                 </header>

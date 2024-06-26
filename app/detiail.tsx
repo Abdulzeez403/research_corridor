@@ -1,11 +1,11 @@
 
 "use client"
 import React, { useState } from "react"
-import { SignInForm } from "./(auth)/signin"
 import Image from 'next/image'
-import { ResearchSignUpForm } from "./(auth)/researcherSignIn"
+import { ResearchSignUpForm } from "./(auth)/researcherSignUp"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { SupervisorSignUpForm } from "./(auth)/supervisorSignIn"
+import { SupervisorSignUpForm } from "./(auth)/supervisorSignUp"
+import { SignInForm } from "./(auth)/signin"
 export const SignDetiail = () => {
 
     const [authLogin, setAuthLogin] = useState(false)
