@@ -5,6 +5,8 @@ import { DocumentProvider } from "./(admin)/admin/upload/context";
 import { UploadTopicProvider } from "./(admin)/admin/validation/context";
 import { ResearcherProfileProvider } from "./(admin)/admin/profile/context";
 import { AppointmentsProvider } from "./(admin)/admin/meeting/context";
+import 'react-toastify/ReactToastify.min.css'
+import Notification from "./components/toast";
 
 
 // const inter = Inter({ subsets: ["latin"] });
@@ -27,16 +29,14 @@ export default function RootLayout({
                 <UploadTopicProvider>
                     <ResearcherProfileProvider>
                         <AppointmentsProvider>
-
                             <DocumentProvider>
                                 <AuthProvider>
+                                    <Notification />
                                     {children}
                                 </AuthProvider>
                             </DocumentProvider>
                         </AppointmentsProvider>
-
                     </ResearcherProfileProvider>
-
                 </UploadTopicProvider>
 
             </body>

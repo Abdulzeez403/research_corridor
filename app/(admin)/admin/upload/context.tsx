@@ -1,4 +1,5 @@
 "use client";
+import { notify } from '@/app/components/toast';
 import axios from 'axios';
 import React, { createContext, useContext, useState } from 'react';
 import Cookies from 'universal-cookie';
@@ -51,18 +52,30 @@ export const DocumentProvider: React.FC<DocumentProviderProps> = ({ children }) 
             formData.append('title', title);
             formData.append('document', document);
 
-            await axios.post(`${port}/researcher/upload-research`, formData, {
+            const response = await axios.post(`${port}/researcher/upload-research`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                     'x-auth-token': token
                 },
             });
-
-            await fetchDocuments();
-        } catch (err: any) {
-            setError(err.response?.data?.message || 'Failed to upload document.');
-        } finally {
+            notify.success(response.data.msg);
+            notify.success("Uploaded Successfully");
             setLoading(false);
+            await fetchDocuments();
+        } catch (error: any) {
+            setLoading(false);
+
+            if (error.response) {
+                console.error('Server Error:', error.response.data);
+                notify.error(error.response.data.message || 'Server error occurred');
+            } else if (error.request) {
+                console.error('Network Error:', error.request);
+                notify.error('Network error occurred. Please try again later.');
+            } else {
+                console.error('Error:', error.message);
+                notify.error('An error occurred. Please try again.');
+            }
+            throw error;
         }
     };
 

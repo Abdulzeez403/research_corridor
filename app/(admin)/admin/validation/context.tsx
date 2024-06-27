@@ -2,6 +2,7 @@
 import React, { createContext, useContext, useState, useCallback } from 'react';
 import axios from 'axios';
 import Cookies from 'universal-cookie';
+import { notify } from '@/app/components/toast';
 
 interface UploadTopicContextType {
     loading: boolean;
@@ -48,14 +49,21 @@ export const UploadTopicProvider: React.FC<IProps> = ({ children }) => {
                 },
             });
             setLoading(false);
+            notify.success(response.data.msg);
             return response.data.msg;
         } catch (error: any) {
             setLoading(false);
-            console.error('Error uploading topic:', error);
             if (error.response) {
-                console.error('Server responded with:', error.response.data);
+                console.error('Server Error:', error.response.data);
+                notify.error(error.response.data.message || 'Server error occurred');
+            } else if (error.request) {
+                console.error('Network Error:', error.request);
+                notify.error('Network error occurred. Please try again later.');
+            } else {
+                console.error('Error:', error.message);
+                notify.error('An error occurred. Please try again.');
             }
-            throw new Error('Error uploading topic');
+            throw error;
         }
     }, []);
 

@@ -12,7 +12,7 @@ import { X } from "lucide-react"
 function VeiwPage() {
     const urlPath = usePathname();
     const id = urlPath.split('/')[3];
-    const fileUrl = "../../../../../public/Discplined Trader.pdf";
+    const fileUrl = ["https://research-corridor.onrender.com/researchDocuments/1719477806738-reciept.pdf"];
 
     const [viewdoc, setViewdoc] = useState(false)
     return (

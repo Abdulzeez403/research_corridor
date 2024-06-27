@@ -5,7 +5,7 @@ import DocViewer, { DocViewerRenderers } from 'react-doc-viewer';
 
 const DocViewerComponent = () => {
     const docs = [
-        { uri: 'https://ebookdisc.com/wp-content/uploads/2024/01/The-Disciplined-Trader-PDF.pdf' },
+        { uri: 'https://research-corridor.onrender.com/researchDocuments/1719477806738-reciept.pdf' },
         { uri: 'https://example.com/sample.docx' } // External document URL
     ];
 

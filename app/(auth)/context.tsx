@@ -148,14 +148,20 @@ export const AuthProvider: React.FC<IProps> = ({ children }) => {
         setLoading(true);
         try {
             const response = await axios.post(`${port}/auth/researcher-signup`, userData);
-            notify.success('Sign up successful');
+            notify.success(response.data.msg);
+
             setLoading(false);
         } catch (error: any) {
             setLoading(false);
-            if (error.response && error.response.data && error.response.data.msg) {
-                notify.error(error.response.data.msg);
+            if (error.response) {
+                console.error('Server Error:', error.response.data);
+                notify.error(error.response.data.message || 'Server error occurred');
+            } else if (error.request) {
+                console.error('Network Error:', error.request);
+                notify.error('Network error occurred. Please try again later.');
             } else {
-                notify.error("An unknown error occurred.");
+                console.error('Error:', error.message);
+                notify.error('An error occurred. Please try again.');
             }
             throw error;
         }
@@ -165,16 +171,21 @@ export const AuthProvider: React.FC<IProps> = ({ children }) => {
         setLoading(true);
         try {
             const response = await axios.post(`${port}/auth/supervisor-signup`, userData);
-            notify.success('Sign up successful');
+            notify.success(response.data.msg);
             setLoading(false);
         } catch (error: any) {
-            if (error.response && error.response.data && error.response.data.msg) {
-                notify.error(error.response.data.msg);
-            } else {
-                notify.error("An unknown error occurred.");
-            }
             setLoading(false);
 
+            if (error.response) {
+                console.error('Server Error:', error.response.data);
+                notify.error(error.response.data.message || 'Server error occurred');
+            } else if (error.request) {
+                console.error('Network Error:', error.request);
+                notify.error('Network error occurred. Please try again later.');
+            } else {
+                console.error('Error:', error.message);
+                notify.error('An error occurred. Please try again.');
+            }
             throw error;
         }
     };
