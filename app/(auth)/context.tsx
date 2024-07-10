@@ -48,7 +48,6 @@ const AuthContext = createContext<IProp>({
     updateResearcher: (values) => { },
     supervisorSignIn: (payload) => { },
     researcherSignIn: (payload) => { },
-
     signOut: () => { },
 });
 
@@ -65,7 +64,6 @@ interface IProps {
 }
 
 export const AuthProvider: React.FC<IProps> = ({ children }) => {
-
     const [loading, setLoading] = useState<boolean>(false);
     const [user, setUser] = useState({} as any);
     const [seasons, setSeasons] = useState()
@@ -73,8 +71,6 @@ export const AuthProvider: React.FC<IProps> = ({ children }) => {
     const [departments, setDepartments] = useState()
     const cookies = new Cookies()
     const router = useRouter();
-
-
     const token = cookies.get("token");
 
 
@@ -85,13 +81,10 @@ export const AuthProvider: React.FC<IProps> = ({ children }) => {
         setLoading(true)
         try {
             const response = await axios.post(`${port}/auth/researcher-login`, payload);
-
-            // UseSetCookie("user")
             UseSetCookie("token", response.data.token)
             setUser(response.data);
             setLoading(false)
-            router.push('/admin');
-
+            router.push('/researcher');
             notify.success(response.data.msg);
 
 
@@ -121,7 +114,7 @@ export const AuthProvider: React.FC<IProps> = ({ children }) => {
             UseSetCookie("token", response.data.token)
             setUser(response.data);
             setLoading(false)
-            router.push('/admin');
+            router.push('/supervisor');
 
             notify.success(response.data.msg);
 
@@ -148,9 +141,11 @@ export const AuthProvider: React.FC<IProps> = ({ children }) => {
         setLoading(true);
         try {
             const response = await axios.post(`${port}/auth/researcher-signup`, userData);
+            UseSetCookie("token", response.data.token)
+            setUser(response.data);
+            setLoading(false)
+            router.push('/researcher');
             notify.success(response.data.msg);
-
-            setLoading(false);
         } catch (error: any) {
             setLoading(false);
             if (error.response) {
@@ -171,11 +166,14 @@ export const AuthProvider: React.FC<IProps> = ({ children }) => {
         setLoading(true);
         try {
             const response = await axios.post(`${port}/auth/supervisor-signup`, userData);
+            UseSetCookie("token", response.data.token)
+            setUser(response.data);
+            setLoading(false)
+            router.push('/supervisor');
+
             notify.success(response.data.msg);
-            setLoading(false);
         } catch (error: any) {
             setLoading(false);
-
             if (error.response) {
                 console.error('Server Error:', error.response.data);
                 notify.error(error.response.data.message || 'Server error occurred');
@@ -264,14 +262,15 @@ export const AuthProvider: React.FC<IProps> = ({ children }) => {
     }
 
 
-
-
-
     const signOut = async () => {
-        cookies.remove('user');
-        cookies.remove('token');
-        router.push('/')
-        // window.location.reload();
+        try {
+            await cookies.remove('token');
+            router.push('/')
+            window.location.reload();
+        } catch (error) {
+            console.log(error)
+        }
+
 
     };
 

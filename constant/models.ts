@@ -1,11 +1,12 @@
 export interface UploodModel {
     id: number;
-    name: string;
-    file?: string;
+    title: string;
+    document: string;
+    status: string;
     time: string;
     date: string;
-    status: string;
     documentType: any;
+    createdAt: any;
 }
 
 // interface FileDetails {
@@ -31,6 +32,7 @@ export interface IResearcher {
 
 
 export interface ISupervisor {
+    _id: string;
     name: string;
     email: string;
     password: string;

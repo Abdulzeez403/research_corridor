@@ -1,12 +1,14 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { AuthProvider } from "./(auth)/context";
-import { DocumentProvider } from "./(admin)/admin/upload/context";
-import { UploadTopicProvider } from "./(admin)/admin/validation/context";
-import { ResearcherProfileProvider } from "./(admin)/admin/profile/context";
-import { AppointmentsProvider } from "./(admin)/admin/meeting/context";
+
 import 'react-toastify/ReactToastify.min.css'
 import Notification from "./components/toast";
+import { UploadTopicProvider } from "./(admin)/researcher/validation/context";
+import { AppointmentsProvider } from "./(admin)/researcher/meeting/context";
+import { ResearcherProfileProvider } from "./(admin)/researcher/profile/context";
+import { DocumentProvider } from "./(admin)/researcher/upload/context";
+import { SupervisorProfileProvider } from "./(admin)/supervisor/context";
 
 
 // const inter = Inter({ subsets: ["latin"] });
@@ -27,16 +29,14 @@ export default function RootLayout({
         <html lang="en">
             <body>
                 <UploadTopicProvider>
-                    <ResearcherProfileProvider>
-                        <AppointmentsProvider>
-                            <DocumentProvider>
-                                <AuthProvider>
-                                    <Notification />
-                                    {children}
-                                </AuthProvider>
-                            </DocumentProvider>
-                        </AppointmentsProvider>
-                    </ResearcherProfileProvider>
+                    <AppointmentsProvider>
+                        <DocumentProvider>
+                            <AuthProvider>
+                                <Notification />
+                                {children}
+                            </AuthProvider>
+                        </DocumentProvider>
+                    </AppointmentsProvider>
                 </UploadTopicProvider>
 
             </body>

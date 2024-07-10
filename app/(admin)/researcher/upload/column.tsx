@@ -42,17 +42,19 @@ export const columns = ({ onEdit, onDelete, onView }: IProps): ColumnDef<UploodM
         enableHiding: false,
     },
     {
-        accessorKey: "documentType",
+        accessorKey: "document",
         header: ({ column }) => (
             <DataTableColumnHeader column={column} title="Document Type" />
         ),
         cell: ({ row }) => {
-            const docType = row.original.documentType;
+            const filePath = row.original.document;
+            const fileExtension = filePath.split('.').pop();
             let imgSrc;
             let bgColor;
 
-            switch (docType) {
+            switch (fileExtension) {
                 case 'doc':
+                case 'docx':
                     imgSrc = doc;
                     bgColor = 'bg-blue-200';
                     break;
@@ -60,47 +62,72 @@ export const columns = ({ onEdit, onDelete, onView }: IProps): ColumnDef<UploodM
                     imgSrc = pdf;
                     bgColor = 'bg-red-200';
                     break;
-                case 'img':
-                    imgSrc = image;
+                case 'jpg':
+                case 'jpeg':
+                case 'png':
+                    imgSrc = image; // Assuming 'image' is the image source for image files
                     bgColor = 'bg-green-200';
                     break;
                 default:
-                    imgSrc = image;
+                    imgSrc = image; // Default image source
                     bgColor = 'bg-gray-200';
             }
 
             return (
                 <div className={`flex justify-center rounded-lg ${bgColor} w-20 h-20 p-4`}>
-                    <Image src={imgSrc} alt={docType} width={30} height={30} />
+                    <Image src={imgSrc} alt="image" width={30} height={30} />
                 </div>
             );
         },
     },
+
+
     {
-        accessorKey: "name",
+        accessorKey: "title",
         header: ({ column }) => (
-            <DataTableColumnHeader column={column} title="Name" />
+            <DataTableColumnHeader column={column} title="Title" />
         ),
     },
 
     {
-        accessorKey: "time",
+        accessorKey: "createdAt",
         header: ({ column }) => (
             <DataTableColumnHeader column={column} title="Time" />
         ),
+        cell: ({ row }) => {
+            const createdAt = row.original.createdAt;
+            const date = new Date(createdAt);
 
+
+            const formattedTime = date.toLocaleTimeString();
+
+            return (
+                <div>
+                    <div>{formattedTime}</div>
+                </div>
+            );
+        },
     },
 
+
     {
-        accessorKey: "date",
+        accessorKey: "createdAt",
         header: ({ column }) => (
             <DataTableColumnHeader column={column} title="Date" />
         ),
+        cell: ({ row }) => {
+            const createdAt = row.original.createdAt;
+            const date = new Date(createdAt);
 
+            const formattedDate = date.toLocaleDateString();
+
+            return (
+                <div>
+                    <div>{formattedDate}</div>
+                </div>
+            );
+        },
     },
-
-
-
 
     {
         accessorKey: "status",

@@ -7,14 +7,11 @@ import { TableComponent } from './table/datatable';
 import CardComponent from '@/app/components/card/index';
 import { UsersRound, MessageCircleMore, BookCheck } from 'lucide-react';
 import FileUploadForm from './form/index';
-import { useRouter } from 'next/navigation';
-import { UploadDataSample } from '@/constant/data';
-import { useAuthContext } from '@/app/(auth)/context';
 import { useDocumentContext } from './context';
 
 
 function UploadDocumentDetail() {
-    const [datas, setDatas] = useState<UploodModel[]>([])
+    // const [datas, setDatas] = useState<UploodModel[]>([])
     const [isDrawerOpen, setDrawerOpen] = useState(false);
     const { fetchDocuments, documents } = useDocumentContext();
 
@@ -46,9 +43,7 @@ function UploadDocumentDetail() {
         setDrawerOpen(true)
     }
 
-    useEffect(() => {
-        setDatas(UploadDataSample as any)
-    }, [])
+
 
     const createColumns = columns({ onEdit: handleUpdate, onDelete: handleDelete, onView: handleView });
 
@@ -80,7 +75,7 @@ function UploadDocumentDetail() {
             <div className="py-10">
                 <TableComponent
                     columns={createColumns}
-                    data={datas}
+                    data={documents}
                     onEdit={handleUpdate}
                     onDelete={handleDelete}
                     onView={handleView}

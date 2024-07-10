@@ -7,12 +7,11 @@ interface ResearcherProfile {
     id: string;
     name: string;
     email: string;
-    phone: string,
+    phone: string;
     season: string;
     supervisor: string;
     role: string;
     male: string;
-
 }
 
 interface ResearcherProfileContextProps {
@@ -55,6 +54,9 @@ export const ResearcherProfileProvider: React.FC<IProps> = ({ children }) => {
         }
     };
 
+    useEffect(() => {
+        fetchProfile();
+    }, []);
 
     return (
         <ResearcherProfileContext.Provider value={{ profile, loading, error, fetchProfile }}>

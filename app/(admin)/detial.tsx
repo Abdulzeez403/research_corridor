@@ -1,14 +1,19 @@
 "use client"
 
 import CardComponent from '@/app/components/card/index'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { UsersRound, MessageCircleMore, BookCheck, ChevronRight, Activity, Mail } from 'lucide-react';
 import { ReatTableComponent } from '@/app/components/table/read';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import Image from 'next/image'
 import User from "../../../public/student.jpg"
-import { useUploadTopic } from './validation/context';
-import { useResearcherProfile } from './profile/context';
+import { useUploadTopic } from './researcher/validation/context';
+import { useResearcherProfile } from './researcher/profile/context';
+import { ResearcherDashboard } from './researcher/detail';
+import { SupervisorDashboard } from './supervisor/detial';
+import ResearcherPage from './researcher/page';
+import SupervisorPage from './supervisor/page';
+
 
 const notifications = [
     { title: 'New Meeting Scheduled', description: 'Lorem ipsum dolor sit, amet consectetur' },
@@ -57,6 +62,9 @@ export const AdminDetial = () => {
 
 
     return (
+
+
+
         <div className='flex gap-x-6'>
 
             <div>
