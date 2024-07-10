@@ -32,7 +32,7 @@ export interface IResearcher {
 
 
 export interface ISupervisor {
-    _id: string;
+    _id?: string;
     name: string;
     email: string;
     password: string;
