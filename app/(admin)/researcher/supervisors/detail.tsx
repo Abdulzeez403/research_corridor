@@ -34,7 +34,7 @@ export const Detail = () => {
 
     };
 
-    const handleView = (value: ISupervisor) => {
+    const handleView = (value: any) => {
         return value?._id
     };
 
