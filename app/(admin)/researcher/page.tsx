@@ -1,10 +1,12 @@
 import React from 'react'
 import { ResearcherDashboard } from './detail'
 
-export default function ResearcherPage() {
+function Page() {
     return (
         <div>
             <ResearcherDashboard />
         </div>
     )
 }
+
+export default Page;

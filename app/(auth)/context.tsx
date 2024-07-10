@@ -109,8 +109,6 @@ export const AuthProvider: React.FC<IProps> = ({ children }) => {
         setLoading(true)
         try {
             const response = await axios.post(`${port}/auth/supervisor-login`, payload);
-
-            // UseSetCookie("user")
             UseSetCookie("token", response.data.token)
             setUser(response.data);
             setLoading(false)
@@ -261,17 +259,13 @@ export const AuthProvider: React.FC<IProps> = ({ children }) => {
         }
     }
 
-
     const signOut = async () => {
         try {
             await cookies.remove('token');
-            router.push('/')
-            window.location.reload();
+            router.push('/');
         } catch (error) {
-            console.log(error)
+            console.log(error);
         }
-
-
     };
 
 

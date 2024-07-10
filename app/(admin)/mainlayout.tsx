@@ -296,7 +296,9 @@ export const MainLayout = ({ children }: IProp) => {
                             <DropdownMenuItem>Settings</DropdownMenuItem>
                             <DropdownMenuItem>Support</DropdownMenuItem>
                             <DropdownMenuSeparator />
-                            <DropdownMenuItem onClick={() => signOut()}>Logout</DropdownMenuItem>
+                            <DropdownMenuItem
+                                onClick={signOut}
+                            >Logout</DropdownMenuItem>
                         </DropdownMenuContent>
                     </DropdownMenu>
                 </header>
