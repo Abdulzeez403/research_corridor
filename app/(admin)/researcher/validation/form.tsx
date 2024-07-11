@@ -15,7 +15,7 @@ interface FormValues {
 
 
 
-const ResearchUploadForm: React.FC = () => {
+const ValidateTopicForm: React.FC = () => {
     // Validation schema
     const validationSchema = Yup.object().shape({
         title: Yup.string().required('Title is required'),
@@ -111,4 +111,4 @@ const ResearchUploadForm: React.FC = () => {
     );
 };
 
-export default ResearchUploadForm;
+export default ValidateTopicForm;

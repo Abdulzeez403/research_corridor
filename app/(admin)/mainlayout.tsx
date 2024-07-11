@@ -33,6 +33,7 @@ import { useAuthContext } from '@/app/(auth)/context';
 import ResearchUploadForm from './researcher/upload/form';
 import { useResearcherProfile } from './researcher/profile/context';
 import { useSupervisorProfile } from './supervisor/context';
+import ValidateTopicForm from './researcher/validation/form';
 
 
 interface IProp {
@@ -281,7 +282,7 @@ export const MainLayout = ({ children }: IProp) => {
                         </form>
                     </div>
                     <Button className="rounded-lg bg-black text-white" onClick={handleOpen}>
-                        Validate Topic
+                        Validation
                     </Button>
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
@@ -313,7 +314,7 @@ export const MainLayout = ({ children }: IProp) => {
                     onClose={handleClose}
                 >
                     <div>
-                        <ResearchUploadForm />
+                        <ValidateTopicForm />
                     </div>
 
 
