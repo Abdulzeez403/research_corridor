@@ -34,6 +34,8 @@ import ResearchUploadForm from './researcher/upload/form';
 import { useResearcherProfile } from './researcher/profile/context';
 import { useSupervisorProfile } from './supervisor/context';
 import ValidateTopicForm from './researcher/validation/form';
+import { Notifications } from './researcher/notificaton/detail';
+import { useNotifications } from './researcher/notificaton/context';
 
 
 interface IProp {
@@ -62,6 +64,8 @@ export const MainLayout = ({ children }: IProp) => {
 
     const { profile: researcherProfile, loading: researcherLoading, error: researcherError } = useResearcherProfile();
     const { profile: supervisorProfile, loading: supervisorLoading, error: supervisorError } = useSupervisorProfile();
+
+    const { newNotification } = useNotifications();
 
 
 
@@ -96,8 +100,24 @@ export const MainLayout = ({ children }: IProp) => {
                             <span className="text-customSecondary">Research Corridor</span>
                         </Link>
                         <Button variant="outline" size="icon" className="ml-auto h-8 w-8">
-                            <Bell className="h-4 w-4" />
-                            <span className="sr-only">Toggle notifications</span>
+                            <DropdownMenu>
+                                <DropdownMenuTrigger asChild>
+                                    <Button className="rounded-lg bg-white relative">
+                                        <Bell className="h-4 w-4 text-customPrimary" />
+                                        {newNotification && (
+                                            <span className="absolute top-0 right-0 inline-block w-2 h-2 bg-red-600 rounded-full"></span>
+                                        )}
+                                        <span className="sr-only">Toggle user menu</span>
+                                    </Button>
+                                </DropdownMenuTrigger>
+                                <DropdownMenuContent align="end">
+                                    <DropdownMenuLabel className="text-center">Notifications</DropdownMenuLabel>
+                                    <DropdownMenuSeparator />
+                                    <DropdownMenuItem>
+                                        <Notifications />
+                                    </DropdownMenuItem>
+                                </DropdownMenuContent>
+                            </DropdownMenu>
                         </Button>
                     </div>
                     <div className="flex-1">
@@ -117,9 +137,7 @@ export const MainLayout = ({ children }: IProp) => {
                                 <NavLink href="/researcher/meeting" icon={Presentation}>
                                     Appointment
                                 </NavLink>
-                                <NavLink href="/researcher/supervisors" icon={Presentation}>
-                                    Supervisors
-                                </NavLink>
+
 
 
 
@@ -211,11 +229,6 @@ export const MainLayout = ({ children }: IProp) => {
                                         <NavLink href="/researcher/meeting" icon={Presentation}>
                                             Appointment
                                         </NavLink>
-                                        <NavLink href="/researcher/supervisors" icon={Presentation}>
-                                            Supervisors
-                                        </NavLink>
-
-
 
                                         <NavLink href="/researcher/chat" icon={MessageSquareQuote}>
                                             ChatRoom

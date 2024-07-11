@@ -2,11 +2,11 @@
 
 import React, { useEffect, useState } from 'react'
 import Image from "next/image"
-import User from "../../../../public/student.jpg"
-import { useResearcherProfile } from './context'
-import { ResponsiveDrawerDialog } from '@/app/components/modals/responsivedrawer'
-import SupervisorUpdateForm from './form/researcher'
+import User from "../../../../public/user.png"
 import { Button } from '@/components/ui/button'
+
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { useResearcherProfile } from './context'
 
 export const ProfileDetail = () => {
 
@@ -19,47 +19,127 @@ export const ProfileDetail = () => {
     const handleOpen = () => {
         setDrawerOpen(true)
     }
-    const { fetchProfile, profile } = useResearcherProfile()
+    const { profile: user } = useResearcherProfile()
 
-    useEffect(() => {
-        fetchProfile()
-    }, [])
+
 
     return (
         <div>
-            <div className="flex gap-x-10">
-                <Image src={User} alt="UserImage" width={300} height={300} className="rounded-lg" />
 
-                <Button onClick={handleOpen}>Update Profile</Button>
-                <div >
-                    <h4 className="font-bold border-b-2 border-customPrimary pb-4">Personal Information</h4>
+            <div className="block md:flex md:gap-x-10 lg:flex lg:gap-x-10">
+                <div className="border-2 p-4 w-full md:w-80 lg:w-80">
+                    <div className='flex justify-center mx-0 border-2-b'>
+                        <Image src={User} alt="user" width={100} height={100} />
+                    </div>
+                    <div className="flex justify-center m-0 bg-customSecondary rounded-md">
+                        <div className='flex justify-between align-center p-2 pb-3 bg-customSecondary rounded-md '>
+                            <div className="block justify-center py-2 ">
+                                <h4 className='text-white text-sm py-2'>{user?.name}</h4>
+                            </div>
+                        </div>
 
 
-                    <div className='flex gap-x-30'>
-                        <h4 className="font-bold text-md">Name: <span>{profile?.name}</span> (Researcher)</h4>
-                        <h4>PhoneNumber: <span>{profile?.phone as any}</span></h4>
+                    </div>
+                    <div className='pt-2 flex justify-center mx-0'>
+                        <div className='flex gap-x-4'>
+
+
+                            <div className="text-center">
+                                <h4>{user?.name}</h4>
+                                <h4>{user?.role}</h4>
+
+                            </div>
+
+
+
+                        </div>
+
                     </div>
 
-                    <div>
-
-                    </div>
+                    <Button
+                        // onClick={handlepayment}
+                        className="w-full mt-4 bg-customPrimary text-customSecondary hover:bg-slate-300" >
+                        update Supervisor/Profile
+                    </Button>
                 </div>
 
+                <div className="w-full">
+                    <Table className='border-2'>
+
+                        <TableBody>
+                            <TableRow>
+                                <TableCell>
+                                    <div className="font-medium">Name:</div>
+                                </TableCell>
+                                <TableCell>
+                                    <div className="font-medium">{user?.name}</div>
+                                </TableCell>
+                            </TableRow >
+                            <TableRow>
+
+                                <TableCell>
+                                    <div className="font-medium">Email:</div>
+                                </TableCell>
+                                <TableCell>
+                                    <div className="font-medium">{user?.email}</div>
+                                </TableCell>
+                            </TableRow >
+                            <TableRow>
+                                <TableCell>
+                                    <div className="font-medium">Username:</div>
+                                </TableCell>
+                                <TableCell>
+                                    <div className="font-medium">{user?.name}</div>
+                                </TableCell>
+                            </TableRow >
+                            <TableRow>
+                                <TableCell>
+                                    <div className="font-medium">Matric:</div>
+                                </TableCell>
+                                <TableCell>
+                                    <div className="font-medium">{user?.matric}</div>
+                                </TableCell>
+                            </TableRow >
+
+                            <TableRow>
+                                <TableCell>
+                                    <div className="font-medium">Role:</div>
+                                </TableCell>
+                                <TableCell>
+                                    <div className="font-medium">{user?.role}</div>
+                                </TableCell>
+                            </TableRow >
+                            <TableRow>
+                                <TableCell>
+                                    <div className="font-medium">Session:</div>
+                                </TableCell>
+                                <TableCell>
+                                    <div className="font-medium">{user?.session as any}</div>
+                                </TableCell>
+                            </TableRow >
+
+                            <TableRow>
+                                <TableCell>
+                                    <div className="font-medium">Department:</div>
+                                </TableCell>
+                                <TableCell>
+                                    <div className="font-medium">{user?.department}</div>
+                                </TableCell>
+                            </TableRow >
+
+                            <TableRow>
+                                <TableCell>
+                                    <div className="font-medium">Phone:</div>
+                                </TableCell>
+                                <TableCell>
+                                    <div className="font-medium">{user?.phone ? (<h4>{user?.phone}</h4>) : (<h4>09194838493</h4>)}</div>
+                                </TableCell>
+                            </TableRow >
+
+                        </TableBody>
+                    </Table>
+                </div>
             </div>
-
-            <ResponsiveDrawerDialog
-                title="Validate Your Topic"
-                description="Validate Your Topic"
-                isOpen={isDrawerOpen}
-                onClose={handleClose}
-            >
-                <div>
-                    <SupervisorUpdateForm />
-                </div>
-
-
-            </ResponsiveDrawerDialog>
-
-        </div >
+        </div>
     )
 };

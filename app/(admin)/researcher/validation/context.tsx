@@ -1,12 +1,13 @@
 "use client"
-import React, { createContext, useContext, useState, useCallback } from 'react';
+import React, { createContext, useContext, useState, useCallback, useEffect } from 'react';
 import axios from 'axios';
 import Cookies from 'universal-cookie';
 import { notify } from '@/app/components/toast';
+import { ITopicModel } from '@/constant/models';
 
 interface UploadTopicContextType {
     loading: boolean;
-    topics: any;
+    topics: any[];
     uploadTopic: (title: string, supervisorIds: string[], document: File) => Promise<string>;
     getTopic: () => Promise<void>;
 }
@@ -27,7 +28,7 @@ interface IProps {
 
 export const UploadTopicProvider: React.FC<IProps> = ({ children }) => {
     const [loading, setLoading] = useState<boolean>(false);
-    const [topics, setTopics] = useState()
+    const [topics, setTopics] = useState<ITopicModel[]>([])
     const cookies = new Cookies();
 
     const port = "https://research-corridor.onrender.com/api";
@@ -83,6 +84,10 @@ export const UploadTopicProvider: React.FC<IProps> = ({ children }) => {
         }
 
     }
+
+    useEffect(() => {
+        getTopic()
+    }, [])
 
     return (
         <UploadTopicContext.Provider value={{ loading, topics, uploadTopic, getTopic }}>

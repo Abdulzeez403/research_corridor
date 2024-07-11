@@ -46,7 +46,7 @@ export const SupervisorProfileProvider: React.FC<IProps> = ({ children }) => {
     };
 
     useEffect(() => {
-        fetchProfile();
+        fetchProfile()
     }, []);
 
     return (

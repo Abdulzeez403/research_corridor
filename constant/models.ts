@@ -47,3 +47,21 @@ export interface IUser {
     supervisor: ISupervisor;
     researcch: IResearcher;
 }
+
+
+export interface Supervisor {
+    _id: string;
+    name: string;
+    email: string;
+}
+
+export interface ITopicModel {
+    _id: string;
+    title: string;
+    researcherId: string;
+    document: string;
+    supervisorIds: Supervisor[];
+    comments: any[];
+    createdAt: string;
+    __v: number;
+}

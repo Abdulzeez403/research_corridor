@@ -1,13 +1,32 @@
-"use client"
+"use client";
 import React, { createContext, useState, useEffect, useContext, ReactNode } from 'react';
 import axios from 'axios';
 import Cookies from 'universal-cookie';
 
 interface Appointment {
     id: string;
+    researcherId: string;
     date: string;
     time: string;
-    // Add other appointment fields as necessary
+    agenda: string; // Add other appointment fields as necessary
+}
+
+interface CreateAppointmentRequest {
+    researcherId: string;
+    date: string; // Expected format: "YYYY-MM-DD"
+    time: string; // Expected format: "hh:mm AM/PM"
+    agenda: string;
+}
+
+interface EditAppointmentRequest {
+    appointmentId: string;
+    date?: string; // Optional field to update date
+    time?: string; // Optional field to update time
+    agenda?: string; // Optional field to update agenda
+}
+
+interface DeleteAppointmentRequest {
+    appointmentId: string;
 }
 
 interface AppointmentsContextProps {
@@ -15,6 +34,9 @@ interface AppointmentsContextProps {
     loading: boolean;
     error: string | null;
     getAppointments: () => void;
+    createAppointment: (data: CreateAppointmentRequest) => void;
+    editAppointment: (data: EditAppointmentRequest) => void;
+    deleteAppointment: (data: DeleteAppointmentRequest) => void;
 }
 
 const AppointmentsContext = createContext<AppointmentsContextProps | undefined>(undefined);
@@ -31,22 +53,84 @@ export const AppointmentsProvider: React.FC<{ children: ReactNode }> = ({ childr
         setLoading(true);
         setError(null);
         try {
-            const response = await axios.get(`${port}/researcher/appointments`, {
+            const response = await axios.get(`${port}/supervisor/appointments`, {
                 headers: {
                     'x-auth-token': token,
                 },
             });
             setAppointments(response.data);
         } catch (error: any) {
-            setError(error.message);
+            setError(error.response?.data?.message || error.message);
         } finally {
             setLoading(false);
         }
     };
 
+    const createAppointment = async (data: CreateAppointmentRequest) => {
+        setLoading(true);
+        setError(null);
+        try {
+            const response = await axios.post(`${port}/supervisor/create-appointment`, data, {
+                headers: {
+                    'x-auth-token': token,
+                    'Content-Type': 'application/json'
+                },
+            });
+            setAppointments((prev) => (prev ? [...prev, response.data] : [response.data]));
+        } catch (error: any) {
+            setError(error.response?.data?.message || error.message);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const editAppointment = async (data: EditAppointmentRequest) => {
+        setLoading(true);
+        setError(null);
+        try {
+            const response = await axios.put(`${port}/supervisor/update-appointment`, data, {
+                headers: {
+                    'x-auth-token': token,
+                    'Content-Type': 'application/json'
+                },
+            });
+            setAppointments((prev) =>
+                prev ? prev.map((appointment) => (appointment.id === data.appointmentId ? response.data : appointment)) : [response.data]
+            );
+        } catch (error: any) {
+            setError(error.response?.data?.message || error.message);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const deleteAppointment = async (data: DeleteAppointmentRequest) => {
+        setLoading(true);
+        setError(null);
+        try {
+            await axios.delete(`${port}/supervisor/delete-appointment`, {
+                headers: {
+                    'x-auth-token': token,
+                    'Content-Type': 'application/json'
+                },
+                data: data
+            });
+            setAppointments((prev) =>
+                prev ? prev.filter((appointment) => appointment.id !== data.appointmentId) : null
+            );
+        } catch (error: any) {
+            setError(error.response?.data?.message || error.message);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        getAppointments();
+    }, []);
 
     return (
-        <AppointmentsContext.Provider value={{ appointments, loading, error, getAppointments }}>
+        <AppointmentsContext.Provider value={{ appointments, loading, error, getAppointments, createAppointment, editAppointment, deleteAppointment }}>
             {children}
         </AppointmentsContext.Provider>
     );

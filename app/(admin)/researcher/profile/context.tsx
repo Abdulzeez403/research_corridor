@@ -1,21 +1,12 @@
 'use client'
+import { IResearcher } from '@/constant/models';
 import axios from 'axios';
 import React, { createContext, useState, useEffect, useContext, ReactNode } from 'react';
 import Cookies from 'universal-cookie';
 
-interface ResearcherProfile {
-    id: string;
-    name: string;
-    email: string;
-    phone: string;
-    season: string;
-    supervisor: string;
-    role: string;
-    male: string;
-}
 
 interface ResearcherProfileContextProps {
-    profile: ResearcherProfile | null;
+    profile: IResearcher | null;
     loading: boolean;
     error: string | null;
     fetchProfile: () => void;
@@ -28,7 +19,7 @@ interface IProps {
 }
 
 export const ResearcherProfileProvider: React.FC<IProps> = ({ children }) => {
-    const [profile, setProfile] = useState<ResearcherProfile | null>(null);
+    const [profile, setProfile] = useState<IResearcher | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
 

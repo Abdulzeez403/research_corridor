@@ -1,14 +1,12 @@
-// components/DataTable.tsx
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { DataTableViewOptions } from "@/app/components/table/tableItems/filter";
 import { DataTablePagination } from "@/app/components/table/tableItems/paginations";
 import { StatusFilter } from "@/app/components/table/tableItems/statusfilter";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@/components/ui/table";
-import { ResponsiveDrawerDialog } from "../../../../components/modals/responsivedrawer"
-
+import { ResponsiveDrawerDialog } from "../../../../components/modals/responsivedrawer";
 import { CloudUpload } from 'lucide-react';
 
 import {
@@ -22,30 +20,34 @@ import {
     getPaginationRowModel,
     getSortedRowModel,
     useReactTable,
-} from "@tanstack/react-table"
+} from "@tanstack/react-table";
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[];
     data: TData[];
-    onEdit: (value: any) => void;
-    onDelete: (user: any) => void;
     onDismiss: () => void;
     onView: (value: any) => void;
     onOpen: () => void;
-    open: boolean,
+    open: boolean;
     children: React.ReactNode;
     title: any;
     description: string;
 }
 
-export function TableComponent<TData, TValue>({ columns, data, open, onDismiss, onOpen, children, title, description }: DataTableProps<TData, TValue>) {
-    const [sorting, setSorting] = React.useState<SortingState>([])
-    const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-        []
-    )
-
-    const [columnVisibility, setColumnVisibility] =
-        React.useState<VisibilityState>({})
+export function TableComponent<TData, TValue>({
+    columns,
+    data,
+    onDismiss,
+    onView,
+    onOpen,
+    open,
+    children,
+    title,
+    description,
+}: DataTableProps<TData, TValue>) {
+    const [sorting, setSorting] = React.useState<SortingState>([]);
+    const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
+    const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({});
 
     const table = useReactTable({
         data,
@@ -62,14 +64,17 @@ export function TableComponent<TData, TValue>({ columns, data, open, onDismiss, 
             columnFilters,
             columnVisibility,
         },
-    })
+    });
 
-    const statusOptions = ['All', 'Active', 'Inactive', 'Pending']
-    const selectedStatus = (table.getColumn("status")?.getFilterValue() as string) ?? 'All'
+    const [isModalOpen, setModalOpen] = useState(false);
+    const [selectedRow, setSelectedRow] = useState<TData | null>(null);
 
-    const handleFilterChange = (status: string) => {
-        table.getColumn("status")?.setFilterValue(status === 'All' ? undefined : status)
-    }
+    const handleView = (rowId: string) => {
+        const selected = data.find((row) => (row as any)._id === rowId);
+        setSelectedRow(selected || null);
+        setModalOpen(true);
+    };
+
 
     return (
         <div className="border-2 rounded-lg p-4">
@@ -78,38 +83,24 @@ export function TableComponent<TData, TValue>({ columns, data, open, onDismiss, 
                     <div className="flex items-center py-4">
                         <Input
                             placeholder="Search name"
-                            value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
+                            value={(table.getColumn("title")?.getFilterValue() as string) ?? ""}
                             onChange={(event: any) =>
-                                table.getColumn("name")?.setFilterValue(event.target.value)
+                                table.getColumn("title")?.setFilterValue(event.target.value)
                             }
                             className="max-w-sm"
                         />
                     </div>
-                    <StatusFilter
-                        options={statusOptions}
-                        selectedStatus={selectedStatus}
-                        onStatusChange={handleFilterChange}
-                    />
+
                 </div>
-
-
                 <div className=" flex items-center">
-
                     <div>
-                        <DataTableViewOptions table={table} />
+                        {/* <DataTableViewOptions table={table} /> */}
                     </div>
-
-
-                    <Button className="ml-4"
-                        onClick={onOpen}>
-                        <h4 className="pr-2">Upload</h4>
-                        <CloudUpload className="h-4 w-4" />
-
+                    <Button className="ml-4" onClick={onOpen}>
+                        <h4 className="pr-2">Validation</h4>
                     </Button>
                 </div>
-
             </div>
-
             <Table className="border-2 rounded-lg border-customPrimary">
                 <TableHeader className=" bg-customPrimary  ">
                     {table.getHeaderGroups().map((headerGroup: any) => (
@@ -126,18 +117,22 @@ export function TableComponent<TData, TValue>({ columns, data, open, onDismiss, 
                     ))}
                 </TableHeader>
                 <TableBody className=" border-2 border-customPrimary">
-                    {table.getRowModel().rows?.length ? (
-                        table.getRowModel().rows.map((row: any) => (
+                    {table.getRowModel().rows && table.getRowModel().rows.length > 0 ? (
+                        table.getRowModel().rows?.map((row: any) => (
                             <TableRow
                                 key={row.id}
                                 data-state={row.getIsSelected() && "selected"}
-                                className="  "
+                                className="cursor-pointer"
+                                onClick={() => handleView(row.original)}
                             >
                                 {row.getVisibleCells().map((cell: any) => (
                                     <TableCell key={cell.id} className="">
                                         {flexRender(cell.column.columnDef.cell, cell.getContext())}
                                     </TableCell>
+
+
                                 ))}
+
 
                             </TableRow>
                         ))
@@ -151,25 +146,26 @@ export function TableComponent<TData, TValue>({ columns, data, open, onDismiss, 
                 </TableBody>
             </Table>
 
+
             <DataTablePagination table={table} />
-
-
             <ResponsiveDrawerDialog
                 title={title}
                 description={description}
                 isOpen={open}
                 onClose={onDismiss}
             >
-                <div>
-                    {children}
-                </div>
-
-
+                <div>{children}</div>
             </ResponsiveDrawerDialog>
-
-
-
-
-        </div >
+            {selectedRow && (
+                <ResponsiveDrawerDialog
+                    title={title}
+                    description={description}
+                    isOpen={isModalOpen}
+                    onClose={() => setModalOpen(false)}
+                >
+                    <div>ththhe</div>
+                </ResponsiveDrawerDialog>
+            )}
+        </div>
     );
 }
