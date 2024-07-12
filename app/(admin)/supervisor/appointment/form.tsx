@@ -62,7 +62,7 @@ const AppointmentForm: React.FC = () => {
                                     {loading && <SelectItem value="loading" disabled >Loading...</SelectItem>}
                                     {error && <SelectItem value="error" disabled >Error loading researchers</SelectItem>}
                                     {assignedResearchers && assignedResearchers.length > 0 ? (
-                                        assignedResearchers.map((r) => (
+                                        assignedResearchers.map((r: any) => (
                                             <SelectItem key={r.id} value={r.id}>
                                                 {r.name}
                                             </SelectItem>
