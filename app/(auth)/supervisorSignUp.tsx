@@ -52,11 +52,8 @@ export const SupervisorSignUpForm: React.FC = () => {
 
     const prefixOptions = [
         { id: 1, prefix: 'Dr' },
-        { id: 2, prefix: 'Mrs' },
-        { id: 3, prefix: 'Miss' },
-        { id: 4, prefix: 'Mr' },
-        { id: 5, prefix: 'Bsc' },
-        { id: 6, prefix: 'Pro' }
+        { id: 2, prefix: 'Bsc' },
+        { id: 3, prefix: 'Pro' }
     ];
 
     return (

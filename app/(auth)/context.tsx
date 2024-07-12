@@ -63,6 +63,24 @@ interface IProps {
     children: React.ReactNode;
 }
 
+const handleAxiosError = (error: any) => {
+    if (error.response) {
+        // Server responded with a status other than 200 range
+        console.error('Server Error:', error.response.data);
+        notify.error(error.response.data.message || error.response.data.msg || 'Server error occurred');
+    } else if (error.request) {
+        // Request was made but no response was received
+        console.error('Network Error:', error.request);
+        notify.error('Network error occurred. Please try again later.');
+    } else {
+        // Something happened in setting up the request that triggered an Error
+        console.error('Error:', error.message);
+        notify.error('An error occurred. Please try again.');
+    }
+    throw error; // Re-throw the error after handling it
+};
+
+
 export const AuthProvider: React.FC<IProps> = ({ children }) => {
     const [loading, setLoading] = useState<boolean>(false);
     const [user, setUser] = useState({} as any);
@@ -225,7 +243,7 @@ export const AuthProvider: React.FC<IProps> = ({ children }) => {
             setSupervisors(response.data);
             return response.data;
         } catch (error) {
-            console.error('Error fetching current supervisor:', error);
+            handleAxiosError(error)
             throw error;
         }
 

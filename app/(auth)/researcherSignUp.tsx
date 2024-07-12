@@ -40,7 +40,7 @@ export const ResearchSignUpForm: React.FC = () => {
 
     const [selectedSeason, setSelectedSeason] = useState('');
     const [selectedSupervisor, setSelectedSupervisor] = useState('')
-    const [selectedDept, setSelectedDept] = useState('Educational Technology')
+    const [selectedDept, setSelectedDept] = useState('')
 
 
     const { researcherSignup, loading, getSeasons, getSupervisors, seasons, supervisors, getDepartments, departments } = useAuthContext();
@@ -110,8 +110,7 @@ export const ResearchSignUpForm: React.FC = () => {
                                 <div className="w-full">
                                     <Label className='font-semibold'>Select Supervisor</Label>
                                     <Select onValueChange={(val: any) => {
-                                        setSelectedSupervisor(val),
-                                            setSelectedDept(val)
+                                        setSelectedSupervisor(val)
                                     }
                                     }>
                                         <SelectTrigger className="">

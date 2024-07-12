@@ -39,16 +39,31 @@ export const columns = ({ onView }: IProps): ColumnDef<any, unknown>[] => [
         ),
     },
 
+    {
+        accessorKey: "matric",
+        header: ({ column }) => (
+            <DataTableColumnHeader column={column} title="Matric" />
+        ),
+    },
+
+    {
+        accessorKey: "progress.progressPercent",
+        header: ({ column }) => (
+            <DataTableColumnHeader column={column} title="Progress" />
+        ),
+    },
+
+
 
     {
         id: 'actions',
         cell: ({ row }) => (
-            <div>
-                <Button onClick={() => onView(row.original._id as any)}>
-                    View Status
+            <Link href={`/supervisor/researcher/${(row.original as any)._id}`}>
+                <Button>
+                    View
                 </Button>
 
-            </div>
+            </Link>
         ),
         size: 50,
     },

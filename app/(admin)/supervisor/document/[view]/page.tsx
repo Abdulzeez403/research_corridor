@@ -4,29 +4,27 @@ import { usePathname } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
 import FileImage from "../../../../../public/pdf.jpg"
 import Image from 'next/image'
-import PdfViewer from './pdfView';
 import { Button } from '@/components/ui/button';
-import DocViewerComponent from '@/app/components/docView';
-import { X } from "lucide-react"
 import DocViewer, { DocViewerRenderers } from 'react-doc-viewer';
-import { useDocumentContext } from '../context';
-import { useResearcherProfile } from '../../profile/context';
+import { useSupervisorProfile } from '../../context';
+import { useSupervisorDocuments } from '../context';
 
 
 function VeiwPage() {
     const urlPath = usePathname();
     const id = urlPath.split('/')[3];
 
-    const { getResearch, document } = useDocumentContext();
-    const { profile } = useResearcherProfile();
+    const { getDocumentById, document } = useSupervisorDocuments();
+    const { profile } = useSupervisorProfile();
+
     useEffect(() => {
-        getResearch(id)
+        getDocumentById(id)
         console.log(id)
     }, [])
 
 
     const [viewdoc, setViewdoc] = useState(false);
-    const documents = document?.document ? [{ uri: document.document }] : [];
+    const doc = document?.document ? [{ uri: document.document }] : [];
     return (
 
         <div>
@@ -55,7 +53,7 @@ function VeiwPage() {
 
                         <div style={{ height: '100vh', width: '100%', padding: '20px', boxSizing: 'border-box' }}>
                             <DocViewer
-                                documents={documents}
+                                documents={doc}
                                 pluginRenderers={DocViewerRenderers}
                                 style={{ width: '100%', height: '100%' }}
                             />
@@ -75,8 +73,8 @@ function VeiwPage() {
                                 <div className=''>
                                     <h4 >
                                         <span className="font-bold text-md">File Name:</span>{document?.title}</h4>
-                                    <h4 >
-                                        <span className="font-bold text-md">Supervisor:</span> {profile?.supervisor}</h4>
+                                    {/* <h4 >
+                                        <span className="font-bold text-md">Supervisor:</span> {profile?.supervisor}</h4> */}
                                     <h4 >
                                         <span className="font-bold text-md">Status</span> {document?.status} </h4>
 

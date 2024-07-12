@@ -37,6 +37,8 @@ export default function Page() {
 
     const createColumns = columns({ onView: handleView });
 
+
+
     return (
         <TableComponent
             columns={createColumns}

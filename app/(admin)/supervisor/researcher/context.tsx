@@ -3,28 +3,24 @@
 import React, { createContext, useState, useEffect, useContext, ReactNode } from 'react';
 import axios from 'axios';
 import Cookies from 'universal-cookie';
+import { IResearcher } from '@/constant/models';
 
-interface Researcher {
-    id: string;
-    name: string;
-    email: string;
-    // Add other researcher fields as necessary
-}
+
 
 interface ResearchersContextProps {
-    researchers: Researcher[];
-    researcher: Researcher | null;
+    researchers: IResearcher[];
+    researcher: IResearcher | null;
     loading: boolean;
     error: string | null;
     getResearchers: () => void;
-    getResearcher: (id: string) => void;
+    getResearcherById: (id: string) => void;
 }
 
 const ResearchersContext = createContext<ResearchersContextProps | undefined>(undefined);
 
 export const AssignedResearchersProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-    const [researchers, setResearchers] = useState<Researcher[]>([]);
-    const [researcher, setResearcher] = useState<Researcher | null>(null);
+    const [researchers, setResearchers] = useState<IResearcher[]>([]);
+    const [researcher, setResearcher] = useState<IResearcher | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
     const port = "https://research-corridor.onrender.com/api";
@@ -38,9 +34,10 @@ export const AssignedResearchersProvider: React.FC<{ children: ReactNode }> = ({
             const response = await axios.get(`${port}/supervisor/get-researchers`, {
                 headers: {
                     'x-auth-token': token,
+                    'season': "2023/2024"
                 },
             });
-            setResearchers(response.data);
+            setResearchers(response.data.researchers);
         } catch (error: any) {
             setError(error.message);
         } finally {
@@ -48,7 +45,7 @@ export const AssignedResearchersProvider: React.FC<{ children: ReactNode }> = ({
         }
     };
 
-    const getResearcher = async (id: string) => {
+    const getResearcherById = async (id: string) => {
         setLoading(true);
         setError(null);
         try {
@@ -57,7 +54,7 @@ export const AssignedResearchersProvider: React.FC<{ children: ReactNode }> = ({
                     'x-auth-token': token,
                 },
             });
-            setResearcher(response.data);
+            setResearcher(response.data.researcher);
         } catch (error: any) {
             setError(error.message);
         } finally {
@@ -66,7 +63,7 @@ export const AssignedResearchersProvider: React.FC<{ children: ReactNode }> = ({
     };
 
     return (
-        <ResearchersContext.Provider value={{ researchers, researcher, loading, error, getResearchers, getResearcher }}>
+        <ResearchersContext.Provider value={{ researchers, researcher, loading, error, getResearchers, getResearcherById }}>
             {children}
         </ResearchersContext.Provider>
     );
