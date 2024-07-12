@@ -7,10 +7,12 @@ import Cookies from 'universal-cookie';
 // Define the type for the context
 interface DocumentContextType {
     documents: any[];
+    document: any;
     loading: boolean;
     error: string | null;
     uploadDocument: (title: string, document: File) => Promise<void>;
     fetchDocuments: () => Promise<void>;
+    getResearch: (id: any) => Promise<void>
 }
 
 // Create the context
@@ -33,6 +35,7 @@ interface DocumentProviderProps {
 // DocumentProvider component
 export const DocumentProvider: React.FC<DocumentProviderProps> = ({ children }) => {
     const [documents, setDocuments] = useState<any[]>([]);
+    const [document, setDocument] = useState({});
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
     const cookies = new Cookies();
@@ -100,8 +103,28 @@ export const DocumentProvider: React.FC<DocumentProviderProps> = ({ children }) 
         }
     };
 
+    const getResearch = async (id: any) => {
+        setLoading(true);
+        setError(null);
+        const token = cookies.get("token");
+
+
+        try {
+            const response = await axios.get(`${port}/researcher/get-research/${id}`, {
+                headers: {
+                    'x-auth-token': token
+                },
+            });
+            setDocument(response.data);
+        } catch (err: any) {
+            setError(err.response?.data?.message || 'Failed to fetch documents.');
+        } finally {
+            setLoading(false);
+        }
+    };
+
     return (
-        <DocumentContext.Provider value={{ documents, loading, error, uploadDocument, fetchDocuments }}>
+        <DocumentContext.Provider value={{ documents, loading, error, uploadDocument, fetchDocuments, getResearch, document }}>
             {children}
         </DocumentContext.Provider>
     );

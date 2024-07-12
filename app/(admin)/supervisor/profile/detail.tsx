@@ -6,7 +6,9 @@ import User from "../../../../public/user.png"
 import { Button } from '@/components/ui/button'
 
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { useResearcherProfile } from './context'
+import { useSupervisorProfile } from '../context'
+import { ResponsiveDrawerDialog } from '@/app/components/modals/responsivedrawer'
+import SupervisorUpdateForm from './form/supervisor'
 
 export const ProfileDetail = () => {
 
@@ -19,7 +21,7 @@ export const ProfileDetail = () => {
     const handleOpen = () => {
         setDrawerOpen(true)
     }
-    const { profile: user } = useResearcherProfile()
+    const { profile: user } = useSupervisorProfile()
 
 
 
@@ -57,9 +59,9 @@ export const ProfileDetail = () => {
                     </div>
 
                     <Button
-                        // onClick={handlepayment}
+                        onClick={handleOpen}
                         className="w-full mt-4 bg-customPrimary text-customSecondary hover:bg-slate-300" >
-                        update Supervisor/Profile
+                        Update Supervisor/Profile
                     </Button>
                 </div>
 
@@ -92,14 +94,7 @@ export const ProfileDetail = () => {
                                     <div className="font-medium">{user?.name}</div>
                                 </TableCell>
                             </TableRow >
-                            <TableRow>
-                                <TableCell>
-                                    <div className="font-medium">Matric:</div>
-                                </TableCell>
-                                <TableCell>
-                                    <div className="font-medium">{user?.matric}</div>
-                                </TableCell>
-                            </TableRow >
+
 
                             <TableRow>
                                 <TableCell>
@@ -109,7 +104,6 @@ export const ProfileDetail = () => {
                                     <div className="font-medium">{user?.role}</div>
                                 </TableCell>
                             </TableRow >
-
 
                             <TableRow>
                                 <TableCell>
@@ -133,6 +127,15 @@ export const ProfileDetail = () => {
                     </Table>
                 </div>
             </div>
+            <ResponsiveDrawerDialog
+                title="Update Profile"
+                description="updating supervisor or profile"
+                isOpen={isDrawerOpen}
+                onClose={handleClose}
+            >
+
+                <SupervisorUpdateForm />
+            </ResponsiveDrawerDialog>
         </div>
     )
 };

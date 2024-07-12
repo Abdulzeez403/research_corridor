@@ -2,6 +2,7 @@
 import React, { useEffect } from 'react'
 import { SupervisorDashboard } from './detial'
 import { SupervisorProfileProvider, useSupervisorProfile } from './context'
+import { AssignedResearchersProvider } from './researcher/context';
 
 export default function SupervisorPage() {
 
@@ -12,8 +13,8 @@ export default function SupervisorPage() {
     }, [])
     return (
         <div>
-
             <SupervisorDashboard />
+
         </div>
     )
 }

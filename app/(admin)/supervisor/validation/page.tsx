@@ -5,9 +5,7 @@ import { ValidationRequestsProvider } from './context'
 export default function page() {
     return (
         <div>
-            <ValidationRequestsProvider>
-                <Detail />
-            </ValidationRequestsProvider>
+            <Detail />
         </div>
     )
 }

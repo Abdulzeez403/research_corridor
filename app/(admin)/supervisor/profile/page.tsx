@@ -1,7 +1,12 @@
 import React from 'react'
+import { ProfileDetail } from './detail'
 
-export default function page() {
+function ProfilePage() {
     return (
-        <div>page</div>
+        <div>
+            <ProfileDetail />
+        </div>
     )
 }
+
+export default ProfilePage

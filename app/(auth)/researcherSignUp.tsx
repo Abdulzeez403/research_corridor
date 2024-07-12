@@ -59,7 +59,7 @@ export const ResearchSignUpForm: React.FC = () => {
         getSeasons(),
             getSupervisors(selectedDept)
         getDepartments()
-    }, [])
+    }, [selectedDept])
 
 
     return (
@@ -109,7 +109,11 @@ export const ResearchSignUpForm: React.FC = () => {
                             <div className="block  md:flex md:gap-x-2 md:items-center lg:flex lg:gap-x-2 lg:items-center">
                                 <div className="w-full">
                                     <Label className='font-semibold'>Select Supervisor</Label>
-                                    <Select onValueChange={(val: any) => setSelectedSupervisor(val)}>
+                                    <Select onValueChange={(val: any) => {
+                                        setSelectedSupervisor(val),
+                                            setSelectedDept(val)
+                                    }
+                                    }>
                                         <SelectTrigger className="">
                                             <SelectValue placeholder="Select Supervisor" />
                                         </SelectTrigger>

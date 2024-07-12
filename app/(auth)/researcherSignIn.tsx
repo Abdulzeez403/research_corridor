@@ -19,7 +19,7 @@ const UserFormValues = Yup.object().shape({
         .required('Required'),
 
     password: Yup.string()
-        .min(8, 'Password too short!')
+        // .min(8, 'Password too short!')
         .required('Required'),
 
 });

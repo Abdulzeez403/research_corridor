@@ -6,17 +6,18 @@ import { columns } from "./column";
 import { TableComponent } from './table/datatable';
 import CardComponent from '@/app/components/card/index';
 import { UsersRound, MessageCircleMore, BookCheck } from 'lucide-react';
-import { useValidationRequests } from './context';
+import { useSupervisorDocuments } from './context';
 
 
 
 export function Detail() {
     const [isDrawerOpen, setDrawerOpen] = useState(false);
-    const { fetchAllValidationRequests, validationRequests } = useValidationRequests()
+    const { getDocuments, documents } = useSupervisorDocuments();
 
 
     useEffect(() => {
-        fetchAllValidationRequests()
+        getDocuments()
+        console.log(documents)
     }, [])
 
     const handleUpdate = (user: UploodModel) => {
@@ -52,13 +53,13 @@ export function Detail() {
             <div>
                 <div className="grid gap-4 md:grid-cols-2 md:gap-8 lg:grid-cols-4 pt-5">
                     <CardComponent
-                        title="Approved Request"
+                        title="Uploaded Document"
                         total="20"
                         subtitle="Total number of all Researcher"
                         icon={<UsersRound className="h-5 w-5" />}
                     />
                     <CardComponent
-                        title="Pending Requests"
+                        title="PFT document"
                         total="10"
                         subtitle="Total number of all Researcher"
                         icon={<MessageCircleMore className="h-5 w-5" />}
@@ -73,7 +74,7 @@ export function Detail() {
             <div className="py-10">
                 <TableComponent
                     columns={createColumns}
-                    data={validationRequests}
+                    data={documents}
                     onEdit={handleUpdate}
                     onDelete={handleDelete}
                     onView={handleView}
@@ -83,9 +84,9 @@ export function Detail() {
                     title="Upload Research Document
                     "
                     description="This support Doc / Pft / Image / sheet and others!">
-                    <h4>hdhhdh</h4>
-
-                </TableComponent>
+                        <h4>hdhhdh</h4>
+                
+                     </TableComponent>
             </div>
         </div>
     )

@@ -4,16 +4,16 @@ import Link from 'next/link';
 import {
     Bell,
     CircleUser,
-    Home,
     Menu,
     Package2,
     Search,
     LayoutDashboard,
-    TicketCheck,
     Presentation,
     Upload,
     CircleUserRound,
-    MessageSquareQuote
+    MessageSquareQuote,
+    BadgeCheck,
+    Users
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
@@ -36,6 +36,7 @@ import { useSupervisorProfile } from './supervisor/context';
 import ValidateTopicForm from './researcher/validation/form';
 import { Notifications } from './researcher/notificaton/detail';
 import { useNotifications } from './researcher/notificaton/context';
+import AppointmentForm from './supervisor/appointment/form';
 
 
 interface IProp {
@@ -127,7 +128,7 @@ export const MainLayout = ({ children }: IProp) => {
                                     Dashboard
                                 </NavLink>
 
-                                <NavLink href="/researcher/validation" icon={Presentation}>
+                                <NavLink href="/researcher/validation" icon={BadgeCheck}>
                                     Topic Validation
                                 </NavLink>
 
@@ -161,7 +162,7 @@ export const MainLayout = ({ children }: IProp) => {
                                 <NavLink href="/supervisor" icon={LayoutDashboard}>
                                     Dashboard
                                 </NavLink>
-                                <NavLink href="/supervisor/validation" icon={Upload}>
+                                <NavLink href="/supervisor/validation" icon={BadgeCheck}>
                                     Validation Request
                                 </NavLink>
 
@@ -174,7 +175,7 @@ export const MainLayout = ({ children }: IProp) => {
                                 <NavLink href="/supervisor/chat" icon={MessageSquareQuote}>
                                     ChatRoom
                                 </NavLink>
-                                <NavLink href="/supervisor/researcher" icon={MessageSquareQuote}>
+                                <NavLink href="/supervisor/researcher" icon={Users}>
                                     Researcher
                                 </NavLink>
                                 <NavLink href="/supervisor/progess" icon={MessageSquareQuote}>
@@ -294,9 +295,19 @@ export const MainLayout = ({ children }: IProp) => {
                             </div>
                         </form>
                     </div>
-                    <Button className="rounded-lg bg-black text-white" onClick={handleOpen}>
-                        Validation
-                    </Button>
+
+                    {researcherProfile ? (
+
+                        <Button className="rounded-lg bg-black text-white" onClick={handleOpen}>
+                            Validation
+                        </Button>) : (
+
+                        <Button className="rounded-lg bg-black text-white" onClick={handleOpen}>
+                            Appointment
+                        </Button>
+                    )
+                    }
+
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
                             <Button className="rounded-lg bg-white">
@@ -321,13 +332,16 @@ export const MainLayout = ({ children }: IProp) => {
                     {children}
                 </main>
                 <ResponsiveDrawerDialog
-                    title="Validate Your Topic"
-                    description="Validate Your Topic"
+                    title={researcherProfile ? "Validate Your Topic" : " Schedule appointment with researcher"}
+                    description={researcherProfile ? "validate Your Topic" : " schedule appointment with researcher"}
                     isOpen={isDrawerOpen}
                     onClose={handleClose}
                 >
                     <div>
-                        <ValidateTopicForm />
+                        {researcherProfile ? (
+                            <ValidateTopicForm />) : (
+                            <AppointmentForm />
+                        )}
                     </div>
 
 

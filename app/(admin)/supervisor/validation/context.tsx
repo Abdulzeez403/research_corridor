@@ -11,7 +11,7 @@ interface ValidationRequest {
 
 // Define the structure for the context state
 interface ValidationRequestsContextProps {
-    validationRequests: ValidationRequest[] | null;
+    validationRequests: ValidationRequest[];
     loading: boolean;
     error: string | null;
     fetchAllValidationRequests: () => void;
@@ -24,7 +24,7 @@ const ValidationRequestsContext = createContext<ValidationRequestsContextProps |
 
 // Define the provider component
 export const ValidationRequestsProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-    const [validationRequests, setValidationRequests] = useState<ValidationRequest[] | null>(null);
+    const [validationRequests, setValidationRequests] = useState<ValidationRequest[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
 

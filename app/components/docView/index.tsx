@@ -5,8 +5,7 @@ import DocViewer, { DocViewerRenderers } from 'react-doc-viewer';
 
 const DocViewerComponent = () => {
     const docs = [
-        { uri: 'https://research-corridor.onrender.com/api/researchDocuments/1720580898119-COURSEWARE_EDT321.docx' },
-        { uri: 'https://example.com/sample.docx' } // External document URL
+        { uri: 'https://res.cloudinary.com/dhxco7i18/raw/upload/v1720746578/validation_documents/1720746577766-Presentation.docx' },
     ];
 
 

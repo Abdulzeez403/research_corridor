@@ -1,7 +1,8 @@
 import React from 'react'
+import { Detail } from './detail'
 
 export default function page() {
     return (
-        <div>page</div>
+        <div><Detail /></div>
     )
 }
