@@ -40,7 +40,7 @@ const AppointmentForm: React.FC = () => {
     };
 
     useEffect(() => {
-        getResearchers()
+        getResearchers('2023-2024')
     }, [])
 
     return (

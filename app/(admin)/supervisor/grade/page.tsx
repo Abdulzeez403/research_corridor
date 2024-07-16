@@ -3,16 +3,21 @@ import React, { useEffect, useState } from 'react'
 import { TableComponent } from './table/datatable'
 import { columns } from './column';
 import { useResearchers } from '../researcher/context';
+import { useGrades } from './context';
 
 
 
 export default function Page() {
 
     const [isDrawerOpen, setDrawerOpen] = useState(false);
-    const { researchers, getResearchers } = useResearchers()
+    const { fetchAllGrades, grades } = useGrades()
 
     useEffect(() => {
-        // getResearchers()
+
+        fetchAllGrades('2023-2024');
+        console.log(grades)
+
+
     }, [])
 
 
@@ -42,7 +47,7 @@ export default function Page() {
     return (
         <TableComponent
             columns={createColumns}
-            data={researchers}
+            data={grades}
             onView={handleView}
             open={isDrawerOpen}
             onDismiss={handleClose}

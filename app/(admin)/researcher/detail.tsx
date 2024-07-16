@@ -45,7 +45,7 @@ export const ResearcherDashboard = () => {
     const { getTopic, topics } = useUploadTopic();
     const { fetchProfile, profile } = useResearcherProfile()
     const { documents, fetchDocuments } = useDocumentContext()
-    const { notifications, getNotifications } = useNotifications()
+    const { notifications, getNotifications, loading, error } = useNotifications()
 
 
     useEffect(() => {
@@ -54,6 +54,9 @@ export const ResearcherDashboard = () => {
         fetchDocuments()
         getNotifications()
     }, [])
+
+    if (loading) return <div>Loading...</div>;
+    if (error) return <div>Error: {error}</div>;
 
 
     return (
@@ -115,9 +118,15 @@ export const ResearcherDashboard = () => {
                                 <h4 className="font-bold">Activities</h4>
                                 <Activity className="h-5 w-5" />
                             </div>
-                            {notifications?.map((notification, index) => (
-                                <NotificationItem key={index} description={notification.message} />
-                            ))}
+                            <div>
+                                {notifications.length > 0 ? (
+                                    notifications.map((notification, index) => (
+                                        <NotificationItem key={index} description={notification.message} />
+                                    ))
+                                ) : (
+                                    <div>No notifications available.</div>
+                                )}
+                            </div>
                         </div>
                     </CardContent>
                 </Card>

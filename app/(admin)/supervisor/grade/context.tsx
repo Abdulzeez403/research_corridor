@@ -1,8 +1,8 @@
 import React, { createContext, useContext, useState } from 'react';
 import axios from 'axios';
+import Cookies from 'universal-cookie';
 
-const baseUrl = 'https://your-api-url.com'; // Replace with your actual API URL
-const token = 'your-auth-token'; // Replace with your actual token
+
 
 interface Grade {
     gradeId: string;
@@ -48,16 +48,20 @@ export const GradesProvider = ({ children }: IProp) => {
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
 
+    const baseUrl = "https://research-corridor.onrender.com/api";
+    const cookies = new Cookies();
+    const token = cookies.get("token");
+
     const fetchAllGrades = async (season: string) => {
         setLoading(true);
         setError(null);
         try {
-            const response = await axios.get(`${baseUrl}/api/supervisor/grades/${season}`, {
+            const response = await axios.get(`${baseUrl}/supervisor/grades/${season}`, {
                 headers: {
                     'x-auth-token': token,
                 },
             });
-            setGrades(response.data);
+            setGrades(response.data?.grades?.researcherId);
         } catch (error: any) {
             setError(error.message);
         } finally {
@@ -69,7 +73,7 @@ export const GradesProvider = ({ children }: IProp) => {
         setLoading(true);
         setError(null);
         try {
-            const response = await axios.get(`${baseUrl}/api/supervisor/grades/${id}`, {
+            const response = await axios.get(`${baseUrl}/api/supervisor/grade/${id}`, {
                 headers: {
                     'x-auth-token': token,
                 },

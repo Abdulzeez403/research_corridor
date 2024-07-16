@@ -34,9 +34,9 @@ export const SupervisorDashboard = () => {
 
     useEffect(() => {
         fetchProfile()
-        getResearchers();
-        getDocuments()
-        fetchAllValidationRequests()
+        getResearchers("2023-2024");
+        getDocuments("2023-2024")
+        fetchAllValidationRequests("2023-2024")
         getNotifications()
     }, [])
 
