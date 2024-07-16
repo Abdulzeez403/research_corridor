@@ -5,7 +5,7 @@ import { AuthProvider } from "./(auth)/context";
 import 'react-toastify/ReactToastify.min.css'
 import Notification from "./components/toast";
 import { UploadTopicProvider } from "./(admin)/researcher/validation/context";
-import { AppointmentsProvider } from "./(admin)/researcher/meeting/context";
+import { AppointmentsProvider } from "./(admin)/supervisor/appointment/context";
 import { ResearcherProfileProvider } from "./(admin)/researcher/profile/context";
 import { DocumentProvider } from "./(admin)/researcher/upload/context";
 import { SupervisorProfileProvider } from "./(admin)/supervisor/context";

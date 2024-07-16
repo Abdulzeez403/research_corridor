@@ -27,7 +27,8 @@ const UserFormValues = Yup.object().shape({
 export const ResearcherSignInForm: React.FC = () => {
 
 
-    const { researcherSignIn, loading } = useAuthContext();
+    const { researcherSignIn } = useAuthContext();
+    const [loading, setLoading] = useState(false)
 
 
     const initialValues: UserFormValues = {
@@ -37,11 +38,13 @@ export const ResearcherSignInForm: React.FC = () => {
     };
 
     const handleSubmit = async (values: UserFormValues) => {
+        setLoading(true)
         try {
             await researcherSignIn(values);
-            notify.success("Logged In")
-            console.log(values);
+            setLoading(true)
+
         } catch (error) {
+            setLoading(false)
             console.error('Error during sign-in:', error);
         }
     };
@@ -64,7 +67,7 @@ export const ResearcherSignInForm: React.FC = () => {
                 {({ isSubmitting }) => (
                     <Form className='mx-6 md:mx-0 lg:mx-0'>
 
-                        <FormField label="EmailOrMatric" name="emailOrMatric" className="my-4" />
+                        <FormField label="Email/Matric" name="emailOrMatric" className="my-4" />
                         <FormField label="Password" name="password" type="password" />
                         <CustomButton type="submit" loading={loading}>
                             SignIn

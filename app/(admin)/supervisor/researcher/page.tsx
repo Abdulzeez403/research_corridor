@@ -12,7 +12,7 @@ export default function Page() {
     const { researchers, getResearchers } = useResearchers()
 
     useEffect(() => {
-        getResearchers()
+        getResearchers("2023-2024")
     }, [])
 
 
@@ -33,11 +33,7 @@ export default function Page() {
         setDrawerOpen(true)
     }
 
-
-
     const createColumns = columns({ onView: handleView });
-
-
 
     return (
         <TableComponent

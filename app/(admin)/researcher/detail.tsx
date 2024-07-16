@@ -3,40 +3,36 @@
 import CardComponent from '@/app/components/card/index'
 import React, { useEffect, useState } from 'react'
 import { UsersRound, MessageCircleMore, BookCheck, ChevronRight, Activity, Mail } from 'lucide-react';
-import { ReatTableComponent } from '@/app/components/table/read';
+// import { ReatTableComponent } from '@/app/components/table/read';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import Image from 'next/image'
 import User from "../../../public/student.jpg"
 import { useUploadTopic } from './validation/context';
 import { useResearcherProfile } from './profile/context';
+import { useDocumentContext } from './upload/context';
+import { useNotifications } from './notificaton/context';
+import { CommentTableComponent } from './component/commets';
 
 
 
-const notifications = [
-    { title: 'New Meeting Scheduled', description: 'Lorem ipsum dolor sit, amet consectetur' },
-    { title: 'Task Completed', description: 'Your recent task has been marked as complete' },
-    { title: 'New Message', description: 'You have received a new message from John' },
-    { title: 'Update Available', description: 'A new update is available for your application' },
-    { title: 'Reminder', description: 'Don\'t forget about your upcoming appointment' },
-    { title: 'Alert', description: 'Your account password will expire in 3 days' },
-];
+
 
 
 interface INotification {
-    title: string,
+    // title: string,
     description: string
 }
 
 export const ResearcherDashboard = () => {
 
-    const NotificationItem = ({ title, description }: INotification) => (
+    const NotificationItem = ({ description }: INotification) => (
         <div className=" flex justify-between my-4 ">
             <div className='flex gap-x-2 items-center'>
                 <div className="bg-green-400 rounded-md p-2">
                     <BookCheck className="text-white" />
                 </div>
                 <div>
-                    <h4 className="text-sm font-semibold">{title}</h4>
+                    {/* <h4 className="text-sm font-semibold">{title}</h4> */}
                     <p className="text-xs">{description}</p>
                 </div>
             </div>
@@ -48,12 +44,15 @@ export const ResearcherDashboard = () => {
 
     const { getTopic, topics } = useUploadTopic();
     const { fetchProfile, profile } = useResearcherProfile()
+    const { documents, fetchDocuments } = useDocumentContext()
+    const { notifications, getNotifications } = useNotifications()
 
 
     useEffect(() => {
         getTopic()
         fetchProfile()
-
+        fetchDocuments()
+        getNotifications()
     }, [])
 
 
@@ -61,83 +60,49 @@ export const ResearcherDashboard = () => {
 
 
 
-        <div className='flex gap-x-6'>
-
-            <div>
-                <div className="grid gap-4 md:grid-cols-2 md:gap-8 lg:grid-cols-4 pt-5">
-                    <CardComponent
-                        title="Researchers"
-                        total="20"
-                        subtitle="Total number of all Researcher"
-                        icon={<UsersRound className="h-5 w-5" />}
-                    />
-                    <CardComponent
-                        title="Pending validations"
-                        total="10"
-                        subtitle="Total number of all Researcher"
-                        icon={<MessageCircleMore className="h-5 w-5" />}
-                    />
+        <div className="flex flex-col lg:flex-row gap-6">
+            <div className="flex flex-col w-full lg:w-3/4">
+                <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-2 pt-5">
 
                     <CardComponent
-                        title="Validated"
-                        total="30"
-                        subtitle="Total number of all Researcher"
+                        title="Documents"
+                        total={documents?.length}
+                        subtitle="Total Document"
                         icon={<BookCheck className="h-5 w-5" />}
                     />
-
                     <CardComponent
-                        title="Meetings"
-                        total="30"
-                        subtitle="Total number of all Researcher"
+                        title="Topic Validations"
+                        total={topics.length}
+                        subtitle="Total Topic validation"
                         icon={<BookCheck className="h-5 w-5" />}
                     />
-
-
                 </div>
-
-                <div>
-                    <ReatTableComponent />
+                <div className="mt-6">
+                    {/* <CommentTableComponent comment={documents.comments as any} /> */}
                 </div>
             </div>
-
-            <div className='hidden md:flex lg:flex'>
-                <Card className="w-[400px]">
+            <div className="flex flex-col w-full lg:w-1/4">
+                <Card className="w-full">
                     <CardHeader>
-                        <CardTitle className='text-2x1 text-customPrimary'>Notification</CardTitle>
-                        <CardDescription>Recent activites from researcher ans superviors.</CardDescription>
+                        <CardTitle className="text-2xl text-customPrimary">Notification</CardTitle>
+                        <CardDescription>Recent activities from researchers and supervisors.</CardDescription>
                     </CardHeader>
                     <CardContent>
-
-
-                        <div className='pb-6'>
+                        <div className="pb-6">
                             <div className="flex justify-between">
-                                <h4 className='font-bold'>Messages</h4>
+                                <h4 className="font-bold">Messages</h4>
                                 <Mail className="h-5 w-5" />
                             </div>
-
                             <div>
-                                <div className='flex gap-x-2 items-center'>
-                                    <div className=" py-2">
-                                        <Image
-                                            src={User}
-                                            alt="image"
-                                            width={50}
-                                            height={70} className="rounded-full" />
-                                    </div>
+                                <div className="flex gap-x-2 items-center py-2">
+                                    <Image src={User} alt="image" width={50} height={70} className="rounded-full" />
                                     <div>
                                         <h4 className="text-sm font-semibold">Abdulazeez Sodiq</h4>
                                         <p className="text-xs">The topic has been validated!</p>
                                     </div>
                                 </div>
-
-                                <div className='flex gap-x-2 items-center'>
-                                    <div className=" py-2">
-                                        <Image
-                                            src={User}
-                                            alt="image"
-                                            width={50}
-                                            height={70} className="rounded-full" />
-                                    </div>
+                                <div className="flex gap-x-2 items-center py-2">
+                                    <Image src={User} alt="image" width={50} height={70} className="rounded-full" />
                                     <div>
                                         <h4 className="text-sm font-semibold">Abdulazeez Sodiq</h4>
                                         <p className="text-xs">The topic has been validated!</p>
@@ -145,31 +110,18 @@ export const ResearcherDashboard = () => {
                                 </div>
                             </div>
                         </div>
-
                         <div>
                             <div className="flex justify-between">
-                                <h4 className='font-bold'>Activities</h4>
+                                <h4 className="font-bold">Activities</h4>
                                 <Activity className="h-5 w-5" />
                             </div>
-                            {notifications.map((notification, index) => (
-                                <NotificationItem
-                                    key={index}
-                                    title={notification.title}
-                                    description={notification.description}
-                                />
+                            {notifications?.map((notification, index) => (
+                                <NotificationItem key={index} description={notification.message} />
                             ))}
                         </div>
-
-
                     </CardContent>
-                    {/* <CardFooter className="flex justify-between">
-                        <Button variant="outline">Cancel</Button>
-                        <Button>Deploy</Button>
-                    </CardFooter> */}
                 </Card>
-
             </div>
-
         </div>
 
     )

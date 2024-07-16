@@ -16,7 +16,7 @@ interface DecodedToken {
     membership: string;
 }
 
-interface IProp {
+interface AuthIPropContextProps {
     loading: boolean;
     user: any,
     seasons: any;
@@ -33,23 +33,7 @@ interface IProp {
     updateResearcher: (values: any) => void;
     signOut: () => void;
 }
-const AuthContext = createContext<IProp>({
-    loading: false,
-    user: null || {},
-    seasons: null,
-    supervisors: null,
-    departments: null,
-    getDepartments: () => { },
-    getSeasons: () => { },
-    getSupervisors: (value) => { },
-    researcherSignup: (values) => { },
-    supervisorSignup: (values) => { },
-    updateSupervisor: (values) => { },
-    updateResearcher: (values) => { },
-    supervisorSignIn: (payload) => { },
-    researcherSignIn: (payload) => { },
-    signOut: () => { },
-});
+const AuthContext = createContext<AuthIPropContextProps | undefined>(undefined);
 
 export const useAuthContext = () => {
     let context = useContext(AuthContext);
@@ -96,18 +80,18 @@ export const AuthProvider: React.FC<IProps> = ({ children }) => {
     const port = "https://research-corridor.onrender.com/api"
 
     const researcherSignIn = async (payload: any) => {
-        setLoading(true)
+        // setLoading(true)
         try {
             const response = await axios.post(`${port}/auth/researcher-login`, payload);
             UseSetCookie("token", response.data.token)
             setUser(response.data);
-            setLoading(false)
+            // setLoading(false)
             router.push('/researcher');
             notify.success(response.data.msg);
 
 
         } catch (error: any) {
-            setLoading(false);
+            // setLoading(false);
             if (error.response) {
                 console.error('Server Error:', error.response.data);
                 notify.error(error.response.data.message || 'Server error occurred');
@@ -124,19 +108,18 @@ export const AuthProvider: React.FC<IProps> = ({ children }) => {
 
 
     const supervisorSignIn = async (payload: any) => {
-        setLoading(true)
+        // setLoading(true)
         try {
             const response = await axios.post(`${port}/auth/supervisor-login`, payload);
             UseSetCookie("token", response.data.token)
             setUser(response.data);
             setLoading(false)
             router.push('/supervisor');
-
             notify.success(response.data.msg);
 
 
         } catch (error: any) {
-            setLoading(false);
+            // setLoading(false);
             if (error.response) {
                 console.error('Server Error:', error.response.data);
                 notify.error(error.response.data.message || 'Server error occurred');
@@ -281,6 +264,7 @@ export const AuthProvider: React.FC<IProps> = ({ children }) => {
         try {
             await cookies.remove('token');
             router.push('/');
+
         } catch (error) {
             console.log(error);
         }

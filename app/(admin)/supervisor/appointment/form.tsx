@@ -1,14 +1,13 @@
-import React, { useState } from 'react';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import React, { useEffect, useState } from 'react';
+import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
-import axios from 'axios';
-import Cookies from 'universal-cookie';
-import { useAppointments } from '../../researcher/meeting/context';
+import { useAppointments } from './context';
 import { FormField } from '@/app/components/input/textInput';
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Label } from '@radix-ui/react-label';
 import { useResearchers } from '../researcher/context';
+import CustomButton from '@/app/components/button';
 
 interface AppointmentFormValues {
     researcherId: string;
@@ -32,15 +31,17 @@ const validationSchema = Yup.object({
 });
 
 const AppointmentForm: React.FC = () => {
+    const { createAppointment } = useAppointments();
+    const { researchers: assignedResearchers, loading, error, getResearchers } = useResearchers();
+    const [selectedResearcher, setSelectedResearcher] = useState('');
 
-    const { createAppointment } = useAppointments()
-    const { researchers: assignedResearchers, loading, error } = useResearchers()
-    const [selectedResearcher, setSelectedResearcher] = useState('')
+    const handleSubmit = (values: AppointmentFormValues) => {
+        createAppointment(values);
+    };
 
-    const handleSubmit = (value: any) => {
-        createAppointment(value)
-
-    }
+    useEffect(() => {
+        getResearchers()
+    }, [])
 
     return (
         <Formik
@@ -48,22 +49,26 @@ const AppointmentForm: React.FC = () => {
             validationSchema={validationSchema}
             onSubmit={handleSubmit}
         >
-            {({ isSubmitting }) => (
+            {({ isSubmitting, setFieldValue }) => (
                 <Form>
-
                     <div>
                         <div className="w-full">
                             <Label className='font-semibold'>Select Researcher</Label>
-                            <Select onValueChange={(val: any) => setSelectedResearcher(val)}>
+                            <Select
+                                onValueChange={(val: any) => {
+                                    setSelectedResearcher(val);
+                                    setFieldValue('researcherId', val);
+                                }}
+                            >
                                 <SelectTrigger className="">
                                     <SelectValue placeholder="Select Researcher" />
                                 </SelectTrigger>
                                 <SelectContent>
-                                    {loading && <SelectItem value="loading" disabled >Loading...</SelectItem>}
-                                    {error && <SelectItem value="error" disabled >Error loading researchers</SelectItem>}
+                                    {loading && <SelectItem value="loading" disabled>Loading...</SelectItem>}
+                                    {error && <SelectItem value="error" disabled>Error loading researchers</SelectItem>}
                                     {assignedResearchers && assignedResearchers.length > 0 ? (
                                         assignedResearchers.map((r: any) => (
-                                            <SelectItem key={r.id} value={r.id}>
+                                            <SelectItem key={r._id} value={r._id}>
                                                 {r.name}
                                             </SelectItem>
                                         ))
@@ -73,7 +78,6 @@ const AppointmentForm: React.FC = () => {
                                 </SelectContent>
                             </Select>
                         </div>
-
                     </div>
                     <div>
                         <FormField label="Date" name="date" className="my-4" type="date" />
@@ -85,13 +89,11 @@ const AppointmentForm: React.FC = () => {
                         <FormField label="Agenda" name="agenda" className="my-4" type="text" />
                     </div>
                     <div>
-                        <Button
-                            type="submit"
-                            className="w-full mt-4 bg-customPrimary text-customSecondary hover:bg-slate-300"
-                            disabled={isSubmitting} >
+
+                        <CustomButton type="submit" loading={isSubmitting}>
                             Create Appointment
 
-                        </Button>
+                        </CustomButton>
 
                     </div>
                 </Form>

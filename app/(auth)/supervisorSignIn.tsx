@@ -26,8 +26,9 @@ const UserFormValues = Yup.object().shape({
 export const SuperviorSignInForm: React.FC = () => {
 
 
-    const { supervisorSignIn, loading } = useAuthContext();
-    const router = useRouter();
+    const { supervisorSignIn } = useAuthContext();
+    const [loading, setLoading] = useState(false)
+
 
 
     const initialValues: UserFormValues = {
@@ -37,10 +38,14 @@ export const SuperviorSignInForm: React.FC = () => {
     };
 
     const handleSubmit = async (values: UserFormValues) => {
+        setLoading(true)
         try {
             await supervisorSignIn(values);
             console.log(values);
+            setLoading(true)
+
         } catch (error) {
+            setLoading(false)
             console.error('Error during sign-in:', error);
         }
     };

@@ -9,6 +9,7 @@ import { NotificationsProvider } from "./researcher/notificaton/context";
 import { AssignedResearchersProvider } from "./supervisor/researcher/context";
 import { SupervisorDocumentsProvider } from "./supervisor/document/context";
 import { ValidationRequestsProvider } from "./supervisor/validation/context";
+import { GradesProvider } from "./supervisor/grade/context";
 
 interface IProps {
     children: React.ReactNode;
@@ -33,13 +34,18 @@ export default function AdminLayout({ children }: IProps) {
                         <SupervisorDocumentsProvider>
                             <ValidationRequestsProvider>
 
-                                <NotificationsProvider>
-                                    <MainLayout>
-                                        <div className="h-full">
-                                            {children}
-                                        </div>
-                                    </MainLayout>
-                                </NotificationsProvider>
+                                <GradesProvider>
+
+
+                                    <NotificationsProvider>
+                                        <MainLayout>
+                                            <div className="h-full">
+                                                {children}
+                                            </div>
+                                        </MainLayout>
+                                    </NotificationsProvider>
+                                </GradesProvider>
+
                             </ValidationRequestsProvider>
 
                         </SupervisorDocumentsProvider>

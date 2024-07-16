@@ -1,11 +1,20 @@
 "use client"
 import { ResponsiveDrawerDialog } from '@/app/components/modals/responsivedrawer'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import AppointmentForm from './form';
 import { Button } from '@/components/ui/button';
+import { useAppointments } from './context';
+import { useAuthContext } from '@/app/(auth)/context';
 
 export default function Page() {
     const [isDrawerOpen, setDrawerOpen] = useState(false);
+
+    const { getAppointments, appointments } = useAppointments()
+    useEffect(() => {
+        getAppointments("2023-2024");
+        console.log(appointments)
+
+    }, []);
 
     const handleClose = () => {
         setDrawerOpen(false)
@@ -15,32 +24,13 @@ export default function Page() {
         setDrawerOpen(true)
     }
 
-    const meetings = [
-        {
-            id: 1,
-            agenda: "The meeting",
-            date: "20-10-200",
-            time: "12:00"
-        },
-        {
-            id: 2,
-            agenda: "The meeting",
-            date: "20-10-200",
-            time: "12:00"
-        },
-        {
-            id: 3,
-            agenda: "The meeting",
-            date: "20-10-200",
-            time: "12:00"
-        }
-    ]
+
     return (
         <div>
             <Button onClick={handleOpen} className="pb-2">Schedule Appointment</Button>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {meetings.map((m) => (
+                {appointments?.map((m) => (
                     <div key={m?.id} className="border border-gray-300 p-4 rounded-lg shadow-md">
                         <div className="flex justify-between items-center mb-4">
                             <h4 className="text-lg font-semibold">{m.agenda}</h4>

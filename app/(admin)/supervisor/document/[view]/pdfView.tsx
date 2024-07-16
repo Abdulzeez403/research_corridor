@@ -39,7 +39,7 @@ const PdfViewer: React.FC<PdfViewerProps> = ({ fileUrl }) => {
                     Next
                 </button>
             </div>
-            <style jsx>{`
+            {/* <style jsx>{`
         .pdf-viewer {
           display: flex;
           flex-direction: column;
@@ -64,7 +64,7 @@ const PdfViewer: React.FC<PdfViewerProps> = ({ fileUrl }) => {
         span {
           margin: 0 10px;
         }
-      `}</style>
+      `}</style> */}
         </div>
     );
 };

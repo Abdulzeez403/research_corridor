@@ -40,7 +40,7 @@ export const ResearchSignUpForm: React.FC = () => {
 
     const [selectedSeason, setSelectedSeason] = useState('');
     const [selectedSupervisor, setSelectedSupervisor] = useState('')
-    const [selectedDept, setSelectedDept] = useState('')
+    const [selectedDept, setSelectedDept] = useState('Educational Technology')
 
 
     const { researcherSignup, loading, getSeasons, getSupervisors, seasons, supervisors, getDepartments, departments } = useAuthContext();

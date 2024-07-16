@@ -1,39 +1,17 @@
 "use client"
 import React, { useEffect } from 'react'
-import { useAppointments } from './context'
+import { useAppointments } from '../../supervisor/appointment/context'
 import { Button } from '@/components/ui/button'
+import { useResearcherProfile } from '../profile/context'
 
 export const MeetingDetail = () => {
-    const { getAppointments, appointments } = useAppointments()
-    useEffect(() => {
-        getAppointments();
-        console.log(appointments)
 
-    }, []);
 
-    const meetings = [
-        {
-            id: 1,
-            agenda: "The meeting",
-            date: "20-10-200",
-            time: "12:00"
-        },
-        {
-            id: 2,
-            agenda: "The meeting",
-            date: "20-10-200",
-            time: "12:00"
-        },
-        {
-            id: 3,
-            agenda: "The meeting",
-            date: "20-10-200",
-            time: "12:00"
-        }
-    ]
+    const { fetchAppointments, appointments } = useResearcherProfile()
+
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {meetings.map((m) => (
+            {appointments?.map((m) => (
                 <div key={m?.id} className="border border-gray-300 p-4 rounded-lg shadow-md">
                     <div className="flex justify-between items-center mb-4">
                         <h4 className="text-lg font-semibold">{m.agenda}</h4>

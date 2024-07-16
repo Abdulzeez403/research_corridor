@@ -2,6 +2,7 @@
 import React, { createContext, useState, useEffect, useContext, ReactNode } from 'react';
 import axios from 'axios';
 import Cookies from 'universal-cookie';
+import { notify } from '@/app/components/toast';
 
 interface Appointment {
     id: string;
@@ -33,7 +34,7 @@ interface AppointmentsContextProps {
     appointments: Appointment[] | null;
     loading: boolean;
     error: string | null;
-    getAppointments: () => void;
+    getAppointments: (season: any) => void;
     createAppointment: (data: CreateAppointmentRequest) => void;
     editAppointment: (data: EditAppointmentRequest) => void;
     deleteAppointment: (data: DeleteAppointmentRequest) => void;
@@ -49,16 +50,17 @@ export const AppointmentsProvider: React.FC<{ children: ReactNode }> = ({ childr
     const cookies = new Cookies();
     const token = cookies.get("token");
 
-    const getAppointments = async () => {
+    const getAppointments = async (season: any) => {
         setLoading(true);
         setError(null);
         try {
-            const response = await axios.get(`${port}/supervisor/appointments`, {
+            const response = await axios.get(`${port}/supervisor/appointments/${season}`, {
                 headers: {
                     'x-auth-token': token,
                 },
             });
-            setAppointments(response.data);
+            setAppointments(response.data.appointments);
+
         } catch (error: any) {
             setError(error.response?.data?.message || error.message);
         } finally {
@@ -77,8 +79,10 @@ export const AppointmentsProvider: React.FC<{ children: ReactNode }> = ({ childr
                 },
             });
             setAppointments((prev) => (prev ? [...prev, response.data] : [response.data]));
+            notify.success(response.data.msg)
         } catch (error: any) {
             setError(error.response?.data?.message || error.message);
+            notify.error(error.response?.data?.message || error.message)
         } finally {
             setLoading(false);
         }
@@ -125,9 +129,6 @@ export const AppointmentsProvider: React.FC<{ children: ReactNode }> = ({ childr
         }
     };
 
-    useEffect(() => {
-        getAppointments();
-    }, []);
 
     return (
         <AppointmentsContext.Provider value={{ appointments, loading, error, getAppointments, createAppointment, editAppointment, deleteAppointment }}>

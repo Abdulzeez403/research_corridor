@@ -176,11 +176,9 @@ export const MainLayout = ({ children }: IProp) => {
                                     ChatRoom
                                 </NavLink>
                                 <NavLink href="/supervisor/researcher" icon={Users}>
-                                    Researcher
+                                    Researchers
                                 </NavLink>
-                                <NavLink href="/supervisor/progess" icon={MessageSquareQuote}>
-                                    Progress Tracking
-                                </NavLink>
+
                                 <NavLink href="/supervisor/grade" icon={MessageSquareQuote}>
                                     Grading
                                 </NavLink>

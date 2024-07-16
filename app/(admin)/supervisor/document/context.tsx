@@ -17,7 +17,7 @@ interface DocumentsContextProps {
     document: Document | null;
     loading: boolean;
     error: string | null;
-    getDocuments: () => void;
+    getDocuments: (season: any) => void;
     getDocumentById: (id: string) => void;
     commentOnDocument: (id: string, comment: string) => void;
 }
@@ -33,11 +33,11 @@ export const SupervisorDocumentsProvider: React.FC<{ children: ReactNode }> = ({
     const cookies = new Cookies();
     const token = cookies.get("token");
 
-    const getDocuments = async () => {
+    const getDocuments = async (season: any) => {
         setLoading(true);
         setError(null);
         try {
-            const response = await axios.get(`${port}/supervisor/documents`, {
+            const response = await axios.get(`${port}/supervisor/documents/${season}`, {
                 headers: {
                     'x-auth-token': token,
                 },

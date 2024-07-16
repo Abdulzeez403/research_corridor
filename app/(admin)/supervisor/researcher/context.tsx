@@ -12,7 +12,7 @@ interface ResearchersContextProps {
     researcher: IResearcher | null;
     loading: boolean;
     error: string | null;
-    getResearchers: () => void;
+    getResearchers: (season: any) => void;
     getResearcherById: (id: string) => void;
 }
 
@@ -27,14 +27,13 @@ export const AssignedResearchersProvider: React.FC<{ children: ReactNode }> = ({
     const cookies = new Cookies();
     const token = cookies.get("token");
 
-    const getResearchers = async () => {
+    const getResearchers = async (season: any) => {
         setLoading(true);
         setError(null);
         try {
-            const response = await axios.get(`${port}/supervisor/get-researchers`, {
+            const response = await axios.get(`${port}/supervisor/get-researchers/${season}`, {
                 headers: {
                     'x-auth-token': token,
-                    'season': "2023/2024"
                 },
             });
             setResearchers(response.data.researchers);
@@ -49,7 +48,7 @@ export const AssignedResearchersProvider: React.FC<{ children: ReactNode }> = ({
         setLoading(true);
         setError(null);
         try {
-            const response = await axios.get(`${port}/supervisor/get-researchers/${id}`, {
+            const response = await axios.get(`${port}/supervisor/get-researcher/${id}`, {
                 headers: {
                     'x-auth-token': token,
                 },

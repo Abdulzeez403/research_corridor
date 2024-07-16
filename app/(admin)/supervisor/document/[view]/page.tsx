@@ -1,32 +1,44 @@
-'use client'
-import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from '@/components/ui/breadcrumb';
+"use client"
 import { usePathname } from 'next/navigation';
-import React, { useEffect, useState } from 'react'
-import FileImage from "../../../../../public/pdf.jpg"
-import Image from 'next/image'
+import React, { useEffect, useState } from 'react';
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbSeparator } from '@/components/ui/breadcrumb';
 import { Button } from '@/components/ui/button';
 import DocViewer, { DocViewerRenderers } from 'react-doc-viewer';
+import Image from 'next/image';
+import FileImage from '../../../../../public/pdf.jpg';
 import { useSupervisorProfile } from '../../context';
 import { useSupervisorDocuments } from '../context';
+import { ResponsiveDrawerDialog } from '@/app/components/modals/responsivedrawer';
+import CommentForm from '../commentForm';
+import { CommentTableComponent } from '../commets';
+import { CopyX } from 'lucide-react';
+import PdfViewer from './pdfView';
 
-
-function VeiwPage() {
+function ViewPage() {
     const urlPath = usePathname();
     const id = urlPath.split('/')[3];
 
     const { getDocumentById, document } = useSupervisorDocuments();
     const { profile } = useSupervisorProfile();
 
+    const [isDrawerOpen, setDrawerOpen] = useState(false);
+
+    const handleClose = () => setDrawerOpen(false);
+    const handleOpen = () => setDrawerOpen(true);
+
     useEffect(() => {
-        getDocumentById(id)
-        console.log(id)
-    }, [])
+        getDocumentById(id);
+    }, [id]);
 
+    const [viewDoc, setViewDoc] = useState(false);
 
-    const [viewdoc, setViewdoc] = useState(false);
-    const doc = document?.document ? [{ uri: document.document }] : [];
+    // Check if the document is a PDF
+    const isPDF = document?.document.endsWith('.pdf');
+
+    // Construct the document URL for embedding
+    const documentURL = document?.document ? [{ uri: document.document }] : [];
+
     return (
-
         <div>
             <Breadcrumb>
                 <BreadcrumbList>
@@ -37,73 +49,59 @@ function VeiwPage() {
                     <BreadcrumbItem>
                         <BreadcrumbLink href="/components">Document</BreadcrumbLink>
                     </BreadcrumbItem>
-
                 </BreadcrumbList>
             </Breadcrumb>
 
-            {
-                viewdoc ? (
-                    <div>
-                        {/* <PdfViewer fileUrl={fileUrl} /> */}
-                        <div className="flex-end bg-red-400 border-2 rounded-lg w-6 h-6 " onClick={() => setViewdoc(false)}>
-                            <h4 className="text-center">X</h4>
+            {viewDoc ? (
+                <div>
+                    <div style={{ height: '100vh', width: '100%', padding: '20px', boxSizing: 'border-box' }}>
+                        <div className="flex justify-end" onClick={() => setViewDoc(false)}>
+                            <CopyX className="h-6 w-6 text-red-500" />
                         </div>
-
-                        {/* <DocViewerComponent /> */}
-
-                        <div style={{ height: '100vh', width: '100%', padding: '20px', boxSizing: 'border-box' }}>
+                        {isPDF ? (
+                            <PdfViewer fileUrl="https://res.cloudinary.com/dhxco7i18/raw/upload/v1720806817/validation_documents/1720806816510-Abdulazeez_Sodiq_Nda_1.pdf" />
+                        ) : (
                             <DocViewer
-                                documents={doc}
+                                documents={documentURL}
                                 pluginRenderers={DocViewerRenderers}
                                 style={{ width: '100%', height: '100%' }}
                             />
-                        </div>
-
+                        )}
                     </div>
-
-                ) : (
-                    <div className='flex justify-between pt-5'>
-                        <div className="flex gap-x-10">
-                            <Image src={FileImage}
-                                alt="UserImage"
-                                width={300} height={300}
-                                className="rounded-lg border-2" />
-                            <div >
-
-                                <div className=''>
-                                    <h4 >
-                                        <span className="font-bold text-md">File Name:</span>{document?.title}</h4>
-                                    {/* <h4 >
-                                        <span className="font-bold text-md">Supervisor:</span> {profile?.supervisor}</h4> */}
-                                    <h4 >
-                                        <span className="font-bold text-md">Status</span> {document?.status} </h4>
-
-                                    <h4 >
-                                        <span className="font-bold text-md ">Comments</span>5</h4>
-                                </div>
-
-                                <div>
-
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <div className="flex gap-x-4">
+                </div>
+            ) : (
+                <div className="flex flex-col md:flex-row justify-between pt-5 gap-4">
+                    <div className="flex flex-col md:flex-row gap-4">
+                        <Image src={FileImage} alt="Document Image" width={300} height={300} className="rounded-lg border-2" />
+                        <div>
                             <div>
-                                <Button className="bg-red-400" onClick={() => setViewdoc(true)}> View</Button>
-
+                                <h4><span className="font-bold text-md">File Name:</span> {document?.title}</h4>
+                                <h4><span className="font-bold text-md">Status:</span> {document?.status}</h4>
+                                <h4><span className="font-bold text-md">Comments:</span> 5</h4>
                             </div>
-
                         </div>
+                    </div>
+                    <div className="flex gap-4">
+                        <Button className="bg-red-400" onClick={() => setViewDoc(true)}>View</Button>
+                        <Button className="bg-green-400" onClick={handleOpen}>Comments</Button>
+                    </div>
+                </div>
+            )}
 
+            <div>
+                <CommentTableComponent comments={document?.comments as any} />
+            </div>
 
-                    </div>)
-            }
-
+            <ResponsiveDrawerDialog
+                title="Create a Comment"
+                description="Comment on the progress of the work"
+                isOpen={isDrawerOpen}
+                onClose={handleClose}
+            >
+                <CommentForm documentId={document?.id || ''} />
+            </ResponsiveDrawerDialog>
         </div>
-    )
-
+    );
 }
 
-export default VeiwPage; 
+export default ViewPage;

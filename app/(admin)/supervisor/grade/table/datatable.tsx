@@ -1,6 +1,11 @@
 "use client";
-
 import React, { useState } from "react";
+import { DataTablePagination } from "@/app/components/table/tableItems/paginations";
+import { Input } from "@/components/ui/input";
+import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@/components/ui/table";
+import { ResponsiveDrawerDialog } from "../../../../components/modals/responsivedrawer";
+import { CloudUpload } from 'lucide-react';
+
 import {
     ColumnDef,
     ColumnFiltersState,
@@ -13,18 +18,6 @@ import {
     getSortedRowModel,
     useReactTable,
 } from "@tanstack/react-table";
-import { DataTablePagination } from "@/app/components/table/tableItems/paginations";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import {
-    Table,
-    TableHeader,
-    TableRow,
-    TableHead,
-    TableBody,
-    TableCell,
-} from "@/components/ui/table";
-import { ResponsiveDrawerDialog } from "../../../../components/modals/responsivedrawer";
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[];
@@ -73,10 +66,12 @@ export function TableComponent<TData, TValue>({
     const [isModalOpen, setModalOpen] = useState(false);
     const [selectedRow, setSelectedRow] = useState<TData | null>(null);
 
-    const handleView = (row: TData) => {
-        setSelectedRow(row);
+    const handleView = (rowId: string) => {
+        const selected = data.find((row) => (row as any)._id === rowId);
+        setSelectedRow(selected || null);
         setModalOpen(true);
     };
+
 
     return (
         <div className="border-2 rounded-lg p-4">
@@ -92,15 +87,9 @@ export function TableComponent<TData, TValue>({
                             className="max-w-sm"
                         />
                     </div>
+
                 </div>
-                <div className=" flex items-center">
-                    <div>
-                        {/* <DataTableViewOptions table={table} /> */}
-                    </div>
-                    <Button className="ml-4" onClick={onOpen}>
-                        <h4 className="pr-2">Validation</h4>
-                    </Button>
-                </div>
+
             </div>
             <Table className="border-2 rounded-lg border-customPrimary">
                 <TableHeader className=" bg-customPrimary  ">
@@ -113,6 +102,7 @@ export function TableComponent<TData, TValue>({
                                     </TableHead>
                                 );
                             })}
+
                         </TableRow>
                     ))}
                 </TableHeader>
@@ -129,22 +119,25 @@ export function TableComponent<TData, TValue>({
                                     <TableCell key={cell.id} className="">
                                         {flexRender(cell.column.columnDef.cell, cell.getContext())}
                                     </TableCell>
+
+
                                 ))}
+
 
                             </TableRow>
                         ))
                     ) : (
                         <TableRow>
                             <TableCell colSpan={columns.length} className="h-24 text-center">
-                                No results.
+                                No Research Yet!.
                             </TableCell>
                         </TableRow>
                     )}
                 </TableBody>
             </Table>
 
-            <DataTablePagination table={table} />
 
+            <DataTablePagination table={table} />
             <ResponsiveDrawerDialog
                 title={title}
                 description={description}
@@ -153,24 +146,14 @@ export function TableComponent<TData, TValue>({
             >
                 <div>{children}</div>
             </ResponsiveDrawerDialog>
-
-
             {selectedRow && (
                 <ResponsiveDrawerDialog
-                    title="Comments"
-                    description="Comments for the selected document"
+                    title={title}
+                    description={description}
                     isOpen={isModalOpen}
                     onClose={() => setModalOpen(false)}
                 >
-                    <div>
-                        {(selectedRow as any).comments && (selectedRow as any).comments.length > 0 ? (
-                            (selectedRow as any).comments.map((comment: any, index: number) => (
-                                <p key={index}>{comment}</p>
-                            ))
-                        ) : (
-                            <p>No comments available.</p>
-                        )}
-                    </div>
+                    <div>ththhe</div>
                 </ResponsiveDrawerDialog>
             )}
         </div>

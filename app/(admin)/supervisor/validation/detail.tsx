@@ -7,16 +7,21 @@ import { TableComponent } from './table/datatable';
 import CardComponent from '@/app/components/card/index';
 import { UsersRound, MessageCircleMore, BookCheck } from 'lucide-react';
 import { useValidationRequests } from './context';
+import { useAuthContext } from '@/app/(auth)/context';
 
 
 
 export function Detail() {
     const [isDrawerOpen, setDrawerOpen] = useState(false);
     const { fetchAllValidationRequests, validationRequests } = useValidationRequests()
+    const { seasons } = useAuthContext()
+
+    const [selectedSeason, getSelectedSeason] = useState("2023-2024");
 
 
     useEffect(() => {
-        fetchAllValidationRequests()
+        fetchAllValidationRequests("2023-2024");
+        console.log(validationRequests, "the topic")
     }, [])
 
     const handleUpdate = (user: UploodModel) => {

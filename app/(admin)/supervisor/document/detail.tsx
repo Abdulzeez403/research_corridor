@@ -7,16 +7,20 @@ import { TableComponent } from './table/datatable';
 import CardComponent from '@/app/components/card/index';
 import { UsersRound, MessageCircleMore, BookCheck } from 'lucide-react';
 import { useSupervisorDocuments } from './context';
+import { useAuthContext } from '@/app/(auth)/context';
 
 
 
 export function Detail() {
     const [isDrawerOpen, setDrawerOpen] = useState(false);
     const { getDocuments, documents } = useSupervisorDocuments();
+    const { seasons } = useAuthContext()
+
+    const [seletedSeason, setSelectedSeason] = useState('2023-2024')
 
 
     useEffect(() => {
-        getDocuments()
+        getDocuments(seletedSeason)
         console.log(documents)
     }, [])
 
@@ -54,16 +58,11 @@ export function Detail() {
                 <div className="grid gap-4 md:grid-cols-2 md:gap-8 lg:grid-cols-4 pt-5">
                     <CardComponent
                         title="Uploaded Document"
-                        total="20"
+                        total={documents?.length}
                         subtitle="Total number of all Researcher"
                         icon={<UsersRound className="h-5 w-5" />}
                     />
-                    <CardComponent
-                        title="PFT document"
-                        total="10"
-                        subtitle="Total number of all Researcher"
-                        icon={<MessageCircleMore className="h-5 w-5" />}
-                    />
+
 
 
 
@@ -84,9 +83,9 @@ export function Detail() {
                     title="Upload Research Document
                     "
                     description="This support Doc / Pft / Image / sheet and others!">
-                        <h4>hdhhdh</h4>
-                
-                     </TableComponent>
+                    <h4>hdhhdh</h4>
+
+                </TableComponent>
             </div>
         </div>
     )

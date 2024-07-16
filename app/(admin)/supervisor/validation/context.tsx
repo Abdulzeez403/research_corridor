@@ -6,7 +6,8 @@ import Cookies from 'universal-cookie';
 // Define the structure for the validation request
 interface ValidationRequest {
     id: string;
-    // Add other relevant fields here
+    matric: string;
+
 }
 
 // Define the structure for the context state
@@ -14,7 +15,7 @@ interface ValidationRequestsContextProps {
     validationRequests: ValidationRequest[];
     loading: boolean;
     error: string | null;
-    fetchAllValidationRequests: () => void;
+    fetchAllValidationRequests: (season: any) => void;
     fetchValidationRequestById: (id: string) => Promise<ValidationRequest | null>;
     addCommentToValidationRequest: (id: string, comment: string) => Promise<void>;
 }
@@ -30,14 +31,14 @@ export const ValidationRequestsProvider: React.FC<{ children: React.ReactNode }>
 
     const cookies = new Cookies();
     const token = cookies.get("token");
-    const baseUrl = "https://your-api-base-url.com/api/supervisor/validation-requests";
+    const baseUrl = "https://research-corridor.onrender.com/api/supervisor/validation-requests";
 
     // Fetch all validation requests
-    const fetchAllValidationRequests = async () => {
+    const fetchAllValidationRequests = async (season: any) => {
         setLoading(true);
         setError(null);
         try {
-            const response = await axios.get(baseUrl, {
+            const response = await axios.get(`https://research-corridor.onrender.com/api/supervisor/validation-requests/${season}`, {
                 headers: {
                     'x-auth-token': token,
                 },
@@ -45,6 +46,7 @@ export const ValidationRequestsProvider: React.FC<{ children: React.ReactNode }>
             setValidationRequests(response.data);
         } catch (error: any) {
             setError(error.message);
+            console.log(error.response ? error.response.data.msg : error.message);
         } finally {
             setLoading(false);
         }
