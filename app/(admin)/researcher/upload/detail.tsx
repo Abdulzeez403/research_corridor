@@ -52,19 +52,14 @@ function UploadDocumentDetail() {
     return (
         <div>
             <div>
-                <div className="grid gap-4 md:grid-cols-2 md:gap-8 lg:grid-cols-4 pt-5">
+                <div className="grid grid-cols-3  pt-5">
                     <CardComponent
                         title="Uploaded Document"
-                        total="20"
-                        subtitle="Total number of all Researcher"
+                        total={documents.length}
+                        subtitle="Total number of all document"
                         icon={<UsersRound className="h-5 w-5" />}
                     />
-                    <CardComponent
-                        title="PFT document"
-                        total="10"
-                        subtitle="Total number of all Researcher"
-                        icon={<MessageCircleMore className="h-5 w-5" />}
-                    />
+
 
 
 

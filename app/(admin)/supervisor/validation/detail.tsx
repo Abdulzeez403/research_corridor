@@ -55,19 +55,14 @@ export function Detail() {
     return (
         <div>
             <div>
-                <div className="grid gap-4 md:grid-cols-2 md:gap-8 lg:grid-cols-4 pt-5">
+                <div className="grid gap-4 grid-cols-3 pt-5">
                     <CardComponent
-                        title="Approved Request"
-                        total="20"
+                        title="Validation Requests"
+                        total={validationRequests.length}
                         subtitle="Total number of all Researcher"
                         icon={<UsersRound className="h-5 w-5" />}
                     />
-                    <CardComponent
-                        title="Pending Requests"
-                        total="10"
-                        subtitle="Total number of all Researcher"
-                        icon={<MessageCircleMore className="h-5 w-5" />}
-                    />
+
 
 
 

@@ -2,28 +2,18 @@ import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import React from 'react';
+import { ValidationRequest } from '../validation/context';
+import Link from 'next/link';
 
-interface ValidationRequest {
-    matric: string;
-    topic: string;
-    progress: number;
-}
+
 
 interface IProps {
     validationRequests: ValidationRequest[];
 }
 
-const headers = ['Matric', 'Topic', 'Progress'];
+const headers = ['Matric', 'Topic', 'Date'];
 
-const getColorForProgress = (progress: number): string => {
-    if (progress >= 80) {
-        return 'bg-green-500';
-    } else if (progress >= 50) {
-        return 'bg-yellow-500';
-    } else {
-        return 'bg-red-500';
-    }
-};
+
 
 export const ReatTableComponent: React.FC<IProps> = ({ validationRequests }) => {
     return (
@@ -33,7 +23,7 @@ export const ReatTableComponent: React.FC<IProps> = ({ validationRequests }) => 
                     {headers.map((header, index) => (
                         <TableHead
                             key={index}
-                            className={`${header === 'Progress' ? 'text-right' : ''} bg-customPrimary text-white`}
+                            className={` bg-customPrimary text-white`}
                         >
                             {header}
                         </TableHead>
@@ -48,16 +38,16 @@ export const ReatTableComponent: React.FC<IProps> = ({ validationRequests }) => 
                         </TableCell>
                     </TableRow>
                 ) : (
-                    validationRequests.map((item, index) => (
+                    validationRequests?.map((item: ValidationRequest, index: number) => (
+
                         <TableRow key={index}>
                             <TableCell>
                                 <div className="font-medium">{item.matric}</div>
                             </TableCell>
                             <TableCell>{item.topic}</TableCell>
-                            <TableCell className="text-right w-10">
-                                <Progress value={item.progress} className={getColorForProgress(item.progress)} />
-                            </TableCell>
+                            <TableCell>{new Date(item.createdAt).toLocaleDateString()}</TableCell>
                         </TableRow>
+
                     ))
                 )}
             </TableBody>

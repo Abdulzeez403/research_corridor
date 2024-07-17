@@ -4,15 +4,18 @@ import axios from 'axios';
 import Cookies from 'universal-cookie';
 
 // Define the structure for the validation request
-interface ValidationRequest {
-    id: string;
+export interface ValidationRequest {
+    _id: string;
     matric: string;
+    topic: string;
+    createdAt: string;
 
 }
 
 // Define the structure for the context state
 interface ValidationRequestsContextProps {
     validationRequests: ValidationRequest[];
+    validationRequest: any;
     loading: boolean;
     error: string | null;
     fetchAllValidationRequests: (season: any) => void;
@@ -26,6 +29,8 @@ const ValidationRequestsContext = createContext<ValidationRequestsContextProps |
 // Define the provider component
 export const ValidationRequestsProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const [validationRequests, setValidationRequests] = useState<ValidationRequest[]>([]);
+
+    const [validationRequest, setValidationRequest] = useState({})
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
 
@@ -43,7 +48,14 @@ export const ValidationRequestsProvider: React.FC<{ children: React.ReactNode }>
                     'x-auth-token': token,
                 },
             });
-            setValidationRequests(response.data);
+
+            const validationRequests = response.data.map((item: any) => ({
+                id: item._id,
+                matric: item.researcherId.matric,
+                topic: item.title,
+                createdAt: item.createdAt,
+            }));
+            setValidationRequests(validationRequests);
         } catch (error: any) {
             setError(error.message);
             console.log(error.response ? error.response.data.msg : error.message);
@@ -62,6 +74,7 @@ export const ValidationRequestsProvider: React.FC<{ children: React.ReactNode }>
                     'x-auth-token': token,
                 },
             });
+            setValidationRequest(response.data)
             return response.data;
         } catch (error: any) {
             setError(error.message);
@@ -91,6 +104,7 @@ export const ValidationRequestsProvider: React.FC<{ children: React.ReactNode }>
     return (
         <ValidationRequestsContext.Provider value={{
             validationRequests,
+            validationRequest,
             loading,
             error,
             fetchAllValidationRequests,

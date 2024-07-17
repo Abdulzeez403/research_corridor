@@ -30,7 +30,7 @@ export const SupervisorDashboard = () => {
     const { fetchProfile, profile } = useSupervisorProfile();
     const { fetchAllValidationRequests, validationRequests } = useValidationRequests();
 
-    const { getNotifications, notifications } = useNotifications();
+    const { getNotifications, notifications, loading, error } = useNotifications();
 
     useEffect(() => {
         fetchProfile()
@@ -39,6 +39,9 @@ export const SupervisorDashboard = () => {
         fetchAllValidationRequests("2023-2024")
         getNotifications()
     }, [])
+
+    if (loading) return <div>Loading...</div>;
+    if (error) return <div>Error: {error}</div>;
 
     const NotificationItem = ({ description }: INotification) => (
         <div className=" flex justify-between my-4 ">
@@ -88,7 +91,7 @@ export const SupervisorDashboard = () => {
                     />
                 </div>
                 <div className="mt-6">
-                    <ReatTableComponent validationRequests={validationRequests as any} />
+                    <ReatTableComponent validationRequests={validationRequests} />
                 </div>
             </div>
             <div className="flex flex-col w-full lg:w-1/4">
@@ -125,9 +128,13 @@ export const SupervisorDashboard = () => {
                                 <h4 className="font-bold">Activities</h4>
                                 <Activity className="h-5 w-5" />
                             </div>
-                            {notifications.map((notification, index) => (
-                                <NotificationItem key={index} description={notification.message} />
-                            ))}
+                            {notifications.length > 0 ? (
+                                notifications?.slice(0, 4).map((notification, index) => (
+                                    <NotificationItem key={index} description={notification.message} />
+                                ))
+                            ) : (
+                                <div>No notifications available.</div>
+                            )}
                         </div>
                     </CardContent>
                 </Card>
