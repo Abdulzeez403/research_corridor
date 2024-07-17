@@ -36,14 +36,14 @@ export const ValidationRequestsProvider: React.FC<{ children: React.ReactNode }>
 
     const cookies = new Cookies();
     const token = cookies.get("token");
-    const baseUrl = "https://research-corridor.onrender.com/api/supervisor/validation-requests";
+    const baseUrl = "https://research-corridor.onrender.com/api/supervisor";
 
     // Fetch all validation requests
     const fetchAllValidationRequests = async (season: any) => {
         setLoading(true);
         setError(null);
         try {
-            const response = await axios.get(`https://research-corridor.onrender.com/api/supervisor/validation-requests/${season}`, {
+            const response = await axios.get(`${baseUrl}/validation-requests/${season}`, {
                 headers: {
                     'x-auth-token': token,
                 },
@@ -69,7 +69,7 @@ export const ValidationRequestsProvider: React.FC<{ children: React.ReactNode }>
         setLoading(true);
         setError(null);
         try {
-            const response = await axios.get(`${baseUrl}/${id}`, {
+            const response = await axios.get(`${baseUrl}/validation-request/${id}`, {
                 headers: {
                     'x-auth-token': token,
                 },
@@ -89,7 +89,7 @@ export const ValidationRequestsProvider: React.FC<{ children: React.ReactNode }>
         setLoading(true);
         setError(null);
         try {
-            await axios.put(`${baseUrl}/comment/${id}`, { comment }, {
+            await axios.put(`${baseUrl}/validation-request/comment/${id}`, { comment }, {
                 headers: {
                     'x-auth-token': token,
                 },

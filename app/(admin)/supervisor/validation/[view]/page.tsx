@@ -8,11 +8,17 @@ import { Button } from '@/components/ui/button';
 import { X } from "lucide-react"
 import { useValidationRequests } from '../context';
 import DocViewer, { DocViewerRenderers } from 'react-doc-viewer';
+import { ResponsiveDrawerDialog } from '@/app/components/modals/responsivedrawer';
+import CommentForm from '../commentForm';
 
 
 function VeiwPage() {
     const urlPath = usePathname();
     const id = urlPath.split('/')[3];
+    const [isDrawerOpen, setDrawerOpen] = useState(false);
+
+    const handleClose = () => setDrawerOpen(false);
+    const handleOpen = () => setDrawerOpen(true);
 
 
     const { fetchValidationRequestById, validationRequest,
@@ -25,7 +31,7 @@ function VeiwPage() {
 
 
     const [viewdoc, setViewdoc] = useState(false);
-    const documents = document?.document ? [{ uri: document.document }] : [];
+    const documents = validationRequest?.document ? [{ uri: validationRequest.document }] : [];
     return (
 
         <div>
@@ -42,65 +48,29 @@ function VeiwPage() {
                 </BreadcrumbList>
             </Breadcrumb>
 
-            {
-                viewdoc ? (
-                    <div>
-                        {/* <PdfViewer fileUrl={fileUrl} /> */}
-                        <div className="flex-end bg-red-400 border-2 rounded-lg w-6 h-6 " onClick={() => setViewdoc(false)}>
-                            <h4 className="text-center">X</h4>
-                        </div>
 
-                        {/* <DocViewerComponent /> */}
+            <div>
 
-                        <div style={{ height: '100vh', width: '100%', padding: '20px', boxSizing: 'border-box' }}>
-                            <DocViewer
-                                documents={documents}
-                                pluginRenderers={DocViewerRenderers}
-                                style={{ width: '100%', height: '100%' }}
-                            />
-                        </div>
+                <Button onClick={() => handleOpen()} className='flex justify-end'>Comment</Button>
+                <div style={{ height: '100vh', width: '100%', padding: '20px', boxSizing: 'border-box' }}>
+                    <DocViewer
+                        documents={documents}
+                        pluginRenderers={DocViewerRenderers}
+                        style={{ width: '100%', height: '100%' }}
+                    />
+                </div>
 
-                    </div>
+            </div>
 
-                ) : (
-                    <div className='flex justify-between pt-5'>
-                        <div className="flex gap-x-10">
-                            <Image src={FileImage}
-                                alt="UserImage"
-                                width={300} height={300}
-                                className="rounded-lg border-2" />
-                            <div >
+            <ResponsiveDrawerDialog
+                title="Create a Comment"
+                description="Comment on the progress of the work"
+                isOpen={isDrawerOpen}
+                onClose={handleClose}
+            >
+                <CommentForm />
+            </ResponsiveDrawerDialog>
 
-                                <div className=''>
-                                    <h4 >
-                                        <span className="font-bold text-md">File Name:</span>{document?.title}</h4>
-                                    {/* <h4 >
-                                        <span className="font-bold text-md">Supervisor:</span> {profile?.supervisor}</h4> */}
-                                    {/* <h4 >
-                                        <span className="font-bold text-md">Status</span> {document?.status} </h4> */}
-
-                                    <h4 >
-                                        <span className="font-bold text-md ">Comments</span>5</h4>
-                                </div>
-
-                                <div>
-
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <div className="flex gap-x-4">
-                            <div>
-                                <Button className="bg-red-400" onClick={() => setViewdoc(true)}> View</Button>
-
-                            </div>
-
-                        </div>
-
-
-                    </div>)
-            }
 
         </div>
     )
