@@ -6,7 +6,7 @@ import { columns } from "./column";
 import { TableComponent } from './table/datatable';
 import CardComponent from '@/app/components/card/index';
 import { UsersRound, MessageCircleMore, BookCheck } from 'lucide-react';
-import { useValidationRequests } from './context';
+import { ValidationRequest, useValidationRequests } from './context';
 import { useAuthContext } from '@/app/(auth)/context';
 
 
@@ -24,18 +24,10 @@ export function Detail() {
         console.log(validationRequests, "the topic")
     }, [])
 
-    const handleUpdate = (user: UploodModel) => {
-        setDrawerOpen(!isDrawerOpen);
 
-    };
 
-    const handleDelete = (user: UploodModel) => {
-        alert("Deleted Successfully!")
-
-    };
-
-    const handleView = (value: UploodModel) => {
-        return value?.id
+    const handleView = (value: ValidationRequest) => {
+        return value?._id
     };
 
     const handleClose = () => {
@@ -48,7 +40,7 @@ export function Detail() {
 
 
 
-    const createColumns = columns({ onEdit: handleUpdate, onDelete: handleDelete, onView: handleView });
+    const createColumns = columns({ onView: handleView });
 
 
 
@@ -74,8 +66,6 @@ export function Detail() {
                 <TableComponent
                     columns={createColumns}
                     data={validationRequests}
-                    onEdit={handleUpdate}
-                    onDelete={handleDelete}
                     onView={handleView}
                     open={isDrawerOpen}
                     onDismiss={handleClose}

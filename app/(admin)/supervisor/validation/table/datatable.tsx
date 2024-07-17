@@ -27,8 +27,6 @@ import {
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[];
     data: TData[];
-    onEdit: (value: any) => void;
-    onDelete: (user: any) => void;
     onDismiss: () => void;
     onView: (value: any) => void;
     onOpen: () => void;

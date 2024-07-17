@@ -7,10 +7,10 @@ import Link from "next/link";
 import { ValidationRequest } from "./context";
 
 interface IProps {
-    onView: (value: ISupervisor) => void;
+    onView: (value: any) => void;
 }
 
-export const columns = ({ onView }: IProps): ColumnDef<ValidationRequest, unknown>[] => [
+export const columns = ({ onView }: IProps): ColumnDef<any, unknown>[] => [
     {
         id: "select",
         header: ({ table }) => (
