@@ -4,16 +4,17 @@ import React, { useEffect } from 'react'
 
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
-import { useResearchers } from '../../researcher/context';
+import { useGrades } from '../context';
+
 
 function ViewPage() {
     const urlPath = usePathname();
     const id = urlPath.split('/')[3];
 
-    const { getResearcherById, researcher: user } = useResearchers();
+    const { fetchSingleGrade, singleGrade } = useGrades();
 
     useEffect(() => {
-        getResearcherById(id)
+        fetchSingleGrade(id)
     }, [])
 
     return (
@@ -27,7 +28,7 @@ function ViewPage() {
                     <div className="flex justify-center m-0 bg-customSecondary rounded-md">
                         <div className='flex justify-between align-center p-2 pb-3 bg-customSecondary rounded-md '>
                             <div className="block justify-center py-2 ">
-                                <h4 className='text-white text-sm py-2'>{user?.name}</h4>
+                                <h4 className='text-white text-sm py-2'>{singleGrade?.name}</h4>
                             </div>
                         </div>
 
@@ -38,8 +39,8 @@ function ViewPage() {
 
 
                             <div className="text-center">
-                                <h4>{user?.name}</h4>
-                                <h4>{user?.role}</h4>
+                                <h4>{singleGrade?.name}</h4>
+                                <h4>{singleGrade?.matric}</h4>
 
                             </div>
 
@@ -65,37 +66,16 @@ function ViewPage() {
                                     <div className="font-medium">Name:</div>
                                 </TableCell>
                                 <TableCell>
-                                    <div className="font-medium">{user?.name}</div>
+                                    <div className="font-medium">{singleGrade?.name}</div>
                                 </TableCell>
                             </TableRow >
-                            <TableRow>
 
-                                <TableCell>
-                                    <div className="font-medium">Email:</div>
-                                </TableCell>
-                                <TableCell>
-                                    <div className="font-medium">{user?.email}</div>
-                                </TableCell>
-                            </TableRow >
                             <TableRow>
                                 <TableCell>
                                     <div className="font-medium">Matric:</div>
                                 </TableCell>
                                 <TableCell>
-                                    <div className="font-medium">{user?.matric}</div>
-                                </TableCell>
-                            </TableRow >
-
-
-
-
-
-                            <TableRow>
-                                <TableCell>
-                                    <div className="font-medium">Phone:</div>
-                                </TableCell>
-                                <TableCell>
-                                    <div className="font-medium">{user?.phone}</div>
+                                    <div className="font-medium">{singleGrade?.matric}</div>
                                 </TableCell>
                             </TableRow >
 

@@ -13,6 +13,7 @@ import CommentForm from '../commentForm';
 import { CommentTableComponent } from '../commets';
 import { CopyX } from 'lucide-react';
 import PdfViewer from './pdfView';
+import Link from 'next/link';
 
 function ViewPage() {
     const urlPath = usePathname();
@@ -58,15 +59,12 @@ function ViewPage() {
                         <div className="flex justify-end" onClick={() => setViewDoc(false)}>
                             <CopyX className="h-6 w-6 text-red-500" />
                         </div>
-                        {isPDF ? (
-                            <PdfViewer fileUrl="https://res.cloudinary.com/dhxco7i18/raw/upload/v1720806817/validation_documents/1720806816510-Abdulazeez_Sodiq_Nda_1.pdf" />
-                        ) : (
-                            <DocViewer
-                                documents={documentURL}
-                                pluginRenderers={DocViewerRenderers}
-                                style={{ width: '100%', height: '100%' }}
-                            />
-                        )}
+
+                        <DocViewer
+                            documents={documentURL}
+                            pluginRenderers={DocViewerRenderers}
+                            style={{ width: '100%', height: '100%' }}
+                        />
                     </div>
                 </div>
             ) : (
@@ -82,7 +80,18 @@ function ViewPage() {
                         </div>
                     </div>
                     <div className="flex gap-4">
-                        <Button className="bg-red-400" onClick={() => setViewDoc(true)}>View</Button>
+                        {isPDF ? (
+                            <Button className="bg-red-400">
+                                <Link href={document?.document as any}>
+                                    View
+                                </Link>
+                            </Button>
+                        ) : (
+                            <Button className="bg-red-400" onClick={() => setViewDoc(true)}>
+                                View
+                            </Button>
+                        )}
+
                         <Button className="bg-green-400" onClick={handleOpen}>Comments</Button>
                     </div>
                 </div>

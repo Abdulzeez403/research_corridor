@@ -2,21 +2,28 @@ import React, { createContext, useContext, useState } from 'react';
 import axios from 'axios';
 import Cookies from 'universal-cookie';
 
-
+interface ResearcherId {
+    _id: string;
+    name: string;
+    matric: string;
+    season: string;
+}
 
 interface Grade {
-    gradeId: string;
+    _id: string;
+    researcherId: ResearcherId;
+    name: string;
+    matric: string;
     introduction: number;
-    reviewLit: number;
-    researchMethod: number;
+    date: string;
     dataAnalysis: number;
     discussion: number;
+    formart: number;
     language: number;
     reference: number;
-    formart: number;
+    researchMethod: number;
+    reviewLit: number;
     total: number;
-    generalComment: string;
-    evaluator: string;
 }
 
 interface GradesContextProps {
@@ -61,7 +68,12 @@ export const GradesProvider = ({ children }: IProp) => {
                     'x-auth-token': token,
                 },
             });
-            setGrades(response.data?.grades?.researcherId);
+            const researcherGrade = response.data?.grades.map((item: any) => ({
+                id: item._id,
+                matric: item.researcherId.matric,
+                name: item.name,
+            }));
+            setGrades(researcherGrade);
         } catch (error: any) {
             setError(error.message);
         } finally {
@@ -73,7 +85,7 @@ export const GradesProvider = ({ children }: IProp) => {
         setLoading(true);
         setError(null);
         try {
-            const response = await axios.get(`${baseUrl}/api/supervisor/grade/${id}`, {
+            const response = await axios.get(`${baseUrl}/supervisor/grade/${id}`, {
                 headers: {
                     'x-auth-token': token,
                 },

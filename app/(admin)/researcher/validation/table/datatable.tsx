@@ -165,7 +165,12 @@ export function TableComponent<TData, TValue>({
                     <div>
                         {(selectedRow as any).comments && (selectedRow as any).comments.length > 0 ? (
                             (selectedRow as any).comments.map((comment: any, index: number) => (
-                                <p key={index}>{comment}</p>
+                                <div key={index} className="flex justify-between">
+                                    <p>{comment?.comment}</p>
+                                    <p className="bg-slate-300 rounded font-semibold px-2 my-2">{comment?.status}</p>
+
+                                </div>
+
                             ))
                         ) : (
                             <p>No comments available.</p>

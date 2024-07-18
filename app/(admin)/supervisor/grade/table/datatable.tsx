@@ -80,9 +80,9 @@ export function TableComponent<TData, TValue>({
                     <div className="flex items-center py-4">
                         <Input
                             placeholder="Search name"
-                            value={(table.getColumn("title")?.getFilterValue() as string) ?? ""}
+                            value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
                             onChange={(event: any) =>
-                                table.getColumn("title")?.setFilterValue(event.target.value)
+                                table.getColumn("name")?.setFilterValue(event.target.value)
                             }
                             className="max-w-sm"
                         />

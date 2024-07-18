@@ -4,6 +4,8 @@ import { TableComponent } from './table/datatable'
 import { useUploadTopic } from './context'
 import ValidateTopicForm from './form';
 import { columns } from "./column";
+import CardComponent from '@/app/components/card';
+import { UsersRound } from 'lucide-react';
 
 
 export const Detail = () => {
@@ -38,17 +40,34 @@ export const Detail = () => {
     const createColumns = columns({ onView: handleView });
 
     return (
-        <TableComponent
-            columns={createColumns}
-            data={topics}
-            onView={handleView}
-            open={isDrawerOpen}
-            onDismiss={handleClose}
-            onOpen={handleCreateNewMember}
-            title="Upload Research Document"
-            description="This support Doc / Pft / Image / sheet and others!">
-            <ValidateTopicForm />
-        </TableComponent>
+
+
+        <div>
+            <div className="grid gap-4 grid-cols-3 pt-5">
+                <CardComponent
+                    title="Topic Validations"
+                    total={topics?.length}
+                    subtitle="Total number of all Researcher"
+                    icon={<UsersRound className="h-5 w-5" />}
+                />
+
+
+
+
+
+            </div>
+            <TableComponent
+                columns={createColumns}
+                data={topics}
+                onView={handleView}
+                open={isDrawerOpen}
+                onDismiss={handleClose}
+                onOpen={handleCreateNewMember}
+                title="Upload Research Document"
+                description="This support Doc / Pft / Image / sheet and others!">
+                <ValidateTopicForm />
+            </TableComponent>
+        </div>
 
 
     )

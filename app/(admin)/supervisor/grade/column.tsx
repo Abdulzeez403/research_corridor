@@ -46,19 +46,19 @@ export const columns = ({ onView }: IProps): ColumnDef<any, unknown>[] => [
         ),
     },
 
-    {
-        accessorKey: "progress.progressPercent",
-        header: ({ column }) => (
-            <DataTableColumnHeader column={column} title="Progress" />
-        ),
-    },
+    // {
+    //     accessorKey: "progress.progressPercent",
+    //     header: ({ column }) => (
+    //         <DataTableColumnHeader column={column} title="Progress" />
+    //     ),
+    // },
 
 
 
     {
         id: 'actions',
         cell: ({ row }) => (
-            <Link href={`/supervisor/researcher/${(row.original as any)._id}`}>
+            <Link href={`/supervisor/grade/${(row.original as any).id}`}>
                 <Button>
                     View
                 </Button>

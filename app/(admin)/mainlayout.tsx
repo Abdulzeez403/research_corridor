@@ -71,8 +71,7 @@ export const MainLayout = ({ children }: IProp) => {
 
 
     useEffect(() => {
-        // fetchProfile()
-        // console.log(profile, "the profile")
+
 
     }, [])
 
@@ -139,20 +138,10 @@ export const MainLayout = ({ children }: IProp) => {
                                     Appointment
                                 </NavLink>
 
-
-
-
                                 <NavLink href="/researcher/chat" icon={MessageSquareQuote}>
                                     ChatRoom
                                 </NavLink>
 
-                                <NavLink href="/researcher/progess" icon={Presentation}>
-                                    Progress
-                                </NavLink>
-
-                                <NavLink href="/researcher/grade" icon={Presentation}>
-                                    Grading
-                                </NavLink>
                                 <NavLink href="/researcher/profile" icon={CircleUserRound}>
                                     Profile
                                 </NavLink>
@@ -316,11 +305,8 @@ export const MainLayout = ({ children }: IProp) => {
                         <DropdownMenuContent align="end">
                             <DropdownMenuLabel>My Account</DropdownMenuLabel>
                             <DropdownMenuSeparator />
-                            <DropdownMenuItem>Settings</DropdownMenuItem>
-                            <DropdownMenuItem>Support</DropdownMenuItem>
-                            <DropdownMenuSeparator />
                             <DropdownMenuItem
-                                onClick={signOut}
+                                onClick={() => signOut()}
                             >Logout</DropdownMenuItem>
                         </DropdownMenuContent>
                     </DropdownMenu>

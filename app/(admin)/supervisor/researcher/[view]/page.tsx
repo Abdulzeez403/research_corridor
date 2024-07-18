@@ -5,6 +5,7 @@ import React, { useEffect } from 'react'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { useResearchers } from '../context';
 import { Button } from '@/components/ui/button';
+import ProgressBar from "@ramonak/react-progress-bar";
 
 function ViewPage() {
     const urlPath = usePathname();
@@ -49,11 +50,6 @@ function ViewPage() {
 
                     </div>
 
-                    <Button
-                        // onClick={handleOpen}
-                        className="w-full mt-4 bg-customPrimary text-customSecondary hover:bg-slate-300" >
-                        Update Supervisor/Profile
-                    </Button>
                 </div>
 
                 <div className="w-full">
@@ -103,6 +99,15 @@ function ViewPage() {
                     </Table>
                 </div>
             </div>
+
+            <div className="pt-8">
+                <h4 className='font-semibold text-lg'> Researcher Progress</h4>
+                <ProgressBar
+                    completed={user?.progress?.progressPercent as any}
+                    labelColor="#e80909"
+                />
+            </div>
+
         </div>
     )
 }

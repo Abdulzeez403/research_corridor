@@ -28,6 +28,9 @@ export interface IResearcher {
     topic?: string;
     season?: any;
     supervisor?: any;
+    progress?: {
+        progressPercent?: number
+    }
 }
 
 

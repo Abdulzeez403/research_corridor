@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from 'react'
 import { TableComponent } from './table/datatable'
 import { columns } from './column';
-import { useResearchers } from '../researcher/context';
 import { useGrades } from './context';
 
 
