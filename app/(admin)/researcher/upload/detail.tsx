@@ -52,7 +52,7 @@ function UploadDocumentDetail() {
     return (
         <div>
             <div>
-                <div className="grid grid-cols-3  pt-5">
+                <div className="grid grid-cols-3  pt-5 pb-4">
                     <CardComponent
                         title="Uploaded Document"
                         total={documents.length}

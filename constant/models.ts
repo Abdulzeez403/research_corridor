@@ -29,9 +29,27 @@ export interface IResearcher {
     season?: any;
     supervisor?: any;
     progress?: {
+        _id: string;
         progressPercent?: number
     }
 }
+
+// interface Progress {
+//     _id: string;
+//     progressPercent: number;
+// }
+
+// interface Researcher {
+//     _id: string;
+//     name: string;
+//     email: string;
+//     department: string;
+//     gender: string;
+//     matric: string;
+//     phone: string;
+//     progress: Progress;
+//     season: string;
+// }
 
 
 export interface ISupervisor {

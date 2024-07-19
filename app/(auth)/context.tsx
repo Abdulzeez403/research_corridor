@@ -264,7 +264,9 @@ export const AuthProvider: React.FC<IProps> = ({ children }) => {
         try {
             // Remove token from cookies
             cookies.remove('token', { path: '/' });
-            router.push('/');
+            // router.push('/');
+            window.location.reload();
+
         } catch (error) {
             console.log(error);
         }

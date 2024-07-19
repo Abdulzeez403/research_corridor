@@ -11,6 +11,7 @@ import { X } from "lucide-react"
 import DocViewer, { DocViewerRenderers } from 'react-doc-viewer';
 import { useDocumentContext } from '../context';
 import { useResearcherProfile } from '../../profile/context';
+import Link from 'next/link';
 
 
 function VeiwPage() {
@@ -25,23 +26,15 @@ function VeiwPage() {
     }, [])
 
 
+    const isPDF = document?.document?.endsWith('.pdf');
+
+
     const [viewdoc, setViewdoc] = useState(false);
     const documents = document?.document ? [{ uri: document.document }] : [];
     return (
 
         <div>
-            <Breadcrumb>
-                <BreadcrumbList>
-                    <BreadcrumbItem>
-                        <BreadcrumbLink href="/researcher/upload">Validation</BreadcrumbLink>
-                    </BreadcrumbItem>
-                    <BreadcrumbSeparator />
-                    <BreadcrumbItem>
-                        <BreadcrumbLink href="/components">Document</BreadcrumbLink>
-                    </BreadcrumbItem>
 
-                </BreadcrumbList>
-            </Breadcrumb>
 
             {
                 viewdoc ? (
@@ -93,8 +86,19 @@ function VeiwPage() {
 
                         <div className="flex gap-x-4">
                             <div>
-                                <Button className="bg-red-400" onClick={() => setViewdoc(true)}> View</Button>
-
+                                {isPDF ? (
+                                    <Button className="bg-red-400">
+                                        <Link href={document?.document as any}>
+                                            View
+                                        </Link>
+                                    </Button>
+                                ) : (
+                                    <Button className="bg-red-400"
+                                        onClick={() => setViewdoc(true)}
+                                    >
+                                        View
+                                    </Button>
+                                )}
                             </div>
 
                         </div>

@@ -4,6 +4,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import React from 'react';
 import { ValidationRequest } from '../validation/context';
 import Link from 'next/link';
+import { Button } from '@/components/ui/button';
 
 
 
@@ -11,7 +12,7 @@ interface IProps {
     validationRequests: ValidationRequest[];
 }
 
-const headers = ['Matric', 'Topic', 'Date'];
+const headers = ['Matric', 'Topic', 'Date', "Action"];
 
 
 
@@ -46,6 +47,15 @@ export const ReatTableComponent: React.FC<IProps> = ({ validationRequests }) => 
                             </TableCell>
                             <TableCell>{item.topic}</TableCell>
                             <TableCell>{new Date(item.createdAt).toLocaleDateString()}</TableCell>
+
+                            <TableCell>
+                                <Link
+                                    href={`/supervisor/validation`}>
+                                    <Button>View</Button>
+                                </Link>
+                            </TableCell>
+
+
                         </TableRow>
 
                     ))

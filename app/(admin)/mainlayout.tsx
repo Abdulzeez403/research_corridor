@@ -62,18 +62,17 @@ export const MainLayout = ({ children }: IProp) => {
         setDrawerOpen(true)
     }
 
+    const handleSignOut = () => {
+        signOut();
+
+    };
+
 
     const { profile: researcherProfile, loading: researcherLoading, error: researcherError } = useResearcherProfile();
     const { profile: supervisorProfile, loading: supervisorLoading, error: supervisorError } = useSupervisorProfile();
 
     const { newNotification } = useNotifications();
 
-
-
-    useEffect(() => {
-
-
-    }, [])
 
 
     const NavLink = ({ href, icon: Icon, children }: NavLinkProps) => {
@@ -176,7 +175,7 @@ export const MainLayout = ({ children }: IProp) => {
                                 </NavLink>
                             </nav>
                         ) : (
-                            <h4>No profile available</h4>
+                            <h4> No profile available</h4>
                         )}
                     </div>
 
@@ -306,7 +305,7 @@ export const MainLayout = ({ children }: IProp) => {
                             <DropdownMenuLabel>My Account</DropdownMenuLabel>
                             <DropdownMenuSeparator />
                             <DropdownMenuItem
-                                onClick={() => signOut()}
+                                onClick={() => handleSignOut()}
                             >Logout</DropdownMenuItem>
                         </DropdownMenuContent>
                     </DropdownMenu>

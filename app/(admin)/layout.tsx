@@ -1,7 +1,7 @@
 "use client"
 import { MainLayout } from "./mainlayout";
-import { ResearcherProfileProvider } from "./researcher/profile/context";
-import { SupervisorProfileProvider } from "./supervisor/context";
+import { ResearcherProfileProvider, useResearcherProfile } from "./researcher/profile/context";
+import { SupervisorProfileProvider, useSupervisorProfile } from "./supervisor/context";
 import Cookies from "universal-cookie";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
@@ -10,6 +10,7 @@ import { AssignedResearchersProvider } from "./supervisor/researcher/context";
 import { SupervisorDocumentsProvider } from "./supervisor/document/context";
 import { ValidationRequestsProvider } from "./supervisor/validation/context";
 import { GradesProvider } from "./supervisor/grade/context";
+import { ProgressProvider } from "./supervisor/progress/context";
 
 interface IProps {
     children: React.ReactNode;
@@ -17,44 +18,46 @@ interface IProps {
 
 export default function AdminLayout({ children }: IProps) {
     const cookie = new Cookies()
-    const router = useRouter()
-    useEffect(() => {
+    const router = useRouter();
 
+    const { fetchProfile, profile } = useSupervisorProfile();
+    const { fetchProfile: researcherProfile, profile: searcherProfile } = useResearcherProfile()
+
+
+    useEffect(() => {
+        fetchProfile()
+        researcherProfile()
         const token = cookie.get("token");
         if (!token) {
             router.push('/');
             console.log(token)
         }
-    }, [])
+    }, [profile, searcherProfile])
     return (
         <div className="h-screen w-screen ">
-            <ResearcherProfileProvider>
-                <SupervisorProfileProvider>
-                    <AssignedResearchersProvider>
-                        <SupervisorDocumentsProvider>
-                            <ValidationRequestsProvider>
 
-                                <GradesProvider>
+            <AssignedResearchersProvider>
+                <SupervisorDocumentsProvider>
+                    <ValidationRequestsProvider>
+                        <GradesProvider>
+                            <NotificationsProvider>
+                                <ProgressProvider>
+                                    <MainLayout>
+                                        <div className="h-full">
+                                            {children}
+                                        </div>
+                                    </MainLayout>
+                                </ProgressProvider>
 
+                            </NotificationsProvider>
+                        </GradesProvider>
 
-                                    <NotificationsProvider>
-                                        <MainLayout>
-                                            <div className="h-full">
-                                                {children}
-                                            </div>
-                                        </MainLayout>
-                                    </NotificationsProvider>
-                                </GradesProvider>
+                    </ValidationRequestsProvider>
 
-                            </ValidationRequestsProvider>
+                </SupervisorDocumentsProvider>
 
-                        </SupervisorDocumentsProvider>
+            </AssignedResearchersProvider>
 
-                    </AssignedResearchersProvider>
-
-
-                </SupervisorProfileProvider>
-            </ResearcherProfileProvider>
 
         </div>
     );

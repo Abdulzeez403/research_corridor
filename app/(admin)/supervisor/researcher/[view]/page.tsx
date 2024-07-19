@@ -1,17 +1,31 @@
 "use client"
 import { usePathname } from 'next/navigation';
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { useResearchers } from '../context';
 import { Button } from '@/components/ui/button';
 import ProgressBar from "@ramonak/react-progress-bar";
+import { ResponsiveDrawerDialog } from '@/app/components/modals/responsivedrawer';
+import ProgressForm from '../../progress/form';
+import { ProgressDetial } from '../../progress/detail';
 
 function ViewPage() {
     const urlPath = usePathname();
     const id = urlPath.split('/')[3];
 
     const { getResearcherById, researcher: user } = useResearchers();
+
+    const [isDrawerOpen, setDrawerOpen] = useState(false);
+
+    const handleClose = () => {
+        setDrawerOpen(false)
+    }
+
+    const handleOpen = () => {
+        setDrawerOpen(true)
+    }
+
 
     useEffect(() => {
         getResearcherById(id)
@@ -108,7 +122,22 @@ function ViewPage() {
                 />
             </div>
 
-        </div>
+            <Button onClick={() => handleOpen()} className='my-2'>Update Progress</Button>
+
+            <div>
+                <ProgressDetial />
+            </div>
+
+            <ResponsiveDrawerDialog
+                title="Schedule appointment with resea"
+                description="dfdfdfdf"
+                isOpen={isDrawerOpen}
+                onClose={handleClose}
+            >
+                <ProgressForm />
+            </ResponsiveDrawerDialog>
+
+        </div >
     )
 }
 

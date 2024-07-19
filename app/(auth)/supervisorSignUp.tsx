@@ -10,16 +10,16 @@ import { useAuthContext } from './context';
 import { ISupervisor } from '@/constant/models';
 
 // Yup Validation Schemas
-const supervisorValidationSchema = Yup.object().shape({
-    name: Yup.string().required('Name is required'),
-    email: Yup.string().email('Invalid email format').required('Email is required'),
-    password: Yup.string().min(6, 'Password must be at least 6 characters long').required('Password is required'),
-    role: Yup.string().required('Role is required'),
-    prefix: Yup.string().required('Prefix is required'),
-    gender: Yup.string(),
-    department: Yup.string(),
-    phone: Yup.string()
-});
+// const supervisorValidationSchema = Yup.object().shape({
+//     name: Yup.string().required('Name is required'),
+//     email: Yup.string().email('Invalid email format').required('Email is required'),
+//     password: Yup.string().min(6, 'Password must be at least 6 characters long').required('Password is required'),
+//     role: Yup.string().required('Role is required'),
+//     prefix: Yup.string().required('Prefix is required'),
+//     gender: Yup.string(),
+//     department: Yup.string(),
+//     phone: Yup.string()
+// });
 
 export const SupervisorSignUpForm: React.FC = () => {
     const [selectedPrefix, setSelectedPrefix] = useState('');

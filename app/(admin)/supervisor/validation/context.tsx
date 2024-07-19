@@ -9,6 +9,7 @@ export interface ValidationRequest {
     matric: string;
     topic: string;
     createdAt: string;
+    id: string
 
 }
 

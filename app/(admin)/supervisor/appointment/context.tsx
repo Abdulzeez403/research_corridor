@@ -5,7 +5,7 @@ import Cookies from 'universal-cookie';
 import { notify } from '@/app/components/toast';
 
 interface Appointment {
-    id: string;
+    _id?: string;
     researcherId: string;
     date: string;
     time: string;
@@ -27,6 +27,7 @@ interface EditAppointmentRequest {
 }
 
 interface DeleteAppointmentRequest {
+
     appointmentId: string;
 }
 
@@ -99,7 +100,7 @@ export const AppointmentsProvider: React.FC<{ children: ReactNode }> = ({ childr
                 },
             });
             setAppointments((prev) =>
-                prev ? prev.map((appointment) => (appointment.id === data.appointmentId ? response.data : appointment)) : [response.data]
+                prev ? prev.map((appointment) => (appointment._id === data.appointmentId ? response.data : appointment)) : [response.data]
             );
         } catch (error: any) {
             setError(error.response?.data?.message || error.message);
@@ -120,7 +121,7 @@ export const AppointmentsProvider: React.FC<{ children: ReactNode }> = ({ childr
                 data: data
             });
             setAppointments((prev) =>
-                prev ? prev.filter((appointment) => appointment.id !== data.appointmentId) : null
+                prev ? prev.filter((appointment) => appointment._id !== data.appointmentId) : null
             );
         } catch (error: any) {
             setError(error.response?.data?.message || error.message);

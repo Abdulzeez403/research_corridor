@@ -28,17 +28,20 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body>
-                <UploadTopicProvider>
-                    <AppointmentsProvider>
-                        <DocumentProvider>
-                            <AuthProvider>
-                                <Notification />
-                                {children}
-                            </AuthProvider>
-                        </DocumentProvider>
-                    </AppointmentsProvider>
-                </UploadTopicProvider>
-
+                <ResearcherProfileProvider>
+                    <SupervisorProfileProvider>
+                        <UploadTopicProvider>
+                            <AppointmentsProvider>
+                                <DocumentProvider>
+                                    <AuthProvider>
+                                        <Notification />
+                                        {children}
+                                    </AuthProvider>
+                                </DocumentProvider>
+                            </AppointmentsProvider>
+                        </UploadTopicProvider>
+                    </SupervisorProfileProvider>
+                </ResearcherProfileProvider>
             </body>
         </html>
     );

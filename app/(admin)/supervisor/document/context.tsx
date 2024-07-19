@@ -54,7 +54,7 @@ export const SupervisorDocumentsProvider: React.FC<{ children: ReactNode }> = ({
         setLoading(true);
         setError(null);
         try {
-            const response = await axios.get(`${port}/supervisor/documents/${id}`, {
+            const response = await axios.get(`${port}/supervisor/document/${id}`, {
                 headers: {
                     'x-auth-token': token,
                 },
@@ -71,7 +71,7 @@ export const SupervisorDocumentsProvider: React.FC<{ children: ReactNode }> = ({
         setLoading(true);
         setError(null);
         try {
-            const response = await axios.put(`${port}/supervisor/documents/comment/${id}`, { comment }, {
+            const response = await axios.put(`${port}/supervisor/document/comment/${id}`, { comment }, {
                 headers: {
                     'x-auth-token': token,
                 },

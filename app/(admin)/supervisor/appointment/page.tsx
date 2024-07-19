@@ -9,7 +9,7 @@ import { useAuthContext } from '@/app/(auth)/context';
 export default function Page() {
     const [isDrawerOpen, setDrawerOpen] = useState(false);
 
-    const { getAppointments, appointments } = useAppointments()
+    const { getAppointments, appointments, deleteAppointment } = useAppointments()
     useEffect(() => {
         getAppointments("2023-2024");
         console.log(appointments)
@@ -24,6 +24,11 @@ export default function Page() {
     const formatTime = (dateString: string) => {
         const date = new Date(dateString);
         return date.toLocaleTimeString();
+    };
+
+    const handleDelete = (appointmentId: string) => {
+
+        deleteAppointment({ appointmentId });
     };
 
 
@@ -45,7 +50,7 @@ export default function Page() {
                 {appointments && appointments.length > 0 ? (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 py-4">
                         {appointments.map((m) => (
-                            <div key={m.id} className="border border-gray-300 p-4 rounded-lg shadow-md">
+                            <div key={m._id} className="border border-gray-300 p-4 rounded-lg shadow-md">
                                 <div className="flex justify-between items-center mb-4">
                                     <h4 className="text-lg font-semibold">{m.agenda}</h4>
                                 </div>
@@ -59,7 +64,9 @@ export default function Page() {
                                 </div>
                                 <div className="flex justify-between mt-4">
                                     <Button variant="outline" className="mr-2">Edit</Button>
-                                    <Button variant="destructive">Delete</Button>
+                                    <Button variant="destructive"
+                                        onClick={() =>
+                                            handleDelete(m?._id as any)}>Delete</Button>
                                 </div>
                             </div>
                         ))}

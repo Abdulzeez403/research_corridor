@@ -20,7 +20,8 @@ import { IResearcher, ISupervisor } from '@/constant/models';
 //     department: Yup.string().required('Department is required').nullable(),
 //     phone: Yup.string().required('Phone is required').nullable(),
 //     season: Yup.string().required('Season is required').nullable(),
-//     supervisor: Yup.string().required('Supervisor is required').nullable()
+//     supervisor: Yup.string().required('Supervisor is required').nullable(),
+//     gender: Yup.string().required('gender is required').nullable()
 // });
 
 export const ResearchSignUpForm: React.FC = () => {

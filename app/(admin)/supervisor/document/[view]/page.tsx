@@ -41,7 +41,7 @@ function ViewPage() {
 
     return (
         <div>
-            <Breadcrumb>
+            {/* <Breadcrumb>
                 <BreadcrumbList>
                     <BreadcrumbItem>
                         <BreadcrumbLink href="/researcher/upload">Validation</BreadcrumbLink>
@@ -51,7 +51,7 @@ function ViewPage() {
                         <BreadcrumbLink href="/components">Document</BreadcrumbLink>
                     </BreadcrumbItem>
                 </BreadcrumbList>
-            </Breadcrumb>
+            </Breadcrumb> */}
 
             {viewDoc ? (
                 <div>

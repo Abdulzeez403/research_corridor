@@ -27,13 +27,11 @@ export const SupervisorDashboard = () => {
 
     const { getDocuments, documents } = useSupervisorDocuments();
     const { getResearchers, researchers } = useResearchers()
-    const { fetchProfile, profile } = useSupervisorProfile();
     const { fetchAllValidationRequests, validationRequests } = useValidationRequests();
 
     const { getNotifications, notifications, loading, error } = useNotifications();
 
     useEffect(() => {
-        fetchProfile()
         getResearchers("2023-2024");
         getDocuments("2023-2024")
         fetchAllValidationRequests("2023-2024")
@@ -91,6 +89,7 @@ export const SupervisorDashboard = () => {
                     />
                 </div>
                 <div className="mt-6">
+                    <h4 className="font-semibold ">Recent Topic Validation Requests</h4>
                     <ReatTableComponent validationRequests={validationRequests} />
                 </div>
             </div>
