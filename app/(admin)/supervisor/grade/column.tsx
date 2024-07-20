@@ -58,7 +58,7 @@ export const columns = ({ onView }: IProps): ColumnDef<any, unknown>[] => [
     {
         id: 'actions',
         cell: ({ row }) => (
-            <Link href={`/supervisor/grade/${(row.original as any).id}`}>
+            <Link href={`/supervisor/grade/${(row.original as any)?.id}`}>
                 <Button>
                     View
                 </Button>

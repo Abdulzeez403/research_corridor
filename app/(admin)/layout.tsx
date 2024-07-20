@@ -32,7 +32,7 @@ export default function AdminLayout({ children }: IProps) {
             router.push('/');
             console.log(token)
         }
-    }, [profile, searcherProfile])
+    }, [])
     return (
         <div className="h-screen w-screen ">
 

@@ -27,6 +27,7 @@ interface Grade {
 }
 
 interface GradesContextProps {
+    loading: boolean;
     grades: Grade[];
     singleGrade: Grade | null;
     fetchAllGrades: (season: string) => Promise<void>;
@@ -69,7 +70,7 @@ export const GradesProvider = ({ children }: IProp) => {
                 },
             });
             const researcherGrade = response.data?.grades.map((item: any) => ({
-                id: item._id,
+                id: item.researcherId._id,
                 matric: item.researcherId.matric,
                 name: item.name,
             }));
@@ -90,7 +91,7 @@ export const GradesProvider = ({ children }: IProp) => {
                     'x-auth-token': token,
                 },
             });
-            setSingleGrade(response.data);
+            setSingleGrade(response.data.grade);
         } catch (error: any) {
             setError(error.message);
         } finally {
@@ -102,7 +103,7 @@ export const GradesProvider = ({ children }: IProp) => {
         setLoading(true);
         setError(null);
         try {
-            await axios.post(`${baseUrl}/api/supervisor/grades`, grade, {
+            await axios.post(`${baseUrl}/supervisor/grades`, grade, {
                 headers: {
                     'x-auth-token': token,
                 },
@@ -116,7 +117,7 @@ export const GradesProvider = ({ children }: IProp) => {
     };
 
     return (
-        <GradesContext.Provider value={{ grades, singleGrade, fetchAllGrades, fetchSingleGrade, addGrade }}>
+        <GradesContext.Provider value={{ loading, grades, singleGrade, fetchAllGrades, fetchSingleGrade, addGrade }}>
             {children}
         </GradesContext.Provider>
     );

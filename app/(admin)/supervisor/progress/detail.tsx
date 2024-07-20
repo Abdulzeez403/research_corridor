@@ -6,7 +6,9 @@ export const ProgressDetial = () => {
     const { allProgress, loading, error, getAllProgress, getSingleProgress, addProgress } = useProgress();
 
     useEffect(() => {
+
         getAllProgress('2023-2024');
+        console.log(allProgress)
     }, []);
 
     return (

@@ -37,27 +37,9 @@ export const CommentTableComponent = ({ comments }: IProps) => {
                     (
                         comments.map((item: any, index: number) => (
                             <TableRow key={index}>
-                                <TableCell>
-                                    <ul>
-                                        {item.comments?.map((comment: string, commentIndex: number) => (
-                                            <li key={commentIndex}>{comment}</li>
-                                        ))}
-                                    </ul>
-                                </TableCell>
-                                <TableCell>
-                                    <ul>
-                                        {item.comments?.map((_: string, commentIndex: number) => (
-                                            <li key={commentIndex}>{formatDate(item.createdAt)}</li>
-                                        ))}
-                                    </ul>
-                                </TableCell>
-                                <TableCell>
-                                    <ul>
-                                        {item.comments?.map((_: string, commentIndex: number) => (
-                                            <li key={commentIndex}>{formatTime(item.createdAt)}</li>
-                                        ))}
-                                    </ul>
-                                </TableCell>
+                                <TableCell>{item.message}</TableCell>
+                                <TableCell>{formatDate(item.createdAt)}</TableCell>
+                                <TableCell>{formatTime(item.createdAt)}</TableCell>
                             </TableRow>
                         ))
                     ) : (
