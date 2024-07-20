@@ -55,8 +55,7 @@ export const ResearcherDashboard = () => {
         getNotifications()
     }, [])
 
-    if (loading) return <div>Loading...</div>;
-    if (error) return <div>Error: {error}</div>;
+
 
 
     return (
@@ -119,13 +118,15 @@ export const ResearcherDashboard = () => {
                                 <Activity className="h-5 w-5" />
                             </div>
                             <div>
-                                {notifications.length > 0 ? (
-                                    notifications.map((notification, index) => (
-                                        <NotificationItem key={index} description={notification.message} />
-                                    ))
-                                ) : (
-                                    <div>No notifications available.</div>
-                                )}
+                                <div>
+                                    {Array.isArray(notifications) && notifications.length > 0 ? (
+                                        notifications.map((notification, index) => (
+                                            <NotificationItem key={index} description={notification.message} />
+                                        ))
+                                    ) : (
+                                        <p>No notifications available.</p>
+                                    )}
+                                </div>
                             </div>
                         </div>
                     </CardContent>

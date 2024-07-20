@@ -8,6 +8,7 @@ import CardComponent from '@/app/components/card/index';
 import { UsersRound, MessageCircleMore, BookCheck } from 'lucide-react';
 import { useSupervisorDocuments } from './context';
 import { useAuthContext } from '@/app/(auth)/context';
+import { useSupervisorProfile } from '../context';
 
 
 
@@ -16,7 +17,7 @@ export function Detail() {
     const { getDocuments, documents } = useSupervisorDocuments();
     const { seasons } = useAuthContext()
 
-    const [seletedSeason, setSelectedSeason] = useState('2023-2024')
+    const [seletedSeason, setSelectedSeason] = useState("2023-2024")
 
 
     useEffect(() => {

@@ -48,7 +48,7 @@ export const columns = ({ onEdit, onDelete, onView }: IProps): ColumnDef<UploodM
         ),
         cell: ({ row }) => {
             const filePath = row.original.document;
-            const fileExtension = filePath.split('.').pop();
+            const fileExtension = filePath?.split('.').pop();
             let imgSrc;
             let bgColor;
 

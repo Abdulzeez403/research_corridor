@@ -61,10 +61,10 @@ const ValidateTopicForm: React.FC = () => {
                         <div className="my-4 w-full">
                             <label htmlFor="supervisorIds" className="block text-sm font-medium text-gray-700">Supervisors</label>
                             <MultiSelect
-                                options={supervisors?.map((supervisor: any) => ({
+                                options={Array.isArray(supervisors) ? supervisors.map((supervisor: any) => ({
                                     value: supervisor._id,
                                     label: supervisor.name,
-                                }))}
+                                })) : []}
                                 selectedOptions={values.supervisorIds}
                                 onChange={(selected) => setFieldValue('supervisorIds', selected)}
                             />

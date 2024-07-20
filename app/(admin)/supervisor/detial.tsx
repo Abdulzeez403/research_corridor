@@ -38,8 +38,7 @@ export const SupervisorDashboard = () => {
         getNotifications()
     }, [])
 
-    if (loading) return <div>Loading...</div>;
-    if (error) return <div>Error: {error}</div>;
+
 
     const NotificationItem = ({ description }: INotification) => (
         <div className=" flex justify-between my-4 ">
@@ -71,7 +70,7 @@ export const SupervisorDashboard = () => {
                 <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 pt-5">
                     <CardComponent
                         title="Researchers"
-                        total={researchers.length}
+                        total={researchers?.length}
                         subtitle="Total Researcher"
                         icon={<UsersRound className="h-5 w-5" />}
                     />
@@ -83,7 +82,7 @@ export const SupervisorDashboard = () => {
                     />
                     <CardComponent
                         title="Topic Validations"
-                        total={validationRequests.length}
+                        total={validationRequests?.length}
                         subtitle="Total Topic validation"
                         icon={<BookCheck className="h-5 w-5" />}
                     />
@@ -127,8 +126,8 @@ export const SupervisorDashboard = () => {
                                 <h4 className="font-bold">Activities</h4>
                                 <Activity className="h-5 w-5" />
                             </div>
-                            {notifications.length > 0 ? (
-                                notifications?.slice(0, 4).map((notification, index) => (
+                            {Array.isArray(notifications) && notifications.length > 0 ? (
+                                notifications.slice(0, 4).map((notification, index) => (
                                     <NotificationItem key={index} description={notification.message} />
                                 ))
                             ) : (

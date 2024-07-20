@@ -94,11 +94,15 @@ export const ResearchSignUpForm: React.FC = () => {
                                         <SelectValue placeholder="Select Department" />
                                     </SelectTrigger>
                                     <SelectContent>
-                                        {departments?.map((item: any) => (
-                                            <SelectItem key={item.id} value={item.department}>
-                                                {item.department}
-                                            </SelectItem>
-                                        ))}
+                                        {Array.isArray(departments) && departments.length > 0 ? (
+                                            departments.map((item: any) => (
+                                                <SelectItem key={item.id} value={item.department}>
+                                                    {item.department}
+                                                </SelectItem>
+                                            ))
+                                        ) : (
+                                            <div>No departments available.</div>
+                                        )}
                                     </SelectContent>
                                 </Select>
                             </div>
@@ -118,11 +122,15 @@ export const ResearchSignUpForm: React.FC = () => {
                                             <SelectValue placeholder="Select Supervisor" />
                                         </SelectTrigger>
                                         <SelectContent>
-                                            {supervisors?.map((supervisor: any) => (
-                                                <SelectItem key={supervisor.name} value={supervisor._id}>
-                                                    {supervisor.name}
-                                                </SelectItem>
-                                            ))}
+                                            {Array.isArray(supervisors) && supervisors.length > 0 ? (
+                                                supervisors.map((supervisor: any) => (
+                                                    <SelectItem key={supervisor._id} value={supervisor._id}>
+                                                        {supervisor.name}
+                                                    </SelectItem>
+                                                ))
+                                            ) : (
+                                                <div>No supervisors available.</div>
+                                            )}
                                         </SelectContent>
                                     </Select>
                                 </div>
@@ -143,11 +151,15 @@ export const ResearchSignUpForm: React.FC = () => {
                                         ) : (
                                             <div>
 
-                                                {seasons?.map((season: any) => (
-                                                    <SelectItem key={season.id} value={season.season}>
-                                                        {season.season}
-                                                    </SelectItem>
-                                                ))}
+                                                {Array.isArray(seasons) && seasons.length > 0 ? (
+                                                    seasons.map((season: any) => (
+                                                        <SelectItem key={season.id} value={season.season}>
+                                                            {season.season}
+                                                        </SelectItem>
+                                                    ))
+                                                ) : (
+                                                    <div>No seasons available.</div>
+                                                )}
                                             </div>
 
                                         )}

@@ -2,6 +2,7 @@
 import React, { createContext, useState, useEffect, useContext, ReactNode } from 'react';
 import axios from 'axios';
 import Cookies from 'universal-cookie';
+import { useSupervisorProfile } from '../context';
 
 interface Document {
     id: string;
@@ -32,6 +33,7 @@ export const SupervisorDocumentsProvider: React.FC<{ children: ReactNode }> = ({
     const port = "https://research-corridor.onrender.com/api";
     const cookies = new Cookies();
     const token = cookies.get("token");
+
 
     const getDocuments = async (season: any) => {
         setLoading(true);

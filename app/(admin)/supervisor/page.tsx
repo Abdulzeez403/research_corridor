@@ -1,8 +1,7 @@
 "use client"
 import React, { useEffect } from 'react'
 import { SupervisorDashboard } from './detial'
-import { SupervisorProfileProvider, useSupervisorProfile } from './context'
-import { AssignedResearchersProvider } from './researcher/context';
+import { useSupervisorProfile } from './context'
 
 export default function SupervisorPage() {
 

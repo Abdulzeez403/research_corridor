@@ -262,10 +262,9 @@ export const AuthProvider: React.FC<IProps> = ({ children }) => {
 
     const signOut = async () => {
         try {
-            // Remove token from cookies
             cookies.remove('token', { path: '/' });
-            // router.push('/');
-            window.location.reload();
+            router.push('/');
+            // window.location.reload();
 
         } catch (error) {
             console.log(error);

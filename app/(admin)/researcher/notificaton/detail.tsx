@@ -35,15 +35,12 @@ export const Notifications: React.FC = () => {
 
     return (
         <div>
-            {notifications && notifications.length > 0 ? (
+            {Array.isArray(notifications) && notifications.length > 0 ? (
                 notifications.map((n: any, index: number) => (
-                    <NotificationItem
-                        key={index}
-                        message={n.message}
-                    />
+                    <NotificationItem key={index} message={n.message} />
                 ))
             ) : (
-                <div>No notifications available</div>
+                <div>No notifications available.</div>
             )}
         </div>
     );

@@ -9,6 +9,12 @@ import { AppointmentsProvider } from "./(admin)/supervisor/appointment/context";
 import { ResearcherProfileProvider } from "./(admin)/researcher/profile/context";
 import { DocumentProvider } from "./(admin)/researcher/upload/context";
 import { SupervisorProfileProvider } from "./(admin)/supervisor/context";
+import { NotificationsProvider } from "./(admin)/researcher/notificaton/context";
+import { SupervisorDocumentsProvider } from "./(admin)/supervisor/document/context";
+import { GradesProvider } from "./(admin)/supervisor/grade/context";
+import { ProgressProvider } from "./(admin)/supervisor/progress/context";
+import { AssignedResearchersProvider } from "./(admin)/supervisor/researcher/context";
+import { ValidationRequestsProvider } from "./(admin)/supervisor/validation/context";
 
 
 // const inter = Inter({ subsets: ["latin"] });
@@ -28,20 +34,37 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body>
-                <ResearcherProfileProvider>
-                    <SupervisorProfileProvider>
-                        <UploadTopicProvider>
-                            <AppointmentsProvider>
-                                <DocumentProvider>
-                                    <AuthProvider>
-                                        <Notification />
-                                        {children}
-                                    </AuthProvider>
-                                </DocumentProvider>
-                            </AppointmentsProvider>
-                        </UploadTopicProvider>
-                    </SupervisorProfileProvider>
-                </ResearcherProfileProvider>
+                <AssignedResearchersProvider>
+                    <SupervisorDocumentsProvider>
+                        <ValidationRequestsProvider>
+                            <GradesProvider>
+                                <NotificationsProvider>
+                                    <ProgressProvider>
+                                        <ResearcherProfileProvider>
+                                            <SupervisorProfileProvider>
+                                                <UploadTopicProvider>
+                                                    <AppointmentsProvider>
+                                                        <DocumentProvider>
+                                                            <AuthProvider>
+                                                                <Notification />
+                                                                {children}
+                                                            </AuthProvider>
+                                                        </DocumentProvider>
+                                                    </AppointmentsProvider>
+                                                </UploadTopicProvider>
+                                            </SupervisorProfileProvider>
+                                        </ResearcherProfileProvider>
+
+                                    </ProgressProvider>
+
+                                </NotificationsProvider>
+                            </GradesProvider>
+
+                        </ValidationRequestsProvider>
+
+                    </SupervisorDocumentsProvider>
+
+                </AssignedResearchersProvider>
             </body>
         </html>
     );

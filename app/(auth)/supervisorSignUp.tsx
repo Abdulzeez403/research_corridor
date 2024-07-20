@@ -88,11 +88,15 @@ export const SupervisorSignUpForm: React.FC = () => {
                                         <SelectValue placeholder="Select Department" />
                                     </SelectTrigger>
                                     <SelectContent>
-                                        {departments?.map((item: any) => (
-                                            <SelectItem key={item.id} value={item.department}>
-                                                {item.department}
-                                            </SelectItem>
-                                        ))}
+                                        {Array.isArray(departments) && departments.length > 0 ? (
+                                            departments.map((item: any) => (
+                                                <SelectItem key={item.id} value={item.department}>
+                                                    {item.department}
+                                                </SelectItem>
+                                            ))
+                                        ) : (
+                                            <div>No departments available.</div>
+                                        )}
                                     </SelectContent>
                                 </Select>
                             </div>

@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button';
 import ProgressBar from "@ramonak/react-progress-bar";
 import { ResponsiveDrawerDialog } from '@/app/components/modals/responsivedrawer';
 import ProgressForm from '../../progress/form';
-import { ProgressDetial } from '../../progress/detail';
+import { ProgressDetail } from '../../progress/detail';
 
 function ViewPage() {
     const urlPath = usePathname();
@@ -124,13 +124,13 @@ function ViewPage() {
 
             <Button onClick={() => handleOpen()} className='my-2'>Update Progress</Button>
 
-            <div>
-                <ProgressDetial />
+            <div className="w-full">
+                <ProgressDetail />
             </div>
 
             <ResponsiveDrawerDialog
-                title="Schedule appointment with resea"
-                description="dfdfdfdf"
+                title="Researcher Progressing"
+                description="Researcher progressing!"
                 isOpen={isDrawerOpen}
                 onClose={handleClose}
             >
