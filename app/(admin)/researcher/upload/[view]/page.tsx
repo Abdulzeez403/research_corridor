@@ -12,6 +12,7 @@ import DocViewer, { DocViewerRenderers } from 'react-doc-viewer';
 import { useDocumentContext } from '../context';
 import { useResearcherProfile } from '../../profile/context';
 import Link from 'next/link';
+import { CommentTableComponent } from './commets';
 
 
 function VeiwPage() {
@@ -106,7 +107,7 @@ function VeiwPage() {
 
                     </div>)
             }
-
+            <CommentTableComponent comments={document.comments} />
         </div>
     )
 

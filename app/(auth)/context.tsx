@@ -83,12 +83,11 @@ export const AuthProvider: React.FC<IProps> = ({ children }) => {
         // setLoading(true)
         try {
             const response = await axios.post(`${port}/auth/researcher-login`, payload);
-            UseSetCookie("token", response.data.token)
+            await UseSetCookie("token", response.data.token)
             setUser(response.data);
             // setLoading(false)
             router.push('/researcher');
             notify.success(response.data.msg);
-
 
         } catch (error: any) {
             // setLoading(false);
@@ -116,6 +115,7 @@ export const AuthProvider: React.FC<IProps> = ({ children }) => {
             setLoading(false)
             router.push('/supervisor');
             notify.success(response.data.msg);
+
 
 
         } catch (error: any) {

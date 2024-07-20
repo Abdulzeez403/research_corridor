@@ -20,19 +20,25 @@ export default function AdminLayout({ children }: IProps) {
     const cookie = new Cookies()
     const router = useRouter();
 
-    const { fetchProfile, profile } = useSupervisorProfile();
-    const { fetchProfile: researcherProfile, profile: searcherProfile } = useResearcherProfile()
 
+    const { fetchProfile: fetchSupervisorProfile, profile: supervisorProfile } = useSupervisorProfile();
+    const { fetchProfile: fetchResearcherProfile, profile: researcherProfile } = useResearcherProfile();
 
     useEffect(() => {
-        fetchProfile()
-        researcherProfile()
-        const token = cookie.get("token");
-        if (!token) {
-            router.push('/');
-            console.log(token)
-        }
-    }, [])
+        const fetchData = async () => {
+            const token = await cookie.get("token");
+            if (!token) {
+                router.push('/');
+                console.log(token);
+                return;
+            }
+
+            fetchSupervisorProfile();
+            fetchResearcherProfile();
+        };
+
+        fetchData();
+    }, [router]);
     return (
         <div className="h-screen w-screen ">
 

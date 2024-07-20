@@ -175,7 +175,7 @@ export const MainLayout = ({ children }: IProp) => {
                                 </NavLink>
                             </nav>
                         ) : (
-                            <h4> No profile available</h4>
+                            <h4 className="text-center"> Loading...</h4>
                         )}
                     </div>
 
@@ -286,12 +286,12 @@ export const MainLayout = ({ children }: IProp) => {
 
                         <Button className="rounded-lg bg-black text-white" onClick={handleOpen}>
                             Validation
-                        </Button>) : (
+                        </Button>) : supervisorProfile ? (
 
-                        <Button className="rounded-lg bg-black text-white" onClick={handleOpen}>
-                            Appointment
-                        </Button>
-                    )
+                            <Button className="rounded-lg bg-black text-white" onClick={handleOpen}>
+                                Appointment
+                            </Button>
+                        ) : null
                     }
 
                     <DropdownMenu>
