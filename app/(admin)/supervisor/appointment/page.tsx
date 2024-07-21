@@ -12,7 +12,6 @@ export default function Page() {
     const { getAppointments, appointments, deleteAppointment } = useAppointments()
     useEffect(() => {
         getAppointments("2023-2024");
-        console.log(appointments)
 
     }, []);
 

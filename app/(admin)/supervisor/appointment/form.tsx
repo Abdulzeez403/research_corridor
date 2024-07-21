@@ -31,7 +31,7 @@ const validationSchema = Yup.object({
 });
 
 const AppointmentForm: React.FC = () => {
-    const { createAppointment, editAppointment, getAppointments, appointments } = useAppointments();
+    const { createAppointment, editAppointment, getAppointments, appointments, loading: apLoading } = useAppointments();
     const { researchers: assignedResearchers, loading, error, getResearchers } = useResearchers();
     const [selectedResearcher, setSelectedResearcher] = useState('');
 
@@ -90,7 +90,7 @@ const AppointmentForm: React.FC = () => {
                     </div>
                     <div>
 
-                        <CustomButton type="submit" loading={isSubmitting}>
+                        <CustomButton type="submit" loading={apLoading}>
                             Create Appointment
 
                         </CustomButton>

@@ -58,8 +58,9 @@ function VeiwPage() {
                     </div>
 
                 ) : (
-                    <div className='flex justify-between pt-5'>
-                        <div className="flex gap-x-10">
+                    <div className=' block md:flex md:justify-between lg:flex lg:justify-between pt-5'>
+
+                        <div className="block md:flex lg:flex gap-x-10">
                             <Image src={FileImage}
                                 alt="UserImage"
                                 width={300} height={300}
@@ -69,13 +70,10 @@ function VeiwPage() {
                                 <div className=''>
                                     <h4 >
                                         <span className="font-bold text-md">File Name:</span>{document?.title}</h4>
-                                    <h4 >
-                                        <span className="font-bold text-md">Supervisor:</span> {profile?.supervisor}</h4>
+
                                     <h4 >
                                         <span className="font-bold text-md">Status</span> {document?.status} </h4>
 
-                                    <h4 >
-                                        <span className="font-bold text-md ">Comments</span>5</h4>
                                 </div>
 
                                 <div>

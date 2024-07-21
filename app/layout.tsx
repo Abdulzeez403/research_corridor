@@ -15,6 +15,7 @@ import { GradesProvider } from "./(admin)/supervisor/grade/context";
 import { ProgressProvider } from "./(admin)/supervisor/progress/context";
 import { AssignedResearchersProvider } from "./(admin)/supervisor/researcher/context";
 import { ValidationRequestsProvider } from "./(admin)/supervisor/validation/context";
+import { ChatProvider } from "./(admin)/supervisor/chat/context";
 
 
 // const inter = Inter({ subsets: ["latin"] });
@@ -34,6 +35,8 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body>
+                {/* <ChatProvider> */}
+
                 <AssignedResearchersProvider>
                     <SupervisorDocumentsProvider>
                         <ValidationRequestsProvider>
@@ -65,6 +68,9 @@ export default function RootLayout({
                     </SupervisorDocumentsProvider>
 
                 </AssignedResearchersProvider>
+
+                {/* </ChatProvider> */}
+
             </body>
         </html>
     );

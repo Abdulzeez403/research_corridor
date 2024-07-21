@@ -8,6 +8,8 @@ import Image from "next/image";
 import doc from "../../../../public/doc.jpg"
 import pdf from "../../../../public/pdf.jpg"
 import image from "../../../../public/img.jpg"
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 
 interface IProps {
@@ -166,9 +168,22 @@ export const columns = ({ onEdit, onDelete, onView }: IProps): ColumnDef<any, un
         },
     },
 
+    // {
+    //     id: 'actions',
+    //     cell: ({ row }) => <DataTableRowActions row={row as any} onEdit={onEdit} onDelete={onDelete} onView={onView} />,
+    //     size: 50
+    // },
+
+
     {
-        id: 'actions',
-        cell: ({ row }) => <DataTableRowActions row={row as any} onEdit={onEdit} onDelete={onDelete} onView={onView} />,
-        size: 50
+        accessorKey: 'Actions',
+        cell: ({ row }) => {
+            return (
+                <Link href={`/supervisor/document/${(row.original as any)._id}`}>
+                    <Button>View</Button>
+                </Link>
+            );
+        },
+        size: 50,
     },
 ];

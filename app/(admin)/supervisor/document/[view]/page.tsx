@@ -75,7 +75,6 @@ function ViewPage() {
                             <div>
                                 <h4><span className="font-bold text-md">File Name:</span> {document?.title}</h4>
                                 <h4><span className="font-bold text-md">Status:</span> {document?.status}</h4>
-                                <h4><span className="font-bold text-md">Comments:</span> 5</h4>
                             </div>
                         </div>
                     </div>

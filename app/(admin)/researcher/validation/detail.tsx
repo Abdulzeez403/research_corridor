@@ -43,7 +43,7 @@ export const Detail = () => {
 
 
         <div>
-            <div className="grid gap-4 grid-cols-3 pt-5">
+            <div className="grid gap-4 grid-cols-1 md:grid-cols-3 lg:grid-cols-3 pt-5 pb-4">
                 <CardComponent
                     title="Topic Validations"
                     total={topics?.length}

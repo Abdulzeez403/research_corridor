@@ -158,7 +158,7 @@ export const MainLayout = ({ children }: IProp) => {
                                         Dashboard
                                     </NavLink>
 
-                                    <NavLink href="/researcher/validation" icon={Presentation}>
+                                    <NavLink href="/researcher/validation" icon={BadgeCheck}>
                                         Topic Validation
                                     </NavLink>
 
@@ -173,13 +173,6 @@ export const MainLayout = ({ children }: IProp) => {
                                         ChatRoom
                                     </NavLink>
 
-                                    <NavLink href="/researcher/progess" icon={Presentation}>
-                                        Progress
-                                    </NavLink>
-
-                                    <NavLink href="/researcher/grade" icon={Presentation}>
-                                        Grading
-                                    </NavLink>
                                     <NavLink href="/researcher/profile" icon={CircleUserRound}>
                                         Profile
                                     </NavLink>

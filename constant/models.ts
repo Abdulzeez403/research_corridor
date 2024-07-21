@@ -53,6 +53,7 @@ export interface IResearcher {
 
 
 export interface ISupervisor {
+    _id?: string;
     name: string;
     email: string;
     password: string;

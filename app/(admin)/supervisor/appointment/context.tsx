@@ -81,6 +81,8 @@ export const AppointmentsProvider: React.FC<{ children: ReactNode }> = ({ childr
             });
             setAppointments((prev) => (prev ? [...prev, response.data] : [response.data]));
             notify.success(response.data.msg)
+            setLoading(false);
+
         } catch (error: any) {
             setError(error.response?.data?.message || error.message);
             notify.error(error.response?.data?.message || error.message)
@@ -120,6 +122,7 @@ export const AppointmentsProvider: React.FC<{ children: ReactNode }> = ({ childr
                 },
                 data: data
             });
+            notify.success("Deleted successfully")
             setAppointments((prev) =>
                 prev ? prev.filter((appointment) => appointment._id !== data.appointmentId) : null
             );
