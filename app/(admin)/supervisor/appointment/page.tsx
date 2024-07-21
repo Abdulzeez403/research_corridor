@@ -63,7 +63,7 @@ export default function Page() {
                                     <span className="text-sm text-gray-800">{formatTime(m.date)}</span>
                                 </div>
                                 <div className="flex justify-between mt-4">
-                                    <Button variant="outline" className="mr-2">Edit</Button>
+                                    {/* <Button variant="outline" className="mr-2">Edit</Button> */}
                                     <Button variant="destructive"
                                         onClick={() =>
                                             handleDelete(m?._id as any)}>Delete</Button>

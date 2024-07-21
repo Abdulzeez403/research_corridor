@@ -12,6 +12,7 @@ import { useResearcherProfile } from './profile/context';
 import { useDocumentContext } from './upload/context';
 import { useNotifications } from './notificaton/context';
 import { CommentTableComponent } from './component/commets';
+import { ReatTableComponent } from '../supervisor/components/read';
 
 
 
@@ -80,7 +81,7 @@ export const ResearcherDashboard = () => {
                     />
                 </div>
                 <div className="mt-6">
-                    {/* <CommentTableComponent comment={documents.comments as any} /> */}
+                    <ReatTableComponent validationRequests={topics} />
                 </div>
             </div>
             <div className="flex flex-col w-full lg:w-1/4">

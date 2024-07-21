@@ -3,15 +3,32 @@ import React, { createContext, useState, useEffect, useContext, ReactNode } from
 import axios from 'axios';
 import Cookies from 'universal-cookie';
 import { notify } from '@/app/components/toast';
+interface IComment {
+    _id: string;
+    createdAt: string;
+    comment?: string;
+}
 
-interface ResearcherProgress {
-    id: string;
-    researcherId: string;
-    name: string;
-    progress: number;
-    comments: string[];
+interface IProgress {
+    _id: string;
+    progressPercent: number;
     season: string;
 }
+
+interface ResearcherProgress {
+    _id: string;
+    supervisorId: string;
+    researcherId: {
+        _id: string;
+        name: string;
+        matric: string;
+    };
+    progressPercent: number;
+    progress: IProgress;
+    comments: IComment[];
+}
+
+
 
 interface AddProgressRequest {
     progressId: string;
@@ -51,7 +68,7 @@ export const ProgressProvider: React.FC<{ children: ReactNode }> = ({ children }
                     'x-auth-token': token,
                 },
             });
-            setAllProgress(response.data.progress);
+            setAllProgress(response.data);
         } catch (error: any) {
             setError(error.response?.data?.message || error.message);
         } finally {

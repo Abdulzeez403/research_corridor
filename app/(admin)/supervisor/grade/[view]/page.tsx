@@ -33,7 +33,7 @@ function ViewPage() {
 
 
     return (
-        <div className="px-20">
+        <div className="px-2 md:px-20 lg:px-20">
 
             <div className="block md:flex md:gap-x-10 lg:flex lg:gap-x-10">
                 <div className="border-2 p-4 w-full md:w-80 lg:w-80">
@@ -112,7 +112,16 @@ function ViewPage() {
 
             <div className="w-full">
                 <Table className='border-2'>
+                    <TableHeader>
+                        <TableRow>
+                            <TableHead className="border-2">S/N</TableHead>
+                            <TableHead className="border-2">Criteria</TableHead>
+                            {/* <TableHead className="border-2">Maximum obtainable Marks</TableHead>
+                            <TableHead className="border-2">Marks obtained</TableHead> */}
+                        </TableRow>
+                    </TableHeader>
                     <TableBody>
+                        {/* <TableCell className="border-2">{index + 1}</TableCell> */}
                         <TableRow>
                             <TableCell className="border-2">
                                 <div className="font-medium">Introudction</div>

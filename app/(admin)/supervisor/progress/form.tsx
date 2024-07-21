@@ -6,15 +6,18 @@ import { useProgress } from './context';
 import { useResearchers } from '../researcher/context';
 import CustomButton from '@/app/components/button';
 
-export const ProgressForm: React.FC = () => {
+
+interface IProps {
+    progressId: any;
+}
+export const ProgressForm = ({ progressId }: IProps) => {
     const urlPath = usePathname();
     const { addProgress } = useProgress();
-    const { getResearcherById, researcher } = useResearchers();
 
-    useEffect(() => {
-        const researcherId = researcher?.progress?._id
-        getResearcherById(researcherId as any);
-    }, []);
+    // useEffect(() => {
+
+    //     getResearcherById(progressId as any);
+    // }, []);
 
     const formik = useFormik({
         initialValues: {
@@ -30,7 +33,7 @@ export const ProgressForm: React.FC = () => {
         }),
         onSubmit: async (values, { setSubmitting, resetForm }) => {
             // const researcherId = urlPath.split('/')[3];
-            const researcherId = researcher?.progress?._id
+            const researcherId = progressId
 
             const payload = { ...values, progressId: researcherId };
             await addProgress(payload as any);
