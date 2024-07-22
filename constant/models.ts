@@ -22,7 +22,10 @@ export interface IResearcher {
     password?: string;
     role?: string;
     gender?: string;
-    department?: string;
+    department?: {
+        _id: string;
+        department: string;
+    }
     matric?: string;
     phone?: string;
     topic?: string;
@@ -60,7 +63,10 @@ export interface ISupervisor {
     role?: string;
     prefix: string;
     gender?: string;
-    department?: string;
+    department?: {
+        _id: string;
+        department: string;
+    }
     phone?: string;
 }
 
@@ -85,5 +91,5 @@ export interface ITopicModel {
     supervisorIds: Supervisor[];
     comments: any[];
     createdAt: string;
-    __v: number;
+
 }

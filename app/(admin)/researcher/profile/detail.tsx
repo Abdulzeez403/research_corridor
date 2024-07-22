@@ -122,7 +122,7 @@ export const ProfileDetail = () => {
                                     <div className="font-medium">Department:</div>
                                 </TableCell>
                                 <TableCell>
-                                    <div className="font-medium">{user?.department}</div>
+                                    <div className="font-medium">{user?.department?.department}</div>
                                 </TableCell>
                             </TableRow >
 
