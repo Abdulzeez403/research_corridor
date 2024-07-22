@@ -241,8 +241,11 @@ export const AuthProvider: React.FC<IProps> = ({ children }) => {
                 },
             });
             console.log('Response:', response.data);
+            notify.success(response.data.msg)
         } catch (error: any) {
             console.error('Error updating researcher:', error.message);
+            notify.error(error.data.msg)
+
         }
     }
 
@@ -254,9 +257,15 @@ export const AuthProvider: React.FC<IProps> = ({ children }) => {
                     'x-auth-token': token,
                 },
             });
+            notify.error(response.data.msg)
+
             console.log('Response:', response.data);
+
         } catch (error: any) {
+            notify.error(error.data.msg)
+
             console.error('Error updating supervisor:', error.message);
+
         }
     }
 

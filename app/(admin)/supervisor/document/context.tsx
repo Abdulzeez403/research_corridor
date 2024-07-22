@@ -3,6 +3,7 @@ import React, { createContext, useState, useEffect, useContext, ReactNode } from
 import axios from 'axios';
 import Cookies from 'universal-cookie';
 import { useSupervisorProfile } from '../context';
+import { notify } from '@/app/components/toast';
 
 interface Document {
     id: string;
@@ -79,9 +80,12 @@ export const SupervisorDocumentsProvider: React.FC<{ children: ReactNode }> = ({
                 },
             });
             // Optionally, refresh the document or documents list after commenting
+            notify.success(response.data.msg)
             getDocumentById(id);
         } catch (error: any) {
             setError(error.message);
+            notify.error(error.data.msg)
+
         } finally {
             setLoading(false);
         }

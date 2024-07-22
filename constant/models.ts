@@ -19,7 +19,7 @@ export interface UploodModel {
 export interface IResearcher {
     name: string;
     email: string;
-    password: string;
+    password?: string;
     role?: string;
     gender?: string;
     department?: string;

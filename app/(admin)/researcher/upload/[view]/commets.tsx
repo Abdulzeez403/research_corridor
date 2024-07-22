@@ -38,8 +38,8 @@ export const CommentTableComponent = ({ comments }: IProps) => {
                         comments.map((item: any, index: number) => (
                             <TableRow key={index}>
                                 <TableCell>{item.message}</TableCell>
-                                <TableCell>{formatDate(item.createdAt)}</TableCell>
-                                <TableCell>{formatTime(item.createdAt)}</TableCell>
+                                <TableCell>{formatDate(item.reviewedDate)}</TableCell>
+                                <TableCell>{formatTime(item.reviewedDate)}</TableCell>
                             </TableRow>
                         ))
                     ) : (

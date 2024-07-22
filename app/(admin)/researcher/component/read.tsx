@@ -2,21 +2,20 @@ import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import React from 'react';
-import { ValidationRequest } from '../validation/context';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 
 
 
 interface IProps {
-    validationRequests: ValidationRequest[];
+    topics: any[];
 }
 
-const headers = ['Matric', 'Topic', 'Date', "Action"];
+const headers = ['Topic', 'Date', "Action"];
 
 
 
-export const ReatTableComponent: React.FC<IProps> = ({ validationRequests }) => {
+export const ReatTableComponent: React.FC<IProps> = ({ topics }) => {
     return (
         <Table className='border-2 rounded-lg p-2 my-6'>
             <TableHeader>
@@ -32,25 +31,23 @@ export const ReatTableComponent: React.FC<IProps> = ({ validationRequests }) => 
                 </TableRow>
             </TableHeader>
             <TableBody>
-                {validationRequests.length === 0 ? (
+                {topics && topics.length === 0 ? (
                     <TableRow>
                         <TableCell colSpan={headers.length} className='text-center p-4'>
                             No validation requests found.
                         </TableCell>
                     </TableRow>
                 ) : (
-                    validationRequests?.slice(0, 5).map((item: ValidationRequest, index: number) => (
+                    topics?.map((item: any, index: number) => (
 
                         <TableRow key={index}>
-                            <TableCell>
-                                <div className="font-medium">{item.matric}</div>
-                            </TableCell>
-                            <TableCell>{item.topic}</TableCell>
+
+                            <TableCell>{item?.title}</TableCell>
                             <TableCell>{new Date(item.createdAt).toLocaleDateString()}</TableCell>
 
                             <TableCell>
                                 <Link
-                                    href={`/supervisor/validation`}>
+                                    href={`/researcher/validation`}>
                                     <Button>View</Button>
                                 </Link>
                             </TableCell>

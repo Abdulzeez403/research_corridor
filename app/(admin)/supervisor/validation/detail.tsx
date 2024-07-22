@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react'
 import { columns } from "./column";
 import { TableComponent } from './table/datatable';
 import CardComponent from '@/app/components/card/index';
-import { UsersRound, MessageCircleMore, BookCheck } from 'lucide-react';
+import { UsersRound } from 'lucide-react';
 import { ValidationRequest, useValidationRequests } from './context';
 import { useAuthContext } from '@/app/(auth)/context';
 

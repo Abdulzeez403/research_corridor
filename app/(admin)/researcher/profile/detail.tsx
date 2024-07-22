@@ -7,6 +7,8 @@ import { Button } from '@/components/ui/button'
 
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { useResearcherProfile } from './context'
+import { ResponsiveDrawerDialog } from '@/app/components/modals/responsivedrawer'
+import ResearcherUpdateForm from './form/researcher'
 
 export const ProfileDetail = () => {
 
@@ -19,7 +21,11 @@ export const ProfileDetail = () => {
     const handleOpen = () => {
         setDrawerOpen(true)
     }
-    const { profile: user } = useResearcherProfile()
+    const { fetchProfile, profile: user } = useResearcherProfile();
+
+    useEffect(() => {
+        fetchProfile()
+    }, [])
 
 
 
@@ -57,9 +63,9 @@ export const ProfileDetail = () => {
                     </div>
 
                     <Button
-                        // onClick={handlepayment}
+                        onClick={handleOpen}
                         className="w-full mt-4 bg-customPrimary text-customSecondary hover:bg-slate-300" >
-                        update Supervisor/Profile
+                        Update Profile
                     </Button>
                 </div>
 
@@ -133,6 +139,15 @@ export const ProfileDetail = () => {
                     </Table>
                 </div>
             </div>
+
+            <ResponsiveDrawerDialog
+                title="Update Profile"
+                description="updating supervisor or profile"
+                isOpen={isDrawerOpen}
+                onClose={handleClose}
+            >
+                <ResearcherUpdateForm />
+            </ResponsiveDrawerDialog>
         </div>
     )
 };

@@ -1,48 +1,49 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
 import { useAuthContext } from '@/app/(auth)/context';
 import { FormField } from '@/app/components/input/textInput';
+import { useResearcherProfile } from '../context';
+import { IResearcher } from '@/constant/models';
+import CustomButton from '@/app/components/button';
 
-interface SupervisorUpdateFormValues {
-    name: string;
-    email: string;
-    role: string;
-    prefix: string;
-    gender: string;
-    department: string;
-    phone: string;
-}
 
-const SupervisorUpdateForm: React.FC = () => {
+const validationSchema = Yup.object({
+    name: Yup.string().required('Name is required'),
+    email: Yup.string().email('Invalid email format').required('Email is required'),
+    gender: Yup.string().required('Gender is required'),
+    department: Yup.string().required('Department is required'),
+    phone: Yup.string().required('Phone is required'),
+});
 
-    const initialValues: SupervisorUpdateFormValues = {
-        name: '',
-        email: '',
-        role: 'supervisor',
-        prefix: '',
-        gender: '',
-        department: '',
-        phone: '',
-    };
 
-    const validationSchema = Yup.object({
-        name: Yup.string().required('Name is required'),
-        email: Yup.string().email('Invalid email format').required('Email is required'),
-        role: Yup.string().required('Role is required'),
-        prefix: Yup.string().required('Prefix is required'),
-        gender: Yup.string().required('Gender is required'),
-        department: Yup.string().required('Department is required'),
-        phone: Yup.string().required('Phone is required'),
-    });
-    const { updateResearcher, updateSupervisor } = useAuthContext()
+const ResearcherUpdateForm: React.FC = () => {
+
+    const { updateResearcher } = useAuthContext();
+    const { fetchProfile, profile } = useResearcherProfile()
 
 
     const handleSubmit = (values: any) => {
-        updateSupervisor(values)
+        updateResearcher(values)
 
     }
+
+    useEffect(() => {
+        fetchProfile()
+
+    }, [])
+
+    const initialValues: IResearcher = {
+        name: profile?.name || '',
+        email: profile?.email || '',
+        gender: profile?.gender || '',
+        department: profile?.department || '',
+        phone: profile?.phone || '',
+    };
+
+
+
 
 
     return (
@@ -60,13 +61,8 @@ const SupervisorUpdateForm: React.FC = () => {
                     <div>
                         <FormField label="Email" name="email" className="my-4" />
                     </div>
-                    <div>
-                        <FormField label="Role" name="role" className="my-4" />
-                    </div>
-                    <div>
 
-                        <FormField label="Prefix" name="prefix" className="my-4" />
-                    </div>
+
                     <div>
                         <FormField label="Gender" name="gender" className="my-4" />
                     </div>
@@ -76,13 +72,13 @@ const SupervisorUpdateForm: React.FC = () => {
                     <div>
                         <FormField label="Phone" name="phone" className="my-4" />
                     </div>
-                    <button type="submit" disabled={isSubmitting}>
-                        Update Supervisor
-                    </button>
+                    <CustomButton type="submit" disabled={isSubmitting}>
+                        Update Researcher
+                    </CustomButton>
                 </Form>
             )}
         </Formik>
     );
 };
 
-export default SupervisorUpdateForm;
+export default ResearcherUpdateForm;

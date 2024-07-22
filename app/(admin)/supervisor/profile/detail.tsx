@@ -21,7 +21,11 @@ export const ProfileDetail = () => {
     const handleOpen = () => {
         setDrawerOpen(true)
     }
-    const { profile: user } = useSupervisorProfile()
+    const {fetchProfile, profile: user } = useSupervisorProfile();
+     useEffect(()=>{
+        fetchProfile()
+
+    },[])
 
 
 
