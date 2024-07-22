@@ -43,7 +43,7 @@ export const SupervisorUpdateForm: React.FC = () => {
         email: profile?.email || '',
         prefix: profile?.prefix || '',
         gender: profile?.gender || '',
-        department: profile?.department || '',
+        department: profile?.department?.department as any || '',
         phone: profile?.phone || '',
     };
 

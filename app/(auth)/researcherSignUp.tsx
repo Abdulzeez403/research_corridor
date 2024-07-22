@@ -25,7 +25,7 @@ import { IResearcher, ISupervisor } from '@/constant/models';
 // });
 
 export const ResearchSignUpForm: React.FC = () => {
-    const researcherInitialValues: IResearcher = {
+    const researcherInitialValues: any = {
         name: '',
         password: '',
         email: '',
@@ -84,7 +84,6 @@ export const ResearchSignUpForm: React.FC = () => {
                             <FormField label="Name" name="name" className="my-4 w-full" />
                             <FormField label="Email" name="email" className="my-4 w-full" />
                         </div>
-
                         <div className="block  md:flex md:gap-x-2 md:items-center lg:flex lg:gap-x-2 lg:items-center">
                             <FormField label="Phone Number" name="phone" className="my-4 w-full" />
                             <div className='w-full'>
@@ -107,9 +106,6 @@ export const ResearchSignUpForm: React.FC = () => {
                                 </Select>
                             </div>
                         </div>
-
-
-
                         <div>
                             <div className="block  md:flex md:gap-x-2 md:items-center lg:flex lg:gap-x-2 lg:items-center">
                                 <div className="w-full">
@@ -168,8 +164,6 @@ export const ResearchSignUpForm: React.FC = () => {
                                 </Select>
                             </div>
                         </div>
-
-
                         <FormField label="Password" name="password" className="my-4 w-full" />
 
                         <div>

@@ -45,13 +45,28 @@ export const SignDetiail = () => {
                             )
                         }
                     </div>
+                    <div className="">
+                        <span
+                            className="cursor-pointer"
+                            onClick={() => setAuthLogin(!authLogin)}
+                        >
+                            <div className="flex justify-center">
 
-                    <div className=" text-center text-sm"
-                        onClick={() => setAuthLogin(!authLogin)}>
-                        Don&apos;t have an account?{" "}
+                                {authLogin ?
+                                    (<h4>Dont have an account?
+                                        <span className="text-customPrimary text-semibold pl-2">Sign Up </span>
+                                    </h4>
+                                    ) : (
+                                        <h4 >
+                                            Already have an account?
+                                            <span className="text-customPrimary text-semibold  pl-2">Sign In</span>
+                                        </h4>
 
-                        <span className="text-customPrimary text-semibold">{authLogin ? "Sign Up" : "Sign In"}</span>
+                                    )
+                                }
+                            </div>
 
+                        </span>
                     </div>
 
 

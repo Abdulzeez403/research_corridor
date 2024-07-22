@@ -38,7 +38,7 @@ const ResearcherUpdateForm: React.FC = () => {
         name: profile?.name || '',
         email: profile?.email || '',
         gender: profile?.gender || '',
-        department: profile?.department || '',
+        department: profile?.department?.department as any || '',
         phone: profile?.phone || '',
     };
 

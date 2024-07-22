@@ -27,7 +27,7 @@ export const SupervisorSignUpForm: React.FC = () => {
 
     const { supervisorSignup, loading, getSeasons, getSupervisors, seasons, getDepartments, departments } = useAuthContext();
 
-    const supervisorInitialValues: ISupervisor = {
+    const supervisorInitialValues: any = {
         name: '',
         password: '',
         email: '',
@@ -51,10 +51,11 @@ export const SupervisorSignUpForm: React.FC = () => {
     }, []);
 
     const prefixOptions = [
-        { id: 1, prefix: 'Mr' },
-        { id: 2, prefix: 'Mrs' },
-        { id: 3, prefix: 'Dr' },
-        { id: 4, prefix: 'Pro' }
+        { id: 1, prefix: 'Miss.' },
+        { id: 2, prefix: 'Mrs.' },
+        { id: 3, prefix: 'Mrs.' },
+        { id: 4, prefix: 'Dr.' },
+        { id: 5, prefix: 'Prof.' }
     ];
 
     return (
@@ -105,10 +106,10 @@ export const SupervisorSignUpForm: React.FC = () => {
 
                         <div className='flex gap-x-2'>
                             <div className='w-full'>
-                                <Label>Select Prefix</Label>
+                                <Label>Select Title</Label>
                                 <Select onValueChange={(val: any) => setSelectedPrefix(val)}>
                                     <SelectTrigger className="">
-                                        <SelectValue placeholder="Select Prefix" />
+                                        <SelectValue placeholder="Select Title" />
                                     </SelectTrigger>
                                     <SelectContent>
                                         {prefixOptions.map((item) => (
