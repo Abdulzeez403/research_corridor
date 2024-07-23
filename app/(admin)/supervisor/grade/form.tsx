@@ -7,20 +7,19 @@ import CustomButton from '@/app/components/button';
 import Textarea from '@/app/components/input/textarea';
 import { useSupervisorProfile } from '../context';
 
-// const GradeSchema = Yup.object().shape({
-//     gradeId: Yup.string().required('Grade ID is required'),
-//     introduction: Yup.number().min(0).max(10).required('Introduction score is required'),
-//     reviewLit: Yup.number().min(0).max(10).required('Review of Literature score is required'),
-//     researchMethod: Yup.number().min(0).max(10).required('Research Method score is required'),
-//     dataAnalysis: Yup.number().min(0).max(10).required('Data Analysis score is required'),
-//     discussion: Yup.number().min(0).max(10).required('Discussion score is required'),
-//     language: Yup.number().min(0).max(10).required('Language score is required'),
-//     reference: Yup.number().min(0).max(10).required('Reference score is required'),
-//     formart: Yup.number().min(0).max(10).required('Format score is required'),
-//     total: Yup.number().required('Total score is required'),
-//     generalComment: Yup.string().required('General comment is required'),
-//     evaluator: Yup.string().required('Evaluator name is required'),
-// });
+const GradeSchema = Yup.object().shape({
+    // gradeId: Yup.string().required('Grade ID is required'),
+    introduction: Yup.number().min(0).max(15).required('Introduction score is required'),
+    reviewLit: Yup.number().min(0).max(15).required('Review of Literature score is required'),
+    researchMethod: Yup.number().min(0).max(15).required('Research Method score is required'),
+    dataAnalysis: Yup.number().min(0).max(20).required('Data Analysis score is required'),
+    discussion: Yup.number().min(0).max(10).required('Discussion score is required'),
+    language: Yup.number().min(0).max(10).required('Language score is required'),
+    reference: Yup.number().min(0).max(10).required('Reference score is required'),
+    formart: Yup.number().min(0).max(5).required('Format score is required'),
+    generalComment: Yup.string().required('General comment is required'),
+    evaluator: Yup.string().required('Evaluator name is required'),
+});
 
 interface IProps {
     gradeId: any
@@ -44,10 +43,11 @@ const AddGradeForm = ({ gradeId }: IProps) => {
                 reference: 0,
                 formart: 0,
                 generalComment: "",
+                evaluator: "",
             }}
-            // validationSchema={GradeSchema}
+            validationSchema={GradeSchema}
             onSubmit={async (values, { setSubmitting, resetForm }) => {
-                const payload = { ...values, gradeId, evaluator: profile?.name }
+                const payload = { ...values, gradeId }
                 await addGrade(payload as any);
                 setSubmitting(false);
                 resetForm();
@@ -81,6 +81,8 @@ const AddGradeForm = ({ gradeId }: IProps) => {
                         <FormField label="Reference" name="reference" type="number" className="my-4 w-full " />
                         <FormField label="Format" name="formart" type="number" className="my-4 w-full" />
                     </div>
+
+                    <FormField label="Evaluator" name="evaluator" type="text" className="my-4 w-full" />
 
                     <Textarea
                         id="comment"

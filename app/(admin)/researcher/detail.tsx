@@ -95,7 +95,7 @@ export const ResearcherDashboard = () => {
                                 <h4 className="font-bold">Messages</h4>
                                 <Mail className="h-5 w-5" />
                             </div>
-                            <div>
+                            {/* <div>
                                 <div className="flex gap-x-2 items-center py-2">
                                     <Image src={User} alt="image" width={50} height={70} className="rounded-full" />
                                     <div>
@@ -110,7 +110,10 @@ export const ResearcherDashboard = () => {
                                         <p className="text-xs">The topic has been validated!</p>
                                     </div>
                                 </div>
-                            </div>
+                            </div> */}
+
+                            <h4 className='text-center pt-10'>Coming Soon!</h4>
+
                         </div>
                         <div>
                             <div className="flex justify-between">
@@ -120,7 +123,7 @@ export const ResearcherDashboard = () => {
                             <div>
                                 <div>
                                     {Array.isArray(notifications) && notifications.length > 0 ? (
-                                        notifications.map((notification, index) => (
+                                        notifications.slice(0,).map((notification, index) => (
                                             <NotificationItem key={index} description={notification.message} />
                                         ))
                                     ) : (
@@ -129,6 +132,7 @@ export const ResearcherDashboard = () => {
                                 </div>
                             </div>
                         </div>
+
                     </CardContent>
                 </Card>
             </div>

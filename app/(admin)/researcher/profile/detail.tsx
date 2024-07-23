@@ -48,12 +48,9 @@ export const ProfileDetail = () => {
                     </div>
                     <div className='pt-2 flex justify-center mx-0'>
                         <div className='flex gap-x-4'>
-
-
                             <div className="text-center">
                                 <h4>{user?.name}</h4>
                                 <h4>{user?.role}</h4>
-
                             </div>
 
 
@@ -92,10 +89,11 @@ export const ProfileDetail = () => {
                             </TableRow >
                             <TableRow>
                                 <TableCell>
-                                    <div className="font-medium">Username:</div>
+                                    <div className="font-medium">Topic:</div>
                                 </TableCell>
                                 <TableCell>
-                                    <div className="font-medium">{user?.name}</div>
+                                    <div className="font-medium">
+                                        {user?.topic ? user?.topic : "Update Your Profile"}</div>
                                 </TableCell>
                             </TableRow >
                             <TableRow>

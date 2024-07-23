@@ -130,16 +130,16 @@ export const ResearchSignUpForm: React.FC = () => {
                                         </SelectContent>
                                     </Select>
                                 </div>
-                                <FormField label="Matric No:" name="matric" className="my-4 w-full" />
+                                <FormField label="Reg No:" name="matric" className="my-4 w-full" />
                             </div>
 
                             <div className="w-full">
-                                <Label className='font-semibold'>Select Season</Label>
+                                <Label className='font-semibold'>Select Session</Label>
                                 <Select onValueChange={(val: any) => {
                                     setSelectedSeason(val);
                                 }}>
                                     <SelectTrigger className="">
-                                        <SelectValue placeholder="Select Season" />
+                                        <SelectValue placeholder="Select Session" />
                                     </SelectTrigger>
                                     <SelectContent>
                                         {loading ? (

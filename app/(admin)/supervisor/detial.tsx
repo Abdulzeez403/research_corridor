@@ -104,7 +104,7 @@ export const SupervisorDashboard = () => {
                                 <h4 className="font-bold">Messages</h4>
                                 <Mail className="h-5 w-5" />
                             </div>
-                            <div>
+                            {/* <div>
                                 <div className="flex gap-x-2 items-center py-2">
                                     <Image src={User} alt="image" width={50} height={70} className="rounded-full" />
                                     <div>
@@ -119,7 +119,9 @@ export const SupervisorDashboard = () => {
                                         <p className="text-xs">The topic has been validated!</p>
                                     </div>
                                 </div>
-                            </div>
+                            </div> */}
+
+                            <h4 className="text-center">Coming Soon!</h4>
                         </div>
                         <div>
                             <div className="flex justify-between">

@@ -89,6 +89,15 @@ function ViewPage() {
                                     <div className="font-medium">{singleProgress?.researcherId?.matric}</div>
                                 </TableCell>
                             </TableRow>
+
+                            <TableRow>
+                                <TableCell>
+                                    <div className="font-medium">Topic</div>
+                                </TableCell>
+                                <TableCell>
+                                    <div className="font-medium">{singleProgress?.researcherId?.topic ? singleProgress?.researcherId?.topic : "N/L"}</div>
+                                </TableCell>
+                            </TableRow>
                             <TableRow>
                                 <TableCell>
                                     <div className="font-medium">Phone:</div>

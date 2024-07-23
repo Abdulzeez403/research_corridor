@@ -22,6 +22,8 @@ interface ResearcherProgress {
         _id: string;
         name: string;
         matric: string;
+        topic: string
+
     };
     progressPercent: number;
     progress: IProgress;

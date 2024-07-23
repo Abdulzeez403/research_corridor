@@ -15,6 +15,7 @@ const validationSchema = Yup.object({
     gender: Yup.string().required('Gender is required'),
     department: Yup.string().required('Department is required'),
     phone: Yup.string().required('Phone is required'),
+    topic: Yup.string().required('topic is required'),
 });
 
 
@@ -40,6 +41,7 @@ const ResearcherUpdateForm: React.FC = () => {
         gender: profile?.gender || '',
         department: profile?.department?.department as any || '',
         phone: profile?.phone || '',
+        topic: profile?.topic || ''
     };
 
 
@@ -68,6 +70,10 @@ const ResearcherUpdateForm: React.FC = () => {
                     </div>
                     <div>
                         <FormField label="Department" name="department" className="my-4" />
+                    </div>
+
+                    <div>
+                        <FormField label="Topic" name="topic" className="my-4" />
                     </div>
                     <div>
                         <FormField label="Phone" name="phone" className="my-4" />

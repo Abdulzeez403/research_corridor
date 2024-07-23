@@ -67,7 +67,7 @@ export const ResearcherSignInForm: React.FC = () => {
                 {({ isSubmitting }) => (
                     <Form className='mx-6 md:mx-0 lg:mx-0'>
 
-                        <FormField label="Email/Matric" name="emailOrMatric" className="my-4" />
+                        <FormField label="Email / Reg No" name="emailOrMatric" className="my-4" />
                         <FormField label="Password" name="password" type="password" />
                         <CustomButton type="submit" loading={loading}>
                             SignIn
