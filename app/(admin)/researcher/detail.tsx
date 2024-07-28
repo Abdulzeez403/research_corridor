@@ -123,7 +123,7 @@ export const ResearcherDashboard = () => {
                             <div>
                                 <div>
                                     {Array.isArray(notifications) && notifications.length > 0 ? (
-                                        notifications.slice(0,).map((notification, index) => (
+                                        notifications.slice(0, 4).map((notification, index) => (
                                             <NotificationItem key={index} description={notification.message} />
                                         ))
                                     ) : (

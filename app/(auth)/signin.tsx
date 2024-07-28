@@ -22,8 +22,6 @@ export const SignInForm = () => {
 
             <TabsContent value="Supervisor" >
                 <SuperviorSignInForm />
-
-
             </TabsContent>
 
         </Tabs>

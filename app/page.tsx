@@ -1,8 +1,8 @@
 "use client"
 import Cookies from "universal-cookie";
-import { SignDetiail } from "./detiail";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+import { SignDetail } from "./detiail";
 
 export default function Home() {
     const cookie = new Cookies()
@@ -18,7 +18,7 @@ export default function Home() {
     return (
 
         <main className="">
-            <SignDetiail />
+            <SignDetail />
         </main>
     );
 }
