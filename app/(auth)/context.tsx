@@ -91,16 +91,7 @@ export const AuthProvider: React.FC<IProps> = ({ children }) => {
 
         } catch (error: any) {
             // setLoading(false);
-            if (error.response) {
-                console.error('Server Error:', error.response.data);
-                notify.error(error.response.data.message || 'Server error occurred');
-            } else if (error.request) {
-                console.error('Network Error:', error.request);
-                notify.error('Network error occurred. Please try again later.');
-            } else {
-                console.error('Error:', error.message);
-                notify.error('An error occurred. Please try again.');
-            }
+            notify.error(error.response.data.msg);
             throw error;
         };
     };
@@ -120,16 +111,7 @@ export const AuthProvider: React.FC<IProps> = ({ children }) => {
 
         } catch (error: any) {
             // setLoading(false);
-            if (error.response) {
-                console.error('Server Error:', error.response.data);
-                notify.error(error.response.data.message || 'Server error occurred');
-            } else if (error.request) {
-                console.error('Network Error:', error.request);
-                notify.error('Network error occurred. Please try again later.');
-            } else {
-                console.error('Error:', error.message);
-                notify.error('An error occurred. Please try again.');
-            }
+            notify.error(error.response.data.msg);
             throw error;
         };
     };
@@ -147,16 +129,8 @@ export const AuthProvider: React.FC<IProps> = ({ children }) => {
             notify.success(response.data.msg);
         } catch (error: any) {
             setLoading(false);
-            if (error.response) {
-                console.error('Server Error:', error.response.data);
-                notify.error(error.response.data.message || 'Server error occurred');
-            } else if (error.request) {
-                console.error('Network Error:', error.request);
-                notify.error('Network error occurred. Please try again later.');
-            } else {
-                console.error('Error:', error.message);
-                notify.error('An error occurred. Please try again.');
-            }
+            notify.error(error.response.data.msg);
+
             throw error;
         }
     };
@@ -173,16 +147,8 @@ export const AuthProvider: React.FC<IProps> = ({ children }) => {
             notify.success(response.data.msg);
         } catch (error: any) {
             setLoading(false);
-            if (error.response) {
-                console.error('Server Error:', error.response.data);
-                notify.error(error.response.data.message || 'Server error occurred');
-            } else if (error.request) {
-                console.error('Network Error:', error.request);
-                notify.error('Network error occurred. Please try again later.');
-            } else {
-                console.error('Error:', error.message);
-                notify.error('An error occurred. Please try again.');
-            }
+            notify.error(error.response.data.msg);
+
             throw error;
         }
     };

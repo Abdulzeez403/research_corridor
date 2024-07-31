@@ -1,5 +1,5 @@
 "use client"
-import React, { createContext, useContext, useState, useCallback, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
 import axios from 'axios';
 import Cookies from 'universal-cookie';
 import { notify } from '@/app/components/toast';
@@ -31,11 +31,17 @@ export const UploadTopicProvider: React.FC<IProps> = ({ children }) => {
     const [topics, setTopics] = useState<ITopicModel[]>([])
     const cookies = new Cookies();
 
+    const [token, setToken] = useState<string | undefined>(undefined);
+
     const port = "https://research-corridor.onrender.com/api";
-    const token = cookies.get("token");
+
+    useEffect(() => {
+        const tokenFromCookies = cookies.get("token");
+        setToken(tokenFromCookies);
+    }, []);
 
 
-    const uploadTopic = useCallback(async (title: string, supervisorIds: string[], document: File) => {
+    const uploadTopic = async (title: string, supervisorIds: string[], document: File) => {
         setLoading(true);
         try {
             const formData = new FormData();
@@ -54,19 +60,10 @@ export const UploadTopicProvider: React.FC<IProps> = ({ children }) => {
             return response.data.msg;
         } catch (error: any) {
             setLoading(false);
-            if (error.response) {
-                console.error('Server Error:', error.response.data);
-                notify.error(error.response.data.message || 'Server error occurred');
-            } else if (error.request) {
-                console.error('Network Error:', error.request);
-                notify.error('Network error occurred. Please try again later.');
-            } else {
-                console.error('Error:', error.message);
-                notify.error('An error occurred. Please try again.');
-            }
+            notify.error(error.response.data.msg);
             throw error;
         }
-    }, []);
+    };
 
 
     const getTopic = async () => {
