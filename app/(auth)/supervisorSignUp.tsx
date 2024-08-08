@@ -52,7 +52,7 @@ export const SupervisorSignUpForm: React.FC = () => {
 
     const prefixOptions = [
         { id: 1, prefix: 'Miss.' },
-        { id: 2, prefix: 'Mrs.' },
+        { id: 2, prefix: 'Mr.' },
         { id: 3, prefix: 'Mrs.' },
         { id: 4, prefix: 'Dr.' },
         { id: 5, prefix: 'Prof.' }

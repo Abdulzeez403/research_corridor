@@ -26,7 +26,7 @@ interface ResponsiveDrawerDialogProps {
     description: string;
     children: React.ReactNode;
     isOpen: boolean;
-    onClose: () => void;
+    onClose?: () => void;
     buttonVariant?: string;
     dialogClassName?: string;
     drawerClassName?: string;

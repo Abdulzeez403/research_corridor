@@ -63,13 +63,7 @@ export function Detail() {
                         subtitle="Total number of all Researcher"
                         icon={<UsersRound className="h-5 w-5" />}
                     />
-
-
-
-
-
                 </div>
-
             </div>
             <div className="py-10">
                 <TableComponent

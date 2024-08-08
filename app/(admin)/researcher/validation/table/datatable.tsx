@@ -31,7 +31,12 @@ interface DataTableProps<TData, TValue> {
     data: TData[];
     onDismiss: () => void;
     onView: (value: any) => void;
+    onEdit: (value: any) => void;
+    onDelete: (value: any) => void;
+    handleViewDismiss: (value: any) => void;
     onOpen: () => void;
+    modelOpen: boolean;
+    selected: boolean;
     open: boolean;
     children: React.ReactNode;
     title: any;
@@ -42,6 +47,9 @@ export function TableComponent<TData, TValue>({
     columns,
     data,
     onDismiss,
+    modelOpen,
+    selected,
+    handleViewDismiss,
     onView,
     onOpen,
     open,
@@ -70,13 +78,7 @@ export function TableComponent<TData, TValue>({
         },
     });
 
-    const [isModalOpen, setModalOpen] = useState(false);
-    const [selectedRow, setSelectedRow] = useState<TData | null>(null);
 
-    const handleView = (row: TData) => {
-        setSelectedRow(row);
-        setModalOpen(true);
-    };
 
     return (
         <div className="border-2 rounded-lg p-4">
@@ -123,7 +125,6 @@ export function TableComponent<TData, TValue>({
                                 key={row.id}
                                 data-state={row.getIsSelected() && "selected"}
                                 className="cursor-pointer"
-                                onClick={() => handleView(row.original)}
                             >
                                 {row.getVisibleCells().map((cell: any) => (
                                     <TableCell key={cell.id} className="">
@@ -155,16 +156,17 @@ export function TableComponent<TData, TValue>({
             </ResponsiveDrawerDialog>
 
 
-            {selectedRow && (
+            {selected && (
                 <ResponsiveDrawerDialog
                     title="Comments"
                     description="Comments for the selected document"
-                    isOpen={isModalOpen}
-                    onClose={() => setModalOpen(false)}
+                    isOpen={modelOpen}
+                    onClose={handleViewDismiss as any}
+
                 >
                     <div>
-                        {(selectedRow as any).comments && (selectedRow as any).comments.length > 0 ? (
-                            (selectedRow as any).comments.map((comment: any, index: number) => (
+                        {(selected as any).comments && (selected as any).comments.length > 0 ? (
+                            (selected as any).comments.map((comment: any, index: number) => (
                                 <div key={index} className="flex justify-between">
                                     <p>{comment?.comment}</p>
                                     <p className="bg-slate-300 rounded font-semibold px-2 my-2">{comment?.status}</p>

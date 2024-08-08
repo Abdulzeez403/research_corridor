@@ -6,6 +6,7 @@ import { useSupervisorProfile } from '../context';
 import { notify } from '@/app/components/toast';
 
 interface Document {
+    _id: string;
     id: string;
     title: string;
     document: string;
@@ -22,6 +23,7 @@ interface DocumentsContextProps {
     getDocuments: (season: any) => void;
     getDocumentById: (id: string) => void;
     commentOnDocument: (id: string, comment: string) => void;
+    commentDelete: (docId: any, coId: any) => void;
 }
 
 const DocumentsContext = createContext<DocumentsContextProps | undefined>(undefined);
@@ -91,8 +93,26 @@ export const SupervisorDocumentsProvider: React.FC<{ children: ReactNode }> = ({
         }
     };
 
+    const commentDelete = async (docId: any, coId: any) => {
+        setLoading(true)
+        const token = cookies.get("token");
+        try {
+            const response = await axios.delete(`${port}/supervisor/document/${docId}/${coId}`, {
+                headers: {
+                    'x-auth-token': token
+                },
+            });
+            notify.success(response?.data?.massage);
+            return response.data;
+        } catch (error: any) {
+            notify.error(error.response?.data?.massage);
+
+        }
+
+    }
+
     return (
-        <DocumentsContext.Provider value={{ documents, document, loading, error, getDocuments, getDocumentById, commentOnDocument }}>
+        <DocumentsContext.Provider value={{ documents, document, loading, error, getDocuments, getDocumentById, commentOnDocument, commentDelete }}>
             {children}
         </DocumentsContext.Provider>
     );

@@ -97,7 +97,7 @@ function ViewPage() {
             )}
 
             <div>
-                <CommentTableComponent comments={document?.comments as any} />
+                <CommentTableComponent comments={document?.comments as any} doc={document?._id as any} />
             </div>
 
             <ResponsiveDrawerDialog

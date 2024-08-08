@@ -4,12 +4,15 @@ import { ISupervisor, ITopicModel, UploodModel } from "@/constant/models";
 import { ColumnDef } from "@tanstack/react-table";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import DataTableRowActions from "./table/dataRowAction";
 
 interface IProps {
-    onView: (value: ISupervisor) => void;
+    onView: (value: ITopicModel) => void;
+    onEdit: (value: ITopicModel) => void;
+    onDelete: (value: ITopicModel) => void;
 }
 
-export const columns = ({ onView }: IProps): ColumnDef<ITopicModel, unknown>[] => [
+export const columns = ({ onEdit, onDelete, onView }: IProps): ColumnDef<ITopicModel, unknown>[] => [
     {
         id: "select",
         header: ({ table }) => (
@@ -78,14 +81,11 @@ export const columns = ({ onView }: IProps): ColumnDef<ITopicModel, unknown>[] =
     },
     {
         id: 'actions',
-        cell: ({ row }) => (
-            <div>
-                <Button onClick={() => onView(row.original._id as any)}>
-                    View Status
-                </Button>
-
-            </div>
-        ),
-        size: 50,
+        cell: ({ row }) => <DataTableRowActions
+            row={row as any}
+            onEdit={onEdit}
+            onDelete={onDelete}
+            onView={onView} />,
+        size: 50
     },
 ];

@@ -13,6 +13,7 @@ interface DocumentContextType {
     uploadDocument: (title: string, document: File) => Promise<void>;
     fetchDocuments: () => Promise<void>;
     getResearch: (id: any) => Promise<void>
+    deleteDoc: (id: any) => Promise<void>
 }
 
 // Create the context
@@ -107,8 +108,6 @@ export const DocumentProvider: React.FC<DocumentProviderProps> = ({ children }) 
         setLoading(true);
         setError(null);
         const token = cookies.get("token");
-
-
         try {
             const response = await axios.get(`${port}/researcher/get-research/${id}`, {
                 headers: {
@@ -123,8 +122,28 @@ export const DocumentProvider: React.FC<DocumentProviderProps> = ({ children }) 
         }
     };
 
+    const deleteDoc = async (id: any) => {
+        setLoading(true)
+        const token = cookies.get("token");
+        try {
+            const response = await axios.delete(`${port}/researcher/delete-research/${id}`, {
+                headers: {
+                    'x-auth-token': token
+                },
+            });
+            notify.success(response.data.msg);
+
+            return response.data;
+        } catch (error: any) {
+            notify.error(error.response.data.msg);
+
+
+        }
+
+    }
+
     return (
-        <DocumentContext.Provider value={{ documents, loading, error, uploadDocument, fetchDocuments, getResearch, document }}>
+        <DocumentContext.Provider value={{ documents, loading, error, uploadDocument, fetchDocuments, getResearch, document, deleteDoc }}>
             {children}
         </DocumentContext.Provider>
     );

@@ -168,21 +168,21 @@ export const columns = ({ onEdit, onDelete, onView }: IProps): ColumnDef<UploodM
         },
     },
 
-    // {
-    //     id: 'actions',
-    //     cell: ({ row }) => <DataTableRowActions row={row as any} onEdit={onEdit} onDelete={onDelete} onView={onView} />,
-    //     size: 50
-    // },
-
     {
-        accessorKey: 'Actions',
-        cell: ({ row }) => {
-            return (
-                <Link href={`/researcher/upload/${(row.original as any)._id}`}>
-                    <Button>View</Button>
-                </Link>
-            );
-        },
-        size: 50,
+        id: 'actions',
+        cell: ({ row }) => <DataTableRowActions row={row as any} onEdit={onEdit} onDelete={onDelete} onView={onView} />,
+        size: 50
     },
+
+    // {
+    //     accessorKey: 'Actions',
+    //     cell: ({ row }) => {
+    //         return (
+    //             <Link href={`/researcher/upload/${(row.original as any)._id}`}>
+    //                 <Button>View</Button>
+    //             </Link>
+    //         );
+    //     },
+    //     size: 50,
+    // },
 ];

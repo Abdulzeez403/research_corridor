@@ -10,7 +10,7 @@ import { UsersRound } from 'lucide-react';
 
 export const Detail = () => {
 
-    const { getTopic, topics } = useUploadTopic();
+    const { getTopic, topics, deleteTopic } = useUploadTopic();
     const [isDrawerOpen, setDrawerOpen] = useState(false);
 
     useEffect(() => {
@@ -18,14 +18,16 @@ export const Detail = () => {
     }, [])
 
 
-    const handleUpdate = (user: any) => {
+    const handleUpdate = () => {
         setDrawerOpen(!isDrawerOpen);
     };
 
+    const handleDelete = (value: any) => {
+        deleteTopic(value?._id)
+        console.log(value?._id, "delete!")
 
-    const handleView = (value: any) => {
-        return value?.id
     };
+
 
     const handleClose = () => {
         setDrawerOpen(false)
@@ -35,9 +37,21 @@ export const Detail = () => {
         setDrawerOpen(true)
     }
 
+    const [isModalOpen, setModalOpen] = useState<any | null>(null);
+    const [selectedRow, setSelectedRow] = useState<any | null>(null);
+
+    const handleView = (row: any) => {
+        setSelectedRow(row);
+        setModalOpen(true);
+    };
+
+    const handleViewDismiss = () => {
+        setModalOpen(false);
+
+    }
 
 
-    const createColumns = columns({ onView: handleView });
+    const createColumns = columns({ onEdit: handleUpdate, onDelete: handleDelete, onView: handleView, });
 
     return (
 
@@ -51,15 +65,16 @@ export const Detail = () => {
                     icon={<UsersRound className="h-5 w-5" />}
                 />
 
-
-
-
-
             </div>
             <TableComponent
-                columns={createColumns}
+                columns={createColumns as any}
+                modelOpen={isModalOpen}
+                selected={selectedRow}
+                handleViewDismiss={handleViewDismiss}
                 data={topics}
                 onView={handleView}
+                onEdit={handleUpdate}
+                onDelete={handleDelete}
                 open={isDrawerOpen}
                 onDismiss={handleClose}
                 onOpen={handleCreateNewMember}

@@ -13,7 +13,7 @@ import { useDocumentContext } from './context';
 function UploadDocumentDetail() {
     // const [datas, setDatas] = useState<UploodModel[]>([])
     const [isDrawerOpen, setDrawerOpen] = useState(false);
-    const { fetchDocuments, documents } = useDocumentContext();
+    const { fetchDocuments, documents, deleteDoc } = useDocumentContext();
 
 
     useEffect(() => {
@@ -26,8 +26,9 @@ function UploadDocumentDetail() {
 
     };
 
-    const handleDelete = (user: UploodModel) => {
-        alert("Deleted Successfully!")
+    const handleDelete = (value: any) => {
+        deleteDoc(value?._id)
+        console.log(value?._id, "delete!")
 
     };
 
