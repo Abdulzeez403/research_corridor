@@ -59,9 +59,6 @@ export const ResearcherDashboard = () => {
 
 
     return (
-
-
-
         <div className="flex flex-col lg:flex-row gap-6">
             <div className="flex flex-col w-full lg:w-3/4">
                 <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-2 pt-5">
@@ -90,12 +87,12 @@ export const ResearcherDashboard = () => {
                         <CardDescription>Recent activities from researchers and supervisors.</CardDescription>
                     </CardHeader>
                     <CardContent>
-                        <div className="pb-6">
+                        {/* <div className="pb-6">
                             <div className="flex justify-between">
                                 <h4 className="font-bold">Messages</h4>
                                 <Mail className="h-5 w-5" />
                             </div>
-                            {/* <div>
+                            <div>
                                 <div className="flex gap-x-2 items-center py-2">
                                     <Image src={User} alt="image" width={50} height={70} className="rounded-full" />
                                     <div>
@@ -110,11 +107,11 @@ export const ResearcherDashboard = () => {
                                         <p className="text-xs">The topic has been validated!</p>
                                     </div>
                                 </div>
-                            </div> */}
+                            </div>
 
                             <h4 className='text-center pt-10'>Coming Soon!</h4>
 
-                        </div>
+                        </div> */}
                         <div>
                             <div className="flex justify-between">
                                 <h4 className="font-bold">Activities</h4>

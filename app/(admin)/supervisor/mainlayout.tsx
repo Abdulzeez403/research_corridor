@@ -137,9 +137,9 @@ export const MainLayout = ({ children }: IProp) => {
                             <NavLink href="/supervisor/appointment" icon={Presentation}>
                                 Appointment
                             </NavLink>
-                            <NavLink href="/supervisor/chat" icon={MessageSquareQuote}>
+                            {/* <NavLink href="/supervisor/chat" icon={MessageSquareQuote}>
                                 ChatRoom
-                            </NavLink>
+                            </NavLink> */}
                             <NavLink href="/supervisor/researcher" icon={Users}>
                                 Researchers
                             </NavLink>
@@ -189,9 +189,9 @@ export const MainLayout = ({ children }: IProp) => {
                                     <NavLink href="/supervisor/appointment" icon={Presentation}>
                                         Appointment
                                     </NavLink>
-                                    <NavLink href="/supervisor/chat" icon={MessageSquareQuote}>
+                                    {/* <NavLink href="/supervisor/chat" icon={MessageSquareQuote}>
                                         ChatRoom
-                                    </NavLink>
+                                    </NavLink> */}
                                     <NavLink href="/supervisor/researcher" icon={Users}>
                                         Researchers
                                     </NavLink>

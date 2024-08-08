@@ -122,9 +122,9 @@ export const MainLayout = ({ children }: IProp) => {
                                 Appointment
                             </NavLink>
 
-                            <NavLink href="/researcher/chat" icon={MessageSquareQuote}>
+                            {/* <NavLink href="/researcher/chat" icon={MessageSquareQuote}>
                                 ChatRoom
-                            </NavLink>
+                            </NavLink> */}
 
                             <NavLink href="/researcher/profile" icon={CircleUserRound}>
                                 Profile
@@ -169,9 +169,9 @@ export const MainLayout = ({ children }: IProp) => {
                                         Appointment
                                     </NavLink>
 
-                                    <NavLink href="/researcher/chat" icon={MessageSquareQuote}>
+                                    {/* <NavLink href="/researcher/chat" icon={MessageSquareQuote}>
                                         ChatRoom
-                                    </NavLink>
+                                    </NavLink> */}
 
                                     <NavLink href="/researcher/profile" icon={CircleUserRound}>
                                         Profile
